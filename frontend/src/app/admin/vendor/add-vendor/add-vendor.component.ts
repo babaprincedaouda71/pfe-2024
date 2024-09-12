@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {VendorService} from "../../../_services/vendor.service";
 import {Router} from "@angular/router";
 import {Vendor} from "../../../../models/vendor.model";
@@ -14,6 +14,8 @@ export class AddVendorComponent implements OnInit {
   addVendorForm!: FormGroup;
   private selectedCV!: File;
   private selectedContract!: File;
+  private selectedConvention!: File;
+  private selectedCTR!: File;
   @ViewChild('fileInput') fileInput!: ElementRef;
   vendor! : Vendor
   private selectedFile!: File;
@@ -30,21 +32,25 @@ export class AddVendorComponent implements OnInit {
 
   buildForm() {
     this.addVendorForm = this.formBuilder.group({
-      status: ['', []],
-      phone: ['', []],
-      email: ['', []],
-      address: ['', []],
-      bankAccountNumber: ['', []],
-      deadline: ['', []],
-      service: ['', []],
-      cnss: ['', []],
-      name: ['', []],
+      status: ['', [Validators.required]],
+      phone: ['', [Validators.required]],
+      email: ['', [Validators.email]],
+      address: ['', [Validators.required]],
+      nameMainContact: ['', [Validators.required]],
+      phoneNumberMainContact: ['', [Validators.required]],
+      emailMainContact: ['', [Validators.required, Validators.email]],
+      positionMainContact: ['', [Validators.required]],
+      bankAccountNumber: ['', [Validators.required]],
+      deadline: ['', [Validators.required]],
+      service: ['', [Validators.required]],
+      cnss: ['', [Validators.required]],
+      name: ['', [Validators.required]],
       nic: ['', []],
-      ice: ['', []],
-      fi: ['', []],
-      rc: ['', []],
-      subject: ['', []],
-      tp: ['', []],
+      ice: ['', [Validators.required]],
+      fi: ['', [Validators.required]],
+      rc: ['', [Validators.required]],
+      subject: ['', [Validators.required]],
+      tp: ['', [Validators.required]],
     })
   }
 
@@ -76,6 +82,16 @@ export class AddVendorComponent implements OnInit {
     this.selectedContract = event.target.files[0];
   }
 
+  onConventionChange(event: any) {
+    if (!event.target.files[0]) return
+    this.selectedConvention = event.target.files[0];
+  }
+
+  onCTRChange(event: any) {
+    if (!event.target.files[0]) return
+    this.selectedCTR = event.target.files[0];
+  }
+
   clearFileInput() {
     this.fileInput.nativeElement.value = '';
   }
@@ -91,6 +107,7 @@ export class AddVendorComponent implements OnInit {
       this.vendor = {
         ...this.addVendorForm.value
       }
+      console.log(this.vendor);
 
       const formData : FormData = new FormData()
       formData.append('vendorData', JSON.stringify(this.vendor))
@@ -99,6 +116,12 @@ export class AddVendorComponent implements OnInit {
       }
       if (this.selectedContract) {
         formData.append('contract', this.selectedContract)
+      }
+      if (this.selectedConvention) {
+        formData.append('convention', this.selectedConvention)
+      }
+      if (this.selectedContract) {
+        formData.append('ctr', this.selectedCTR)
       }
 
       this.vendorService.addVendor(formData)

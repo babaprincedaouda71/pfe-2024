@@ -69,7 +69,6 @@ export class ClientComponent implements OnInit, AfterViewInit, OnDestroy {
           })
           this.datasource = new MatTableDataSource(this.clients);
           this.datasource.paginator = this.paginator;
-          console.log(this.datasource.paginator)
         },
       })
 

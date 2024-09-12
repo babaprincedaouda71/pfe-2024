@@ -10,6 +10,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {ColorService} from "../../../_services/color.service";
 import {ColorModel} from "../../../../models/color.model";
 import {Subscription} from "rxjs";
+import {MatDialog} from "@angular/material/dialog";
+import {AppClientDialogContentComponent} from "../client/client.component";
 
 @Component({
   selector: 'app-add-client',
@@ -30,6 +32,7 @@ export class AddClientComponent implements OnInit, OnDestroy {
               private sanitizer: DomSanitizer,
               private datePipe: DatePipe,
               private snackBar: MatSnackBar,
+              public dialog: MatDialog,
               private colorService: ColorService) {
   }
 
@@ -175,4 +178,21 @@ export class AddClientComponent implements OnInit, OnDestroy {
     this.subscriptions.push(colorSubscription)
   }
 
+  //handle save a client
+  openDialog(action: string, obj: any) {
+    obj.action = action;
+    const dialogRef = this.dialog.open(AppClientDialogContentComponent, {
+      data: {
+        obj: obj,
+      }
+    })
+    const openDialogSubscription = dialogRef.afterClosed().subscribe((result) => {
+      if (result.event === 'Save') {
+        console.log(result.data);
+        this.onSubmit()
+      }
+    })
+
+    this.subscriptions.push(openDialogSubscription)
+  }
 }
