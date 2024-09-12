@@ -1,0 +1,551 @@
+import {Component, Inject, OnDestroy, OnInit, Optional} from '@angular/core';
+import {TrainingModel} from "../../../../models/training.model";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Params, Router} from "@angular/router";
+import {TrainingService} from "../../../_services/training.service";
+import {firstValueFrom, Subscription, switchMap} from "rxjs";
+import {MatTableDataSource} from "@angular/material/table";
+import {ErrorDialogComponent} from "../training/error-dialog/error-dialog.component";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {DatesService} from "../../../_services/dates.service";
+
+@Component({
+  selector: 'app-detail-training',
+  templateUrl: './detail-training.component.html',
+  styleUrl: './detail-training.component.scss'
+})
+export class DetailTrainingComponent implements OnInit, OnDestroy {
+  training!: TrainingModel
+  idTraining!: number
+  confirmFormVendor!: FormGroup;
+  confirmFormClient!: FormGroup;
+  datasource!: MatTableDataSource<any>;
+  displayedColumns: string[] = ['group', 'staff', 'dates', 'location'];
+  pdfBytes!: Uint8Array | undefined
+  presenceBytes!: Uint8Array | undefined
+  evaluationBytes!: Uint8Array | undefined
+  pdfUrl!: string | null;
+  presenceUrl!: string | null;
+  evaluationUrl!: string | null;
+  private subscriptions : Subscription[] = [];
+
+  constructor(private route: ActivatedRoute,
+              private trainingService: TrainingService,
+              private router: Router,
+              private formBuilder: FormBuilder,
+              public dialog: MatDialog,
+              private snackBar: MatSnackBar,
+              public dateService: DatesService) {
+    this.idTraining = this.route.snapshot.params['idTraining']
+    this.confirmFormVendor = this.formBuilder.group({
+      receiver: [''], // Valeur par défaut pour receiver
+      subject: [''], // Valeur par défaut pour subject
+      body: [''] // Valeur par défaut pour body
+    });
+    this.confirmFormClient = this.formBuilder.group({
+      receiver: [''], // Valeur par défaut pour receiver
+      subject: [''], // Valeur par défaut pour subject
+      body: [''] // Valeur par défaut pour body
+    });
+  }
+
+  ngOnInit() {
+    this.loadTraining();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe())
+  }
+
+  loadTraining() {
+    const trainingSubscription = this.route.params.pipe(
+      switchMap((params: Params) =>
+        this.trainingService.getTraining(params['idTraining'])
+      )
+    ).subscribe({
+      next: value => {
+        this.training = value
+        this.datasource = new MatTableDataSource(this.training.groups)
+        this.buildSendMailFormVendor()
+        this.buildSendMailFormClient()
+        this.convertLogoToBytes()
+      },
+      error: error => {
+      }
+    })
+    this.subscriptions.push(trainingSubscription);
+  }
+
+  buildSendMailFormVendor() {
+    this.confirmFormVendor = this.formBuilder.group({
+      receiver: [this.training.vendor.email, [Validators.email]],
+      subject: ['Confirmation des Détails de la formation'],
+      body: [`Bonjour ${this.training.vendor.name} Nous vous écivons pour confirmer la formation prévu pour ${this.training.trainingDates}`]
+    })
+  }
+
+  buildSendMailFormClient() {
+    this.confirmFormClient = this.formBuilder.group({
+      receiver: [this.training.client.email, [Validators.email]],
+      subject: ['Confirmation des Détails de la formation'],
+      body: [`Bonjour Monsieur ${this.training.client.nameMainContact} Nous vous écivons pour confirmer la formation prévu pour ${this.training.trainingDates}`]
+    })
+  }
+
+  sendMail(receiver: string) {
+    if (receiver === 'instructor') {
+      document.getElementById('btn-closeIns')?.click()
+      this.trainingService.sendMail(this.confirmFormVendor.value)
+        .subscribe({
+          next: value => {
+            console.log(value)
+          },
+          error: err => {
+            console.error(err.message)
+          }
+        })
+    } else if (receiver === 'client') {
+      document.getElementById('btn-closeCl')?.click()
+      this.trainingService.sendMail(this.confirmFormClient.value)
+        .subscribe({
+          next: value => {
+            console.log(value)
+          },
+          error: err => {
+            console.error(err.message)
+          }
+        })
+    }
+  }
+
+  handleEdit(idTraining: number) {
+    this.router.navigate([`training/edit/${idTraining}`])
+  }
+
+  /********** Printing Training Files **********/
+  getTrainingSupportUrl() {
+    return this.pdfUrl
+  }
+
+  getPresenceListUrl() {
+    return this.presenceUrl
+  }
+
+  getEvaluationUrl() {
+    return this.evaluationUrl
+  }
+
+  /*********** Training Life Cycle ***********/
+  openErrorDialog(obj: TrainingModel): void {
+    this.dialog.open(ErrorDialogComponent, {
+      data: {
+        obj: obj,
+      }
+    })
+  }
+
+  removePv(idTraining: number) {
+    const removePvSubscription = this.trainingService.removePv(idTraining, this.training).subscribe({
+      next: data => {
+        this.updateLifeCycle(this.training)
+          .then(() => {
+            this.loadTraining();
+          })
+          .catch(err => {
+            console.log(err.message);
+          });
+      },
+      error: error => {
+        console.log(error.message)
+      }
+    })
+    this.subscriptions.push(removePvSubscription)
+  }
+
+  removeTrainingSupport() {
+    const removeTrainingSupportSubscription = this.trainingService.removeTrainingSupport(this.training.idTraining, this.training).subscribe({
+      next: data => {
+        this.updateLifeCycle(this.training)
+          .then(() => {
+            this.loadTraining();
+          })
+          .catch(err => {
+            console.log(err.message);
+          });
+      },
+      error: error => {
+        console.log(error.message)
+      }
+    })
+    this.subscriptions.push(removeTrainingSupportSubscription)
+  }
+
+  removeTrainingNotes() {
+    const removeTrainingNotesSubscription = this.trainingService.removeTrainingNotes(this.training.idTraining, this.training).subscribe({
+      next: data => {
+        this.updateLifeCycle(this.training)
+          .then(() => {
+            this.loadTraining();
+          })
+          .catch(err => {
+            console.log(err.message);
+          });
+      },
+      error: error => {
+        console.log(error.message)
+      }
+    })
+    this.subscriptions.push(removeTrainingNotesSubscription)
+  }
+
+  /********** End **********/
+
+  // Update training life cycle
+  updateLifeCycle(training: TrainingModel): Promise<TrainingModel> {
+    return firstValueFrom(this.trainingService.updateLifeCycle(training.idTraining, training));
+  }
+
+  checkVendor(event: any) {
+    if (!this.training.vendor || this.training.vendor.idVendor == null) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.training.lifeCycle.trainerSearch = false;
+      this.openErrorDialog(this.training);
+    } else {
+      this.removeTrainingNotes()
+      this.removePv(this.training.idTraining)
+      this.removeTrainingSupport()
+      this.resetCheckboxes('trainerSearch');
+      this.updateLifeCycle(this.training)
+        .then(() => {
+          this.loadTraining(); // Recharger les données après la mise à jour
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
+    }
+  }
+
+  checkValidation() {
+    this.resetCheckboxes('trainerValidation');
+    this.updateLifeCycle(this.training)
+      .then(() => {
+        this.loadTraining()
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+  }
+
+  checkKickOfMeeting(event: any) {
+    if (this.training.lifeCycle.kickOfMeeting && !this.training.lifeCycle.trainingSupport) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.training.lifeCycle.kickOfMeeting = false;
+      this.openLifeCycleDialog('pv', this.training)
+    } else {
+      this.resetCheckboxes('kickOfMeeting');
+      this.training.lifeCycle.kickOfMeeting = false;
+      this.removePv(this.training.idTraining)
+      this.removeTrainingSupport()
+      this.removeTrainingNotes()
+    }
+  }
+
+  checkTrainingSupport(event: any) {
+    if (this.training.lifeCycle.trainingSupport && !this.training.lifeCycle.impression) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.training.lifeCycle.trainingSupport = false
+      this.openLifeCycleDialog('trainingSupport', this.training)
+    } else {
+      this.resetCheckboxes('trainingSupport');
+      this.training.lifeCycle.trainingSupport = false
+      this.removeTrainingSupport()
+      this.removeTrainingNotes()
+    }
+  }
+
+  checkImpression() {
+    this.resetCheckboxes('impression');
+    this.updateLifeCycle(this.training)
+      .then(() => {
+        this.loadTraining()
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+  }
+
+  checkCompletion() {
+    this.resetCheckboxes('completion');
+    this.updateLifeCycle(this.training)
+      .then(() => {
+        this.loadTraining()
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+  }
+
+  checkCertif(event: any) {
+    if (this.training.lifeCycle.certif && !this.training.lifeCycle.invoicing) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.training.lifeCycle.certif = false
+      this.openLifeCycleDialog('trainingNotes', this.training)
+    } else {
+      this.training.lifeCycle.certif = false
+      this.resetCheckboxes('certif');
+      this.removeTrainingNotes()
+    }
+  }
+
+  checkInvoicing() {
+    this.resetCheckboxes('invoicing');
+    this.updateLifeCycle(this.training)
+      .then(() => {
+        this.loadTraining()
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+  }
+
+  checkPayment() {
+    this.resetCheckboxes('payment');
+    this.updateLifeCycle(this.training)
+      .then(() => {
+        this.loadTraining()
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+  }
+
+  openLifeCycleDialog(action: string, obj: TrainingModel) {
+    const dialogRef = this.dialog.open(TrainingLifecycleDialogComponent, {
+      data: {
+        obj: obj,
+        action: action
+      }
+    })
+
+    const openLifeCycleDialogSubscription = dialogRef.afterClosed().subscribe((result) => {
+      if (result.event == 'pv') {
+        this.resetCheckboxes('kickOfMeeting');
+      }
+      if (result.event == 'trainingSupport') {
+        this.resetCheckboxes('trainingSupport');
+      }
+      if (result.event == 'trainingNotes') {
+        this.resetCheckboxes('certif');
+      }
+      if (result.data != undefined) {
+        this.updateLifeCycle(result.data)
+          .then(() => {
+            this.loadTraining()
+          })
+          .catch(err => {
+            console.log(err.message);
+          });
+      }
+    })
+    this.subscriptions.push(openLifeCycleDialogSubscription);
+  }
+
+  private convertLogoToBytes() {
+    if (this.training && this.training.trainingSupport) {
+      // @ts-ignore
+      const byteCharacters = atob(this.training.trainingSupport);
+      const byteNumbers = new Array(byteCharacters.length)
+
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      this.pdfBytes = new Uint8Array(byteNumbers);
+      this.createPdfUrl();
+    }
+    if (this.training && this.training.presenceList) {
+      // @ts-ignore
+      const byteCharacters = atob(this.training.presenceList);
+      const byteNumbers = new Array(byteCharacters.length)
+
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      this.presenceBytes = new Uint8Array(byteNumbers);
+      this.createPresenceUrl();
+    }
+    if (this.training && this.training.evaluation) {
+      // @ts-ignore
+      const byteCharacters = atob(this.training.evaluation);
+      const byteNumbers = new Array(byteCharacters.length)
+
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      this.evaluationBytes = new Uint8Array(byteNumbers);
+      this.createEvaluationUrl();
+    }
+  }
+
+  private createPdfUrl() {
+    if (this.pdfBytes) {
+      const blob = new Blob([this.pdfBytes], {type: 'application/pdf'});
+      this.pdfUrl = URL.createObjectURL(blob);
+    } else {
+      this.pdfUrl = null;
+    }
+  }
+
+  private createPresenceUrl() {
+    if (this.presenceBytes) {
+      const blob = new Blob([this.presenceBytes], {type: 'application/pdf'});
+      this.presenceUrl = URL.createObjectURL(blob);
+    } else {
+      this.presenceUrl = null;
+    }
+  }
+
+  private createEvaluationUrl() {
+    if (this.evaluationBytes) {
+      const blob = new Blob([this.evaluationBytes], {type: 'application/pdf'});
+      this.evaluationUrl = URL.createObjectURL(blob);
+    } else {
+      this.evaluationUrl = null;
+    }
+  }
+
+  private resetCheckboxes(currentCheckbox: string) {
+    const checkboxOrder = [
+      'trainerSearch',
+      'trainerValidation',
+      'kickOfMeeting',
+      'trainingSupport',
+      'impression',
+      'completion',
+      'certif',
+      'invoicing',
+      'payment'
+    ];
+
+    const currentIndex: number = checkboxOrder.indexOf(currentCheckbox);
+    if (currentIndex !== -1) {
+      for (let i: number = currentIndex + 1; i < checkboxOrder.length; i++) {
+        // @ts-ignore
+        this.training.lifeCycle[checkboxOrder[i]] = false;
+      }
+    }
+  }
+
+  /********** End Life Cycle **********/
+}
+
+
+/*****************************************************************************************/
+@Component({
+  selector: 'training-life-cycle-dialog',
+  templateUrl: 'training-life-cycle-dialog.html'
+})
+export class TrainingLifecycleDialogComponent {
+  action!: string;
+  local_data: any
+  pv!: string
+  selectedTrainingSupport!: File
+  selectedPresenceList!: File
+  selectedEvaluation!: File
+  private subscriptions : Subscription[] = []
+
+  constructor(public dialogRef: MatDialogRef<TrainingLifecycleDialogComponent>,
+              @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+              public dialog: MatDialog,
+              private trainingService: TrainingService) {
+    this.local_data = {...data.obj}
+    this.action = data.action
+    this.selectedTrainingSupport = this.local_data.trainingSupport
+  }
+
+  doAction(local_data: TrainingModel) {
+    this.dialogRef.close({event: this.action, data: local_data});
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close({event: 'Cancel'});
+  }
+
+
+  onAddPV() {
+    this.trainingService.addPv(this.pv, this.local_data.idTraining)
+      .subscribe({
+        next: value => {
+          value.lifeCycle.kickOfMeeting = true
+          this.doAction(value)
+        },
+        error: err => {
+          console.log(err.message)
+        }
+      })
+  }
+
+  onTrainingSupportChange(event: any) {
+    if (!event.target.files[0]) return
+    this.selectedTrainingSupport = event.target.files[0];
+    console.log(event.target.files[0])
+  }
+
+  onSubmitTrainingSupport() {
+    const formData: FormData = new FormData()
+    if (this.selectedTrainingSupport) {
+      formData.append('trainingSupport', this.selectedTrainingSupport)
+    }
+
+    this.trainingService.addTrainingSupport(formData, this.local_data.idTraining)
+      .subscribe({
+        next: data => {
+          data.lifeCycle.trainingSupport = true
+          this.doAction(data)
+        },
+        error: error => {
+          console.log(error.message)
+        }
+      })
+  }
+
+
+  onPresenceListChange(event: any) {
+    if (!event.target.files[0]) return
+    this.selectedPresenceList = event.target.files[0];
+    console.log(event.target.files[0])
+  }
+
+  onEvaluationChange(event: any) {
+    if (!event.target.files[0]) return
+    this.selectedEvaluation = event.target.files[0];
+    console.log(event.target.files[0])
+  }
+
+
+  onSubmitTrainingNotes() {
+    const formData: FormData = new FormData()
+    if (this.selectedPresenceList) {
+      formData.append('presenceList', this.selectedPresenceList)
+    }
+    if (this.selectedEvaluation) {
+      formData.append('evaluation', this.selectedEvaluation)
+    }
+
+    this.trainingService.addTrainingNotes(formData, this.local_data.idTraining)
+      .subscribe({
+        next: data => {
+          data.lifeCycle.certif = true
+          this.doAction(data)
+        },
+        error: error => {
+          console.log(error.message)
+        }
+      })
+  }
+}
+

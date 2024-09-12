@@ -1,0 +1,291 @@
+<mat-card class="cardWithShadow theme-card">
+  <mat-card-header>
+    <mat-card-title class="m-b-0">Basic Header Form</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="b-t-1">
+    <div class="p-16 bg-light-primary rounded">
+      <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+        <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler
+        >
+<!--        1-->
+      </h5>
+    </div>
+
+    <div class="row m-t-20">
+      <div class="col-lg-6">
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Statut
+        </mat-label
+        >
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-select formControlName="status">
+            <mat-option value="" disabled>Choisir une option</mat-option>
+            <mat-option value="INDIVIDUAL">Personne Physique</mat-option>
+            <mat-option value="SOLE_PROPRIETOR">Auto Entrepreneur</mat-option>
+            <mat-option value="LLC">SARL</mat-option>
+            <mat-option value="SMLLC">SARL AU</mat-option>
+          </mat-select>
+          <mat-error *ngIf="addVendorForm.get('service')?.invalid && addVendorForm.get('service')?.touched">
+            *Ce champ est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Téléphone
+        </mat-label
+        >
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput placeholder="" formControlName="phone"/>
+          <mat-error
+            *ngIf="addVendorForm.get('phone')?.invalid && addVendorForm.get('phone')?.touched">
+            *Ce champ est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Email
+        </mat-label
+        >
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput placeholder="" formControlName="email"/>
+          <mat-error *ngIf="addVendorForm.get('email')?.invalid && addVendorForm.get('email')?.touched">
+            *Ce champ est obligatoire
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6">
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Nom ou Raison Sociale
+        </mat-label
+        >
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput placeholder="" formControlName="name"/>
+          <mat-error
+            *ngIf="addVendorForm.get('name')?.invalid && addVendorForm.get('name')?.touched">
+            *Ce champ est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Adresse
+        </mat-label
+        >
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput placeholder="" formControlName="address"/>
+          <mat-error *ngIf="addVendorForm.get('address')?.invalid && addVendorForm.get('address')?.touched">
+            *Ce champ est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >CIN
+        </mat-label
+        >
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput placeholder="" formControlName="nic"/>
+          <mat-error *ngIf="addVendorForm.get('nic')?.invalid && addVendorForm.get('nic')?.touched">
+            *Ce champ est obligatoire
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div class="p-16 bg-light-primary rounded">
+      <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+        <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler
+        >
+<!--        2-->
+      </h5>
+    </div>
+    <div class="row m-t-20">
+      <div class="col-lg-6">
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >N° Compte Bancaire
+        </mat-label
+        >
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput placeholder="" formControlName="bankAccountNumber"/>
+          <mat-error
+            *ngIf="addVendorForm.get('bankAccountNumber')?.invalid && addVendorForm.get('bankAccountNumber')?.touched">
+            *Ce champ est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block">
+          Matière
+        </mat-label>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-select formControlName="subject">
+            <mat-option value="" disabled>Choisir une option</mat-option>
+            <mat-option value="0">Finance</mat-option>
+            <mat-option value="1">Sécurité Alimentaire</mat-option>
+            <mat-option value="2">Travaux</mat-option>
+          </mat-select>
+          <mat-error *ngIf="addVendorForm.get('subject')?.invalid && addVendorForm.get('subject')?.touched">
+            *Ce champ est obligatoire
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6">
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Prestation
+        </mat-label
+        >
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-select formControlName="service">
+            <mat-option value="" disabled>Choisir une option</mat-option>
+            <mat-option value="SERVICE">Service</mat-option>
+            <mat-option value="TRADE">Négoce</mat-option>
+            <mat-option value="WORK">Travaux</mat-option>
+          </mat-select>
+          <mat-error *ngIf="addVendorForm.get('service')?.invalid && addVendorForm.get('service')?.touched">
+            *Ce champ est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Écheance
+        </mat-label
+        >
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="Choisir une date" formControlName="deadline"
+                 min="{{ getDate() }}">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="addVendorForm.get('deadline')?.invalid && addVendorForm.get('deadline')?.touched">
+            *Ce champ est obligatoire
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div class="p-16 bg-light-primary rounded m-y-20">
+      <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+        <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler
+        >
+<!--        3-->
+      </h5>
+    </div>
+
+    <div class="row m-t-20">
+      <div class="col-lg-6">
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >CNSS
+        </mat-label
+        >
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput placeholder="" formControlName="cnss"/>
+          <mat-error *ngIf="addVendorForm.get('cnss')?.invalid && addVendorForm.get('cnss')?.touched">
+            *Ce champ est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >IF
+        </mat-label
+        >
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput placeholder="" formControlName="fi"/>
+          <mat-error
+            *ngIf="addVendorForm.get('fi')?.invalid && addVendorForm.get('fi')?.touched">
+            *Ce champ est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >TP
+        </mat-label
+        >
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput placeholder="" formControlName="tp"/>
+          <mat-error
+            *ngIf="addVendorForm.get('tp')?.invalid && addVendorForm.get('tp')?.touched">
+            *Ce champ est obligatoire
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6">
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >ICE
+        </mat-label
+        >
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput placeholder="" formControlName="ice"/>
+          <mat-error
+            *ngIf="addVendorForm.get('ice')?.invalid && addVendorForm.get('ice')?.touched">
+            *Ce champ est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >RC
+        </mat-label
+        >
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput placeholder="" formControlName="rc"/>
+          <mat-error
+            *ngIf="addVendorForm.get('rc')?.invalid && addVendorForm.get('rc')?.touched">
+            *Ce champ est obligatoire
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="p-16 bg-light-primary rounded m-y-20">
+      <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+        <i-tabler name="info-circle" class="icon-20 m-r-8 d-flex"></i-tabler
+        >
+<!--        4-->
+      </h5>
+    </div>
+    <div class="row m-t-20">
+      <div class="col-lg-6">
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >CV
+        </mat-label
+        >
+        <div appearance="outline" class="w-100">
+          <button type="button" mat-flat-button color="primary" class="m-l-16 input-file-button">
+            <input type="file" (change)="onFileChange($event)" #fileInput/>
+          </button>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Contrat
+        </mat-label
+        >
+        <div appearance="outline" class="w-100">
+          <button type="button" mat-flat-button color="primary" class="m-l-16 input-file-button">
+            <input type="file" (change)="onFileChange($event)" #fileInput/>
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="b-t-1">
+    <button mat-flat-button color="warn">Cancel</button>
+    <button mat-flat-button color="primary" class="m-l-8">Enregistrer</button>
+  </mat-card-actions>
+</mat-card>

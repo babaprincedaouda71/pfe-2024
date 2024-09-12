@@ -1,0 +1,71 @@
+<!--<h4 class="mat-headline-6 m-y-24">Form with Tabs</h4>-->
+<mat-card class="cardWithShadow theme-card" *ngIf="invoice">
+  <mat-card-content>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="row">
+          <div class="col-sm-12 d-flex align-items-center">
+            <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16">
+              État
+            </mat-label>
+          </div>
+          <div class="col-sm-12">
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput placeholder="" value="{{ invoice.status }}" readonly/>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 d-flex align-items-center">
+            <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16">
+              Éditeur
+            </mat-label>
+          </div>
+          <div class="col-sm-12">
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput placeholder="" value="{{ invoice.editor }}" readonly/>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6" *ngIf="invoice.status == 'Réglée'">
+        <div class="row">
+          <div class="col-sm-12 d-flex align-items-center">
+            <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+            >Copie Chèque
+            </mat-label>
+          </div>
+          <div class="col-sm-12">
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput placeholder="" value="" readonly/>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 d-flex align-items-center">
+            <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+            >Copie Remise
+            </mat-label>
+          </div>
+          <div class="col-sm-12">
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput placeholder="" value="" readonly/>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <!--        formulaire designation-->
+      <div class="col-lg-12 d-flex justify-content-center">
+        <!--     ******************************* Start ***********************-->
+        <object [data]="pdfUrl" id="pdf" type="application/pdf" width="50%" height="820px" >
+        </object>
+        <!--     ******************************* End ***********************-->
+      </div>
+    </div>
+    <div class="m-t-12 text-right">
+      <button type="submit" (click)="onEditInvoice(invoice.idInvoice)" mat-flat-button color="primary">
+        Modifier
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

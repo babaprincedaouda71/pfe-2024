@@ -1,0 +1,278 @@
+<h2 class="f-w-500 m-b-24" mat-dialog-title><strong>{{action}}</strong></h2>
+
+<!--@if(action !== 'Supprimer') {-->
+<!--<mat-dialog-content style="max-width: 600px">-->
+<!--  <form [formGroup]="data.form" (ngSubmit)="submitForm()">-->
+<!--    <div class="d-flex align-items-center m-b-16">-->
+<!--      <button mat-flat-button color="primary" class="m-l-16 input-file-button">-->
+<!--        <input type="file" (change)="selectFile($event)" #fileInput />-->
+<!--      </button>-->
+<!--    </div>-->
+<!--    <div class="row">-->
+<!--      <div class="col-lg-6">-->
+<!--        <mat-form-field appearance="outline" class="w-100">-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            matInput-->
+<!--            required-->
+<!--            id="corporateName"-->
+<!--            name="corporateName"-->
+<!--            placeholder="Raison Sociale"-->
+<!--            formControlName="corporateName"-->
+<!--          />-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-lg-6">-->
+<!--        <mat-form-field appearance="outline" class="w-100">-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            matInput-->
+<!--            required-->
+<!--            id="address"-->
+<!--            name="address"-->
+<!--            placeholder="Adresse"-->
+<!--            formControlName="address"-->
+<!--          />-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-lg-6">-->
+<!--        <mat-form-field appearance="outline" class="w-100">-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            matInput-->
+<!--            required-->
+<!--            id="phoneNumber"-->
+<!--            name="phoneNumber"-->
+<!--            placeholder="Téléphone"-->
+<!--            formControlName="phoneNumber"-->
+<!--          />-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-lg-6">-->
+<!--        <mat-form-field appearance="outline" class="w-100">-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            matInput-->
+<!--            required-->
+<!--            id="email"-->
+<!--            name="email"-->
+<!--            placeholder="Email"-->
+<!--            formControlName="email"-->
+<!--          />-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-lg-6">-->
+<!--        <mat-form-field appearance="outline" class="w-100">-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            matInput-->
+<!--            required-->
+<!--            id="website"-->
+<!--            name="website"-->
+<!--            placeholder="Site Web"-->
+<!--            formControlName="website"-->
+<!--          />-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-lg-6">-->
+<!--        <mat-form-field appearance="outline" class="w-100">-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            matInput-->
+<!--            required-->
+<!--            id="nameMainContact"-->
+<!--            name="nameMainContact"-->
+<!--            placeholder="Nom du Contact Principal"-->
+<!--            formControlName="nameMainContact"-->
+<!--          />-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-lg-6">-->
+<!--        <mat-form-field appearance="outline" class="w-100">-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            placeholder="Téléphone Contact Principal"-->
+<!--            matInput-->
+<!--            required-->
+<!--            id="phoneNumberMainContact"-->
+<!--            name="phoneNumberMainContact"-->
+<!--            formControlName="phoneNumberMainContact"-->
+<!--          />-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-lg-6">-->
+<!--        <mat-form-field appearance="outline" class="w-100">-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            placeholder="Email Contact Principal"-->
+<!--            matInput-->
+<!--            required-->
+<!--            id="emailMainContact"-->
+<!--            name="emailMainContact"-->
+<!--            formControlName="emailMainContact"-->
+<!--          />-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-lg-6">-->
+<!--        <mat-form-field appearance="outline" class="w-100">-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            placeholder="Fonction Contact Principal"-->
+<!--            matInput-->
+<!--            required-->
+<!--            id="positionMainContact"-->
+<!--            name="positionMainContact"-->
+<!--            formControlName="positionMainContact"-->
+<!--          />-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-lg-6">-->
+<!--        <mat-form-field appearance="outline" class="w-100">-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            placeholder="ICE"-->
+<!--            matInput-->
+<!--            required-->
+<!--            id="commonCompanyIdentifier"-->
+<!--            name="commonCompanyIdentifier"-->
+<!--            formControlName="commonCompanyIdentifier"-->
+<!--          />-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-lg-6">-->
+<!--        <mat-form-field appearance="outline" class="w-100">-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            placeholder="Taxe de Registre"-->
+<!--            matInput-->
+<!--            required-->
+<!--            id="taxRegistration"-->
+<!--            name="taxRegistration"-->
+<!--            formControlName="taxRegistration"-->
+<!--          />-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-lg-6">-->
+<!--        <mat-form-field appearance="outline" class="w-100">-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            placeholder="Registre du Commerce"-->
+<!--            matInput-->
+<!--            required-->
+<!--            id="commercialRegister"-->
+<!--            name="commercialRegister"-->
+<!--            formControlName="commercialRegister"-->
+<!--          />-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-lg-6">-->
+<!--        <mat-form-field appearance="outline" class="w-100">-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            placeholder="Taxe Professionnelle"-->
+<!--            matInput-->
+<!--            required-->
+<!--            id="professionalTax"-->
+<!--            name="professionalTax"-->
+<!--            formControlName="professionalTax"-->
+<!--          />-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-lg-6">-->
+<!--        <mat-form-field appearance="outline" class="w-100">-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            placeholder="CNSS"-->
+<!--            matInput-->
+<!--            required-->
+<!--            id="cnss"-->
+<!--            name="cnss"-->
+<!--            formControlName="cnss"-->
+<!--          />-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-lg-6">-->
+<!--        <mat-form-field appearance="outline" class="w-100">-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            placeholder="Secteur d'Activité"-->
+<!--            matInput-->
+<!--            required-->
+<!--            id="field"-->
+<!--            name="field"-->
+<!--            formControlName="field"-->
+<!--          />-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-lg-6">-->
+<!--        <mat-form-field appearance="outline" class="w-100">-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            placeholder="Etat"-->
+<!--            matInput-->
+<!--            required-->
+<!--            id="status"-->
+<!--            name="status"-->
+<!--            formControlName="status"-->
+<!--          />-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-lg-6">-->
+<!--        <mat-form-field appearance="outline" class="w-100">-->
+<!--          <input-->
+<!--            type="date"-->
+<!--            placeholder="Echéance"-->
+<!--            matInput-->
+<!--            required-->
+<!--            id="deadline"-->
+<!--            name="deadline"-->
+<!--            formControlName="deadline"-->
+<!--            min="{{ getDate() }}"-->
+<!--          />-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div class="col-lg-6">-->
+<!--        <mat-form-field appearance="outline" class="w-100">-->
+<!--          <input-->
+<!--            type="text"-->
+<!--            placeholder="Plafond"-->
+<!--            matInput-->
+<!--            required-->
+<!--            id="limitAmount"-->
+<!--            name="limitAmount"-->
+<!--            formControlName="limitAmount"-->
+<!--          />-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <button-->
+<!--      mat-flat-button-->
+<!--      (click)="doAction()"-->
+<!--      mat-flat-button-->
+<!--      color="primary"-->
+<!--      [disabled]="!data.form.valid"-->
+<!--    >-->
+<!--      {{action}}-->
+<!--    </button>-->
+<!--    <button-->
+<!--      mat-stroked-button-->
+<!--      color="warn"-->
+<!--      class="m-l-8"-->
+<!--      (click)="closeDialog()"-->
+<!--    >-->
+<!--      Annuler-->
+<!--    </button>-->
+<!--  </form>-->
+<!--</mat-dialog-content>-->
+<!--} @else {-->
+@if (action == 'Supprimer'){
+<div class="p-x-24">
+  <p>Êtes-vous sûre de vouloir supprimer <span class="f-w-600">{{local_data.firstName}} {{local_data.lastName}}</span> ?</p>
+</div>
+<div mat-dialog-actions class="p-x-24 p-b-24">
+  <button mat-button (click)="doAction()" mat-flat-button color="warn">
+    {{action}}
+  </button>
+  <button mat-button (click)="closeDialog()" class="m-l-8">Annuler</button>
+</div>
+}

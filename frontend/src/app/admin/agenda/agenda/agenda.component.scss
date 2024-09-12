@@ -1,0 +1,25 @@
+.event-text {
+  font-size: 14px; /* Change la taille de la police */
+  background-color: rgba(22, 156, 245, 0.87); /* Change la couleur de fond */
+  padding: 5px; /* Ajoute du rembourrage pour un meilleur aspect */
+  margin-bottom: 5px; /* Ajoute des marges autour de l'événement */
+  //margin-left: 10px; /* Ajoute des marges autour de l'événement */
+  white-space: nowrap; /* Empêche le retour à la ligne */
+  overflow: hidden; /* Cache le texte qui dépasse */
+  text-overflow: ellipsis;
+  color: white;
+  width: 100%;
+  text-align: center;
+  border-radius: 8px; /* Ajoute des bordures arrondies */
+}
+
+.event-text:hover {
+  background-color: rgba(14, 119, 198, 0.87); /* Change la couleur de fond au survol */
+}
+
+.event-container {
+  display: flex; /* Utilise la disposition flexbox pour aligner les éléments */
+  align-items: center; /* Aligne les éléments sur l'axe vertical */
+}
+
+

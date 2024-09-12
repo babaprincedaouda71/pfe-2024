@@ -1,0 +1,10 @@
+a {
+  text-decoration: none; /* Enlever le soulignement par défaut */
+  color: inherit; /* Utiliser la couleur par défaut du texte */
+  /* Ajoutez d'autres styles si nécessaire */
+}
+
+::ng-deep .green-snackbar {
+  background-color: green !important;
+  color: white !important;
+}

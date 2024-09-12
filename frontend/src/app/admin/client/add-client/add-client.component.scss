@@ -1,0 +1,13 @@
+/* Ajoutez ces styles à votre fichier de style global (styles.css) ou à votre composant spécifique */
+
+/* Augmenter la taille de la police dans la liste déroulante */
+.datalist {
+  font-size: 16px; /* Taille de la police en pixels */
+  max-height: 200px; /* Hauteur maximale en pixels */
+  overflow-y: auto; /* Ajoute une barre de défilement si nécessaire */
+  width: 100%;
+}
+
+.datalist-option {
+  font-size: 16px;
+}

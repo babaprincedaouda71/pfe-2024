@@ -1,0 +1,27 @@
+a {
+  text-decoration: none; /* Enlever le soulignement par défaut */
+  color: inherit; /* Utiliser la couleur par défaut du texte */
+  /* Ajoutez d'autres styles si nécessaire */
+}
+
+.checkbox-container {
+  display: flex;
+  flex-direction: column;
+}
+.checkbox-container mat-checkbox {
+  margin-bottom: 8px;
+}
+
+#alert-message {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+//.f-s-14 {
+//  white-space: pre-line;
+//}
+
+

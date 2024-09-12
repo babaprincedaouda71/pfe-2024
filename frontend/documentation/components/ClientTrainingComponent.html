@@ -1,0 +1,1445 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">frontend documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ClientTrainingComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/admin/invoicing/client-training/client-training.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+                <code>OnDestroy</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-client-training</code></td>
+            </tr>
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./client-training.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./client-training.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#datasource" >datasource</a>
+                            </li>
+                            <li>
+                                <a href="#displayedColumns" >displayedColumns</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#keycloakService" >keycloakService</a>
+                            </li>
+                            <li>
+                                <a href="#selection" >selection</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#subscriptions" >subscriptions</a>
+                            </li>
+                            <li>
+                                <a href="#trainings" >trainings</a>
+                            </li>
+                            <li>
+                                <a href="#userProfile" >userProfile</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#canSelect" >canSelect</a>
+                            </li>
+                            <li>
+                                <a href="#checkboxLabel" >checkboxLabel</a>
+                            </li>
+                            <li>
+                                <a href="#getTrainings" >getTrainings</a>
+                            </li>
+                            <li>
+                                <a href="#getUserProfile" >getUserProfile</a>
+                            </li>
+                            <li>
+                                <a href="#isAllSelected" >isAllSelected</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onCheckboxChange" >onCheckboxChange</a>
+                            </li>
+                            <li>
+                                <a href="#onGenerateInvoice" >onGenerateInvoice</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(trainingService: <a href="../injectables/TrainingService.html" target="_self">TrainingService</a>, router: Router, snackBar: MatSnackBar, invoicingService: <a href="../injectables/InvoicingService.html" target="_self">InvoicingService</a>, keycloakService: KeycloakService)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/admin/invoicing/client-training/client-training.component.ts:32</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>trainingService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TrainingService.html" target="_self" >TrainingService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>snackBar</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatSnackBar</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>invoicingService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/InvoicingService.html" target="_self" >InvoicingService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>keycloakService</td>
+                                                  
+                                                        <td>
+                                                                    <code>KeycloakService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canSelect"></a>
+                    <span class="name">
+                        <span ><b>canSelect</b></span>
+                        <a href="#canSelect"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>canSelect(row: <a href="../interfaces/TrainingModel.html" target="_self">TrainingModel</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="88"
+                                    class="link-to-prism">src/app/admin/invoicing/client-training/client-training.component.ts:88</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Check if the row can be selected</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>row</td>
+                                            <td>
+                                                            <code><a href="../interfaces/TrainingModel.html" target="_self" >TrainingModel</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkboxLabel"></a>
+                    <span class="name">
+                        <span ><b>checkboxLabel</b></span>
+                        <a href="#checkboxLabel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkboxLabel(row?: <a href="../interfaces/TrainingModel.html" target="_self">TrainingModel</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="60"
+                                    class="link-to-prism">src/app/admin/invoicing/client-training/client-training.component.ts:60</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>The label for the checkbox on the passed row</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>row</td>
+                                            <td>
+                                                            <code><a href="../interfaces/TrainingModel.html" target="_self" >TrainingModel</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTrainings"></a>
+                    <span class="name">
+                        <span ><b>getTrainings</b></span>
+                        <a href="#getTrainings"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getTrainings()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="110"
+                                    class="link-to-prism">src/app/admin/invoicing/client-training/client-training.component.ts:110</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUserProfile"></a>
+                    <span class="name">
+                        <span ><b>getUserProfile</b></span>
+                        <a href="#getUserProfile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getUserProfile()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="161"
+                                    class="link-to-prism">src/app/admin/invoicing/client-training/client-training.component.ts:161</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isAllSelected"></a>
+                    <span class="name">
+                        <span ><b>isAllSelected</b></span>
+                        <a href="#isAllSelected"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isAllSelected()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="53"
+                                    class="link-to-prism">src/app/admin/invoicing/client-training/client-training.component.ts:53</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Whether the number of selected elements matches the total number of rows.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="106"
+                                    class="link-to-prism">src/app/admin/invoicing/client-training/client-training.component.ts:106</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="101"
+                                    class="link-to-prism">src/app/admin/invoicing/client-training/client-training.component.ts:101</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCheckboxChange"></a>
+                    <span class="name">
+                        <span ><b>onCheckboxChange</b></span>
+                        <a href="#onCheckboxChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onCheckboxChange(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, row: <a href="../interfaces/TrainingModel.html" target="_self">TrainingModel</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="70"
+                                    class="link-to-prism">src/app/admin/invoicing/client-training/client-training.component.ts:70</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handle checkbox change</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>row</td>
+                                            <td>
+                                                            <code><a href="../interfaces/TrainingModel.html" target="_self" >TrainingModel</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onGenerateInvoice"></a>
+                    <span class="name">
+                        <span ><b>onGenerateInvoice</b></span>
+                        <a href="#onGenerateInvoice"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onGenerateInvoice()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="129"
+                                    class="link-to-prism">src/app/admin/invoicing/client-training/client-training.component.ts:129</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="datasource"></a>
+                    <span class="name">
+                        <span ><b>datasource</b></span>
+                        <a href="#datasource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/TrainingModel.html" target="_self" >MatTableDataSource&lt;TrainingModel&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/admin/invoicing/client-training/client-training.component.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displayedColumns"></a>
+                    <span class="name">
+                        <span ><b>displayedColumns</b></span>
+                        <a href="#displayedColumns"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    &#x27;client&#x27;,
+    &#x27;theme&#x27;,
+    &#x27;dates&#x27;,
+    &#x27;amount&#x27;,
+    &#x27;status&#x27;,
+    &#x27;select&#x27;
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/admin/invoicing/client-training/client-training.component.ts:20</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="keycloakService"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>keycloakService</b></span>
+                        <a href="#keycloakService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>KeycloakService</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/admin/invoicing/client-training/client-training.component.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selection"></a>
+                    <span class="name">
+                        <span ><b>selection</b></span>
+                        <a href="#selection"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new SelectionModel&lt;TrainingModel&gt;(true, [])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/admin/invoicing/client-training/client-training.component.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="subscriptions"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>subscriptions</b></span>
+                        <a href="#subscriptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/admin/invoicing/client-training/client-training.component.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="trainings"></a>
+                    <span class="name">
+                        <span ><b>trainings</b></span>
+                        <a href="#trainings"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/TrainingModel.html" target="_self" >Array&lt;TrainingModel&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/admin/invoicing/client-training/client-training.component.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userProfile"></a>
+                    <span class="name">
+                        <span ><b>userProfile</b></span>
+                        <a href="#userProfile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>KeycloakProfile</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/admin/invoicing/client-training/client-training.component.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, OnDestroy, OnInit} from &#x27;@angular/core&#x27;;
+import {MatTableDataSource} from &quot;@angular/material/table&quot;;
+import {SelectionModel} from &quot;@angular/cdk/collections&quot;;
+import {TrainingService} from &quot;../../../_services/training.service&quot;;
+import {Router} from &quot;@angular/router&quot;;
+import {TrainingModel} from &quot;../../../../models/training.model&quot;;
+import {MatSnackBar} from &quot;@angular/material/snack-bar&quot;;
+import {InvoicingService} from &quot;../../../_services/invoicing.service&quot;;
+import {TrainingInvoice} from &quot;../../../../models/trainingInvoice&quot;;
+import {KeycloakService} from &quot;keycloak-angular&quot;;
+import {KeycloakProfile} from &quot;keycloak-js&quot;;
+import {Subscription} from &quot;rxjs&quot;;
+
+@Component({
+  selector: &#x27;app-client-training&#x27;,
+  templateUrl: &#x27;./client-training.component.html&#x27;,
+  styleUrl: &#x27;./client-training.component.scss&#x27;
+})
+export class ClientTrainingComponent implements OnInit, OnDestroy {
+  displayedColumns: string[] &#x3D; [
+    &#x27;client&#x27;,
+    &#x27;theme&#x27;,
+    &#x27;dates&#x27;,
+    &#x27;amount&#x27;,
+    &#x27;status&#x27;,
+    &#x27;select&#x27;
+  ];
+  datasource!: MatTableDataSource&lt;TrainingModel&gt;;
+  selection &#x3D; new SelectionModel&lt;TrainingModel&gt;(true, []);
+  trainings!: Array&lt;TrainingModel&gt;;
+  userProfile!: KeycloakProfile
+  private subscriptions: Subscription[] &#x3D; []
+
+  constructor(
+    private trainingService: TrainingService,
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private invoicingService: InvoicingService,
+    public keycloakService: KeycloakService
+  ) {
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  // masterToggle(): void {
+  //   this.isAllSelected()
+  //     ? this.selection.clear()
+  //     : this.datasource.data.forEach((row) &#x3D;&gt; this.selection.select(row));
+  // }
+
+  /*********************************************************************************/
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected(): any {
+    const numSelected &#x3D; this.selection.selected.length;
+    const numRows &#x3D; this.datasource.data.length;
+    return numSelected &#x3D;&#x3D;&#x3D; numRows;
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: TrainingModel): string {
+    if (!row) {
+      return &#x60;${this.isAllSelected() ? &#x27;select&#x27; : &#x27;deselect&#x27;} all&#x60;;
+    }
+    return &#x60;${this.selection.isSelected(row) ? &#x27;deselect&#x27; : &#x27;select&#x27;} row ${
+      row.theme + 1
+    }&#x60;;
+  }
+
+  /** Handle checkbox change */
+  onCheckboxChange(event: any, row: TrainingModel): void {
+    if (event.checked) {
+      if (this.canSelect(row)) {
+        this.selection.toggle(row);
+      } else {
+        event.source.checked &#x3D; false;
+        this.snackBar.open(&#x27;Les Formations sélectionnés doivent avoir le même Client et le même mois de date de réalisation.&#x27;, &#x27;Fermer&#x27;, {
+          duration: 5000,
+          verticalPosition: &quot;top&quot;,
+          horizontalPosition: &#x27;center&#x27;
+        });
+      }
+    } else {
+      this.selection.toggle(row);
+    }
+  }
+
+  /** Check if the row can be selected */
+  canSelect(row: TrainingModel): boolean {
+    if (this.selection.isEmpty()) {
+      return true;
+    }
+
+    const selectedClient &#x3D; this.selection.selected[0].client.corporateName;
+    const selectedMonth &#x3D; new Date(this.selection.selected[0].completionDate).getMonth();
+    const rowClient &#x3D; row.client.corporateName;
+    const rowMonth &#x3D; new Date(row.completionDate).getMonth();
+
+    return selectedClient &#x3D;&#x3D;&#x3D; rowClient &amp;&amp; selectedMonth &#x3D;&#x3D;&#x3D; rowMonth;
+  }
+
+  ngOnInit() {
+    this.getUserProfile()
+    this.getTrainings()
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(s &#x3D;&gt; s.unsubscribe())
+  }
+
+  getTrainings() {
+    const trainingSubscription &#x3D; this.trainingService.getTrainingsClient()
+      .subscribe({
+        next: data &#x3D;&gt; {
+          this.trainings &#x3D; data
+          console.log(this.trainings)
+
+          this.datasource &#x3D; new MatTableDataSource(this.trainings);
+          console.log(&quot;TAILLE DU TABLEAU : &quot; + this.datasource.data.length)
+          // this.datasource.paginator &#x3D; this.paginator;
+        },
+        error: err &#x3D;&gt; {
+          console.log(err.message)
+        }
+      })
+    this.subscriptions.push(trainingSubscription)
+  }
+
+  /* Generate Invoice */
+  onGenerateInvoice() {
+    // this.invoicingService.generateInvoiceWithMultipleTrainings(this.selection.selected, this.selection.selected[0].client)
+    const trainingInvoice: TrainingInvoice &#x3D; {
+      idClient: this.selection.selected[0].idClient,
+      trainings: this.selection.selected,
+      editor: this.userProfile.firstName + &#x27; &#x27; + this.userProfile.lastName
+    }
+    const saveTrainingInvoiceSubscription &#x3D; this.invoicingService.saveTrainingInvoice(trainingInvoice)
+      .subscribe({
+        next: data &#x3D;&gt; {
+          data.trainings.forEach(training &#x3D;&gt; {
+            const updateLifeCycleSubscription &#x3D; this.trainingService.updateLifeCycle(training.idTraining, training)
+              .subscribe({
+                next: value &#x3D;&gt; {
+                  this.router.navigate([&#x27;invoicing&#x27;])
+                },
+                error: err &#x3D;&gt; {
+                  console.log(err.message)
+                }
+              })
+            this.subscriptions.push(updateLifeCycleSubscription)
+          })
+        },
+        error: err &#x3D;&gt; {
+          console.log(err.message)
+        }
+      })
+    this.subscriptions.push(saveTrainingInvoiceSubscription)
+  }
+
+
+  // User Profile
+  getUserProfile() {
+    if (this.keycloakService.isLoggedIn()) {
+      this.keycloakService.loadUserProfile().then(
+        profile &#x3D;&gt; {
+          this.userProfile &#x3D; profile
+        }
+      )
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;mat-card class&#x3D;&quot;cardWithShadow&quot;&gt;
+  &lt;mat-card-header&gt;
+    &lt;mat-card-title&gt;Veuillez Sélectionner les Formations à Facturer&lt;/mat-card-title&gt;
+    &lt;mat-card-subtitle class&#x3D;&quot;mat-body-1&quot;&gt;un seul ou plusieurs éléments&lt;/mat-card-subtitle&gt;
+  &lt;/mat-card-header&gt;
+  &lt;mat-card-content&gt;
+    &lt;div class&#x3D;&quot;table-responsive m-t-30&quot;&gt;
+      &lt;table *ngIf&#x3D;&quot;datasource&quot; [dataSource]&#x3D;&quot;datasource&quot; class&#x3D;&quot;w-100&quot; mat-table&gt;
+        &lt;!-- Position Column --&gt;
+        &lt;ng-container matColumnDef&#x3D;&quot;client&quot;&gt;
+          &lt;th *matHeaderCellDef class&#x3D;&quot;f-w-600 mat-subtitle-1 f-s-14&quot; mat-header-cell&gt;
+            Client
+          &lt;/th&gt;
+          &lt;td *matCellDef&#x3D;&quot;let element&quot; mat-cell&gt;
+            &lt;div class&#x3D;&quot;d-flex align-items-center&quot;&gt;
+              &lt;!--              &lt;img [src]&#x3D;&quot;element.imagePath&quot; alt&#x3D;&quot;users&quot; width&#x3D;&quot;40&quot; class&#x3D;&quot;rounded-circle&quot; /&gt;--&gt;
+              &lt;div class&#x3D;&quot;m-l-16&quot;&gt;
+                &lt;h6 class&#x3D;&quot;mat-subtitle-1 f-s-14 f-w-600&quot;&gt;
+                  {{ element.client.corporateName }}
+                &lt;/h6&gt;
+                &lt;!--                &lt;span class&#x3D;&quot;mat-body-1 f-s-12&quot;&gt;--&gt;
+                &lt;!--                  {{ element.position }}--&gt;
+                &lt;!--                &lt;/span&gt;--&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/td&gt;
+        &lt;/ng-container&gt;
+
+        &lt;!-- Theme Column --&gt;
+        &lt;ng-container matColumnDef&#x3D;&quot;theme&quot;&gt;
+          &lt;th *matHeaderCellDef class&#x3D;&quot;f-w-600 mat-subtitle-1 f-s-14&quot; mat-header-cell&gt;
+            Thème
+          &lt;/th&gt;
+          &lt;td *matCellDef&#x3D;&quot;let element&quot; class&#x3D;&quot;mat-body-1&quot; mat-cell&gt;
+            {{ element.theme }}
+          &lt;/td&gt;
+        &lt;/ng-container&gt;
+
+        &lt;!-- Date Column --&gt;
+        &lt;ng-container matColumnDef&#x3D;&quot;dates&quot;&gt;
+          &lt;th *matHeaderCellDef class&#x3D;&quot;f-w-600 mat-subtitle-1 f-s-14&quot; mat-header-cell&gt;
+            Dates de Réalisation
+          &lt;/th&gt;
+          &lt;td *matCellDef&#x3D;&quot;let element&quot; mat-cell&gt;
+            {{ element.completionDate | date : &#x27;shortDate&#x27; }}
+            &lt;!--            @if(element.priority &#x3D;&#x3D; &#x27;low&#x27;) {--&gt;
+            &lt;!--              &lt;span class&#x3D;&quot;bg-light-accent text-accent rounded f-w-600 p-6 p-y-4 f-s-12&quot;&gt;--&gt;
+            &lt;!--              {{ element.priority | titlecase }}--&gt;
+            &lt;!--            &lt;/span&gt;--&gt;
+            &lt;!--            }--&gt;
+
+            &lt;!--            @if(element.priority &#x3D;&#x3D; &#x27;medium&#x27;) {--&gt;
+            &lt;!--              &lt;span class&#x3D;&quot;bg-light-primary text-primary rounded f-w-600 p-6 p-y-4 f-s-12&quot;&gt;--&gt;
+            &lt;!--              {{ element.priority | titlecase }}--&gt;
+            &lt;!--            &lt;/span&gt;--&gt;
+            &lt;!--            }--&gt;
+
+            &lt;!--            @if(element.priority &#x3D;&#x3D; &#x27;high&#x27;) {--&gt;
+            &lt;!--              &lt;span class&#x3D;&quot;bg-light-warning text-warning rounded f-w-600 p-6 p-y-4 f-s-12&quot;&gt;--&gt;
+            &lt;!--              {{ element.priority | titlecase }}--&gt;
+            &lt;!--            &lt;/span&gt;--&gt;
+            &lt;!--            }--&gt;
+
+            &lt;!--            @if(element.priority &#x3D;&#x3D; &#x27;critical&#x27;) {--&gt;
+            &lt;!--              &lt;span class&#x3D;&quot;bg-light-error text-error rounded f-w-600 p-6 p-y-4 f-s-12&quot;&gt;--&gt;
+            &lt;!--              {{ element.priority | titlecase }}--&gt;
+            &lt;!--            &lt;/span&gt;--&gt;
+            &lt;!--            }--&gt;
+
+            &lt;!--            @if(element.priority &#x3D;&#x3D; &#x27;moderate&#x27;) {--&gt;
+            &lt;!--              &lt;span class&#x3D;&quot;bg-light-success text-success rounded f-w-600 p-6 p-y-4 f-s-12&quot;&gt;--&gt;
+            &lt;!--              {{ element.priority | titlecase }}--&gt;
+            &lt;!--            &lt;/span&gt;--&gt;
+            &lt;!--            }--&gt;
+          &lt;/td&gt;
+        &lt;/ng-container&gt;
+
+        &lt;!-- Amount Column --&gt;
+        &lt;ng-container matColumnDef&#x3D;&quot;amount&quot;&gt;
+          &lt;th *matHeaderCellDef class&#x3D;&quot;f-w-600 mat-subtitle-1 f-s-14&quot; mat-header-cell&gt;
+            Montant
+          &lt;/th&gt;
+          &lt;td *matCellDef&#x3D;&quot;let element&quot; class&#x3D;&quot;mat-body-1&quot; mat-cell&gt;
+            {{ element.amount }}
+          &lt;/td&gt;
+        &lt;/ng-container&gt;
+
+        &lt;!-- Status Column --&gt;
+        &lt;ng-container matColumnDef&#x3D;&quot;status&quot;&gt;
+          &lt;th *matHeaderCellDef class&#x3D;&quot;f-w-600 mat-subtitle-1 f-s-14&quot; mat-header-cell&gt;
+            État
+          &lt;/th&gt;
+          &lt;td *matCellDef&#x3D;&quot;let element&quot; class&#x3D;&quot;mat-body-1&quot; mat-cell&gt;
+            &lt;!--            ${{ element.amount }}--&gt;
+          &lt;/td&gt;
+        &lt;/ng-container&gt;
+
+        &lt;!-- Checkbox Column --&gt;
+        &lt;ng-container matColumnDef&#x3D;&quot;select&quot;&gt;
+          &lt;th *matHeaderCellDef class&#x3D;&quot;p-l-0&quot; mat-header-cell&gt;
+            &lt;!--            &lt;mat-checkbox (change)&#x3D;&quot;$event ? masterToggle() : null&quot; [checked]&#x3D;&quot;selection.hasValue() &amp;&amp; isAllSelected()&quot;--&gt;
+            &lt;!--                          color&#x3D;&quot;primary&quot; [indeterminate]&#x3D;&quot;selection.hasValue() &amp;&amp; !isAllSelected()&quot; [aria-label]&#x3D;&quot;checkboxLabel()&quot;&gt;--&gt;
+            &lt;!--            &lt;/mat-checkbox&gt;--&gt;
+          &lt;/th&gt;
+          &lt;td *matCellDef&#x3D;&quot;let row&quot; class&#x3D;&quot;p-l-0&quot; mat-cell&gt;
+            &lt;mat-checkbox (change)&#x3D;&quot;onCheckboxChange($event, row)&quot;
+                          (click)&#x3D;&quot;$event.stopPropagation()&quot;
+                          [aria-label]&#x3D;&quot;checkboxLabel(row)&quot; [checked]&#x3D;&quot;selection.isSelected(row)&quot; color&#x3D;&quot;primary&quot;&gt;
+            &lt;/mat-checkbox&gt;
+          &lt;/td&gt;
+        &lt;/ng-container&gt;
+
+        &lt;tr *matHeaderRowDef&#x3D;&quot;displayedColumns&quot; mat-header-row&gt;&lt;/tr&gt;
+        &lt;tr (click)&#x3D;&quot;selection.toggle(row)&quot; *matRowDef&#x3D;&quot;let row; columns: displayedColumns&quot; mat-row&gt;&lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;m-t-12 text-right&quot;&gt;
+      &lt;button (click)&#x3D;&quot;onGenerateInvoice()&quot; [disabled]&#x3D;&quot;selection.selected.length &lt;&#x3D; 0&quot; color&#x3D;&quot;primary&quot; mat-flat-button&gt;
+        Valider
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/mat-card-content&gt;
+&lt;/mat-card&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><mat-card class="cardWithShadow">  <mat-card-header>    <mat-card-title>Veuillez Sélectionner les Formations à Facturer</mat-card-title>    <mat-card-subtitle class="mat-body-1">un seul ou plusieurs éléments</mat-card-subtitle>  </mat-card-header>  <mat-card-content>    <div class="table-responsive m-t-30">      <table *ngIf="datasource" [dataSource]="datasource" class="w-100" mat-table>        <!-- Position Column -->        <ng-container matColumnDef="client">          <th *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14" mat-header-cell>            Client          </th>          <td *matCellDef="let element" mat-cell>            <div class="d-flex align-items-center">              <!--              <img [src]="element.imagePath" alt="users" width="40" class="rounded-circle" />-->              <div class="m-l-16">                <h6 class="mat-subtitle-1 f-s-14 f-w-600">                  {{ element.client.corporateName }}                </h6>                <!--                <span class="mat-body-1 f-s-12">-->                <!--                  {{ element.position }}-->                <!--                </span>-->              </div>            </div>          </td>        </ng-container>        <!-- Theme Column -->        <ng-container matColumnDef="theme">          <th *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14" mat-header-cell>            Thème          </th>          <td *matCellDef="let element" class="mat-body-1" mat-cell>            {{ element.theme }}          </td>        </ng-container>        <!-- Date Column -->        <ng-container matColumnDef="dates">          <th *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14" mat-header-cell>            Dates de Réalisation          </th>          <td *matCellDef="let element" mat-cell>            {{ element.completionDate | date : \'shortDate\' }}            <!--            @if(element.priority == \'low\') {-->            <!--              <span class="bg-light-accent text-accent rounded f-w-600 p-6 p-y-4 f-s-12">-->            <!--              {{ element.priority | titlecase }}-->            <!--            </span>-->            <!--            }-->            <!--            @if(element.priority == \'medium\') {-->            <!--              <span class="bg-light-primary text-primary rounded f-w-600 p-6 p-y-4 f-s-12">-->            <!--              {{ element.priority | titlecase }}-->            <!--            </span>-->            <!--            }-->            <!--            @if(element.priority == \'high\') {-->            <!--              <span class="bg-light-warning text-warning rounded f-w-600 p-6 p-y-4 f-s-12">-->            <!--              {{ element.priority | titlecase }}-->            <!--            </span>-->            <!--            }-->            <!--            @if(element.priority == \'critical\') {-->            <!--              <span class="bg-light-error text-error rounded f-w-600 p-6 p-y-4 f-s-12">-->            <!--              {{ element.priority | titlecase }}-->            <!--            </span>-->            <!--            }-->            <!--            @if(element.priority == \'moderate\') {-->            <!--              <span class="bg-light-success text-success rounded f-w-600 p-6 p-y-4 f-s-12">-->            <!--              {{ element.priority | titlecase }}-->            <!--            </span>-->            <!--            }-->          </td>        </ng-container>        <!-- Amount Column -->        <ng-container matColumnDef="amount">          <th *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14" mat-header-cell>            Montant          </th>          <td *matCellDef="let element" class="mat-body-1" mat-cell>            {{ element.amount }}          </td>        </ng-container>        <!-- Status Column -->        <ng-container matColumnDef="status">          <th *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14" mat-header-cell>            État          </th>          <td *matCellDef="let element" class="mat-body-1" mat-cell>            <!--            ${{ element.amount }}-->          </td>        </ng-container>        <!-- Checkbox Column -->        <ng-container matColumnDef="select">          <th *matHeaderCellDef class="p-l-0" mat-header-cell>            <!--            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"-->            <!--                          color="primary" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">-->            <!--            </mat-checkbox>-->          </th>          <td *matCellDef="let row" class="p-l-0" mat-cell>            <mat-checkbox (change)="onCheckboxChange($event, row)"                          (click)="$event.stopPropagation()"                          [aria-label]="checkboxLabel(row)" [checked]="selection.isSelected(row)" color="primary">            </mat-checkbox>          </td>        </ng-container>        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>        <tr (click)="selection.toggle(row)" *matRowDef="let row; columns: displayedColumns" mat-row></tr>      </table>    </div>    <div class="m-t-12 text-right">      <button (click)="onGenerateInvoice()" [disabled]="selection.selected.length <= 0" color="primary" mat-flat-button>        Valider      </button>    </div>  </mat-card-content></mat-card></div>'
+    var COMPONENTS = [{'name': 'AddClientComponent', 'selector': 'app-add-client'},{'name': 'AddComponent', 'selector': 'app-add'},{'name': 'AddInstructorComponent', 'selector': 'app-add-instructor'},{'name': 'AddInvoiceDialogContentComponent', 'selector': 'app-add-invoice-dialog-content'},{'name': 'AddTrainingComponent', 'selector': 'app-add-training'},{'name': 'AddVendorComponent', 'selector': 'app-add-vendor'},{'name': 'AgendaComponent', 'selector': 'app-agenda'},{'name': 'AppClientDialogContentComponent', 'selector': 'app-dialog-content'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppInstructorDialogContentComponent', 'selector': 'app-dialog-content'},{'name': 'AppSearchDialogComponent', 'selector': 'search-dialog'},{'name': 'AppTrainingDialogContentComponent', 'selector': 'app-dialog-content'},{'name': 'AppVendorDialogContentComponent', 'selector': 'app-vendor-dialog-content'},{'name': 'BlankComponent', 'selector': 'app-blank'},{'name': 'BrandingComponent', 'selector': 'app-branding'},{'name': 'BreadcrumbComponent', 'selector': 'app-breadcrumb'},{'name': 'ClientComponent', 'selector': 'app-client'},{'name': 'ClientTrainingComponent', 'selector': 'app-client-training'},{'name': 'CustomizerComponent', 'selector': 'app-customizer'},{'name': 'DetailClientComponent', 'selector': 'app-detail-client'},{'name': 'DetailComponent', 'selector': 'app-detail'},{'name': 'DetailInstructorComponent', 'selector': 'app-detail-instructor'},{'name': 'DetailInvoiceComponent', 'selector': 'app-detail-invoice'},{'name': 'DetailPdfComponent', 'selector': 'app-detail-pdf'},{'name': 'DetailTrainingComponent', 'selector': 'app-detail-training'},{'name': 'DetailTrainingInvoiceComponent', 'selector': 'app-detail-training-invoice'},{'name': 'DetailVendorComponent', 'selector': 'app-detail-vendor'},{'name': 'EditClientComponent', 'selector': 'app-edit-client'},{'name': 'EditComponent', 'selector': 'app-edit'},{'name': 'EditInstructorComponent', 'selector': 'app-edit-instructor'},{'name': 'EditTrainingComponent', 'selector': 'app-edit-training'},{'name': 'EditTrainingInvoiceComponent', 'selector': 'app-edit-training-invoice'},{'name': 'EditVendorComponent', 'selector': 'app-edit-vendor'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'ErrorDialogComponent', 'selector': 'app-ok-dialog'},{'name': 'FullComponent', 'selector': 'app-full'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'InstructorComponent', 'selector': 'app-instructor'},{'name': 'InvoiceComponent', 'selector': 'app-invoice'},{'name': 'InvoiceDialogContentComponent', 'selector': 'app-invoice-dialog-content'},{'name': 'LifeCycleComponent', 'selector': 'app-life-cycle'},{'name': 'NavItemComponent', 'selector': 'app-nav-item'},{'name': 'OkDialogComponent', 'selector': 'app-ok-dialog'},{'name': 'OkDialogComponent', 'selector': 'app-ok-dialog'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'TrainingComponent', 'selector': 'app-training'},{'name': 'TrainingDialog', 'selector': 'app-agenda-dialog'},{'name': 'TrainingLifecycleDialogComponent', 'selector': 'training-life-cycle-dialog'},{'name': 'TrainingLifecycleDialogContentComponent', 'selector': 'training-lifecycle-dialog-content'},{'name': 'VendorComponent', 'selector': 'app-vendor'},{'name': 'WelcomeComponent', 'selector': 'app-welcome'},{'name': 'WelcomeComponent', 'selector': 'app-welcome'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ClientTrainingComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ClientTrainingComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

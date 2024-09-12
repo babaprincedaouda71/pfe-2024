@@ -1,0 +1,45 @@
+<h1>Groupes</h1>
+<table mat-table [dataSource]="trainingGroups" class="mat-elevation-z8" formArrayName="groups">
+  <div formArrayName="groups">
+    <div *ngFor="let group of trainingGroups; let i = index" [formGroupName]="i">
+      <!-- Groupe Column -->
+      <ng-container matColumnDef="groupe">
+        <th mat-header-cell *matHeaderCellDef> Groupe</th>
+        <td mat-cell *matCellDef="let group; let i = index">{{ i + 1 }}</td>
+      </ng-container>
+
+      <!-- Effectif Column -->
+      <ng-container matColumnDef="effectif">
+        <th mat-header-cell *matHeaderCellDef> Effectif</th>
+        <td mat-cell *matCellDef="let element"><input type="number" formControlName="groupStaff"></td>
+      </ng-container>
+
+      <!-- Dates Column -->
+      <ng-container matColumnDef="dates">
+        <th mat-header-cell *matHeaderCellDef> Dates</th>
+        <td mat-cell *matCellDef="let groupDates">
+          <div *ngFor="let date of groupDates.get('dates').controls; let j = index">
+            <input placeholder="Choisir une date" [matDatepicker]="picker" matInput [formControl]="date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <button type="button" mat-icon-button color="warn" matTooltip="Supprimer" (click)="removeDate(i, j)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <button type="button" (click)="addDate(i)" mat-button>Ajouter Date</button>
+        </td>
+      </ng-container>
+
+      <!-- Lieu Column -->
+      <ng-container matColumnDef="lieu">
+        <th mat-header-cell *matHeaderCellDef> Lieu</th>
+        <td mat-cell *matCellDef="let element"><input formControlName="location"></td>
+      </ng-container>
+      <button type="button" mat-raised-button color="warn" (click)="removeGroup(i)">Supprimer Groupe</button>
+    </div>
+  </div>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<button type="button" (click)="addGroup()" mat-button>Ajouter Groupe</button>

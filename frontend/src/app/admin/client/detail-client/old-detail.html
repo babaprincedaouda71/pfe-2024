@@ -1,0 +1,278 @@
+<div class="m-t-12 text-center">
+  <button type="button" (click)="handleEdit(client.idClient)" mat-flat-button color="primary">Modifier</button>
+</div>
+<br>
+<form *ngIf="client">
+  <mat-card class="cardWithShadow theme-card">
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms" #tabGroup>
+      <mat-tab label="Informations de l'entreprise">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Raison Sociale
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" value="{{client.corporateName}}" readonly />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Adresse
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" value="{{client.address}}" readonly/>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Téléphone
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" value="{{client.phoneNumber}}" readonly/>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Email
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" value="{{client.email}}" readonly/>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Site Web
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" value="{{client.website}}" readonly/>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-tab>
+      <mat-tab label="Contact Principal">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Nom & Prénom(s)
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" value="{{client.nameMainContact}}" readonly/>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Téléphone
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" value="{{client.phoneNumberMainContact}}" readonly/>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Email
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" value="{{client.emailMainContact}}" readonly/>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Position
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" value="{{client.positionMainContact}}" readonly/>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-tab>
+      <mat-tab label="Identification de l'Entreprise">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >ICE
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" value="{{client.commonCompanyIdentifier}}" readonly/>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >IF
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" value="{{client.taxRegistration}}" readonly/>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >RC
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" value="{{client.commercialRegister}}" readonly/>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >TP
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" value="{{client.professionalTax}}" readonly/>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >CNSS
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" value="{{client.cnss}}" readonly/>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-tab>
+
+      <mat-tab label="Informations Générale">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Secteur d'Activité
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" value="{{client.field}}" readonly/>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Statut
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" value="{{client.status}}" readonly/>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Écheance
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input
+                      [ngModel] ="client.deadline | date:'dd-MM-yyyy'"
+                      (ngModelChange)="client.deadline = $event"
+                      [ngModelOptions]="{standalone: true}"
+                      matInput
+                      readonly
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Plafond
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" value="{{client.limitAmount}}" readonly/>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-tab>
+    </mat-tab-group>
+    <div class="m-t-12 text-left">
+      <button type="button" mat-flat-button class="m-2" color="primary" (click)="goToNextTab()">Suivant</button>
+      <button type="button" mat-flat-button class="m-2" color="primary" (click)="goToPreviousTab()">Précédent</button>
+    </div>
+    <br>
+  </mat-card>
+</form>
