@@ -189,6 +189,17 @@
           </mat-form-field>
 
           <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Attestation de RIB
+          </mat-label
+          >
+          <div appearance="outline" class="w-100">
+            <button class="m-l-16 input-file-button" color="primary" mat-flat-button type="button">
+              <input #fileInput (change)="onRIBChange($event)" accept="application/pdf" type="file"/>
+            </button>
+          </div>
+
+          <!-- input -->
           <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block">
             Domaine
           </mat-label>

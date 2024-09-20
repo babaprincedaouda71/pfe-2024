@@ -12,6 +12,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class AddVendorComponent implements OnInit {
   addVendorForm!: FormGroup;
+  private selectedRIB!: File;
   private selectedCV!: File;
   private selectedContract!: File;
   private selectedConvention!: File;
@@ -72,6 +73,11 @@ export class AddVendorComponent implements OnInit {
     // return `${formattedDay}-${formattedMonth}-${year}`;
   }
 
+  onRIBChange(event: any) {
+    if (!event.target.files[0]) return
+    this.selectedRIB = event.target.files[0];
+  }
+
   onCVChange(event: any) {
     if (!event.target.files[0]) return
     this.selectedCV = event.target.files[0];
@@ -111,6 +117,9 @@ export class AddVendorComponent implements OnInit {
 
       const formData : FormData = new FormData()
       formData.append('vendorData', JSON.stringify(this.vendor))
+      if (this.selectedRIB) {
+        formData.append('rib', this.selectedRIB)
+      }
       if (this.selectedCV) {
         formData.append('cv', this.selectedCV)
       }

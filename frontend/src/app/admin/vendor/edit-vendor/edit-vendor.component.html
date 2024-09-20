@@ -122,13 +122,25 @@
 
           <!-- input -->
           <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block">
-            Matière
+            Domaine
           </mat-label>
           <mat-form-field appearance="outline" class="w-100">
             <mat-select formControlName="subject">
               <mat-option disabled value="">Choisir une option</mat-option>
-              <mat-option value="Finance">Finance</mat-option>
-              <mat-option value="Sécurité Alimentaire">Sécurité Alimentaire</mat-option>
+              <mat-option disabled value="">Choisir une option</mat-option>
+              <mat-option value="Qualité">Qualité</mat-option>
+              <mat-option value="Sécurité">Sécurité</mat-option>
+              <mat-option value="Environnement">Environnement</mat-option>
+              <mat-option value="Hygiène">Hygiène</mat-option>
+              <mat-option value="QSE">QSE</mat-option>
+              <mat-option value="Sécurité Incendie">Sécurité Incendie</mat-option>
+              <mat-option value="RSE">RSE</mat-option>
+              <mat-option value="Ressources Humaines">Ressources Humaines</mat-option>
+              <mat-option value="Management">Management</mat-option>
+              <mat-option value="Finances et Gestion Financière">Finances et Gestion Financière</mat-option>
+              <mat-option value="Communication">Communication</mat-option>
+              <mat-option value="Informatique et Système d'Information">Informatique et Système d'Information
+              </mat-option>
             </mat-select>
             <mat-error *ngIf="editVendorForm.get('subject')?.invalid && editVendorForm.get('subject')?.touched">
               *Ce champ est obligatoire

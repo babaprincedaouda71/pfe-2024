@@ -286,7 +286,7 @@ public class ClientServiceApplication {
       clientRepository.save(client);
       clientRepository.save(client1);
       clientRepository.save(client2);
-      clientRepository.save(client3);
+//      clientRepository.save(client3);
       //			clientRepository.save(client4);
       //			clientRepository.save(client5);
       //			clientRepository.save(client6);

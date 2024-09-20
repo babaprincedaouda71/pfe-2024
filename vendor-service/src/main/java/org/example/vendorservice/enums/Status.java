@@ -4,5 +4,6 @@ public enum Status {
     INDIVIDUAL,
     SOLE_PROPRIETOR,
     LLC,
-    SMLLC
+    SMLLC,
+    SA
 }

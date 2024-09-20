@@ -46,7 +46,7 @@ public class VendorServiceApplication {
 
             Random random = new Random();
 
-            for (int i = 1; i <= 10; i++) {
+            for (int i = 1; i <= 3; i++) {
                 Vendor vendor = new Vendor();
                 vendor.setPhone(generatePhoneNumber());
                 vendor.setEmail("vendor" + i + "@email.com");

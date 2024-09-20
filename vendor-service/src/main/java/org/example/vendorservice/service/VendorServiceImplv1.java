@@ -27,15 +27,24 @@ public class VendorServiceImplv1 implements VendorService {
   }
 
   @Override
-  public VendorDTO addVendor(String vendor, MultipartFile cv, MultipartFile contract) {
+  public VendorDTO addVendor(String vendor, MultipartFile rib, MultipartFile cv, MultipartFile contract, MultipartFile convention, MultipartFile ctr) {
     ObjectMapper objectMapper = new ObjectMapper();
     try {
       Vendor vendor1 = objectMapper.readValue(vendor, Vendor.class);
+      if (rib != null) {
+        vendor1.setRib(cv.getBytes());
+      }
       if (cv != null) {
         vendor1.setCv(cv.getBytes());
       }
       if (contract != null) {
         vendor1.setContract(contract.getBytes());
+      }
+      if (convention != null) {
+        vendor1.setConvention(convention.getBytes());
+      }
+      if (ctr != null) {
+        vendor1.setCtr(ctr.getBytes());
       }
       vendor1.setCreatedAt(LocalDate.now());
       vendorRepo.save(vendor1);

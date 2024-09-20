@@ -23,9 +23,12 @@ public class VendorController {
     @PreAuthorize("hasAuthority('admin')")
     public VendorDTO addVendor(
             @RequestParam(value = "vendorData") String vendor,
+            @RequestParam(value = "rib", required = false) MultipartFile rib,
             @RequestParam(value = "cv", required = false) MultipartFile cv,
-            @RequestParam(value = "contract", required = false) MultipartFile contract) {
-        return vendorService.addVendor(vendor, cv, contract);
+            @RequestParam(value = "contract", required = false) MultipartFile contract,
+            @RequestParam(value = "convention", required = false) MultipartFile convention,
+            @RequestParam(value = "ctr", required = false) MultipartFile ctr) {
+        return vendorService.addVendor(vendor, rib, cv, contract, convention, ctr);
     }
 
     @GetMapping("/find/all")

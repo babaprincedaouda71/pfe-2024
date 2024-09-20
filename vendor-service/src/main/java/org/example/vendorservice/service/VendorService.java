@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface VendorService {
-    VendorDTO addVendor(String vendor, MultipartFile cv, MultipartFile contract);
+    VendorDTO addVendor(String vendor, MultipartFile rib, MultipartFile cv, MultipartFile contract, MultipartFile convention, MultipartFile ctr);
 
     List<VendorDTO> getAllVendors();
 

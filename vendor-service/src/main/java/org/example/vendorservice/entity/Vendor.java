@@ -23,6 +23,10 @@ public class Vendor {
     private String email;
     private String address;
     private String nic;
+    private String nameMainContact;
+    private String phoneNumberMainContact;
+    private String emailMainContact;
+    private String positionMainContact;
     private String cnss;
     private String ice;
     private String rc;
@@ -34,9 +38,15 @@ public class Vendor {
     @Enumerated(EnumType.STRING)
     private Services service;
     @Column(columnDefinition = "LONGBLOB")
+    private byte[] rib;
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] cv;
     @Column(columnDefinition = "LONGBLOB")
     private byte[] contract;
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] convention;
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] ctr;
     private String subject;
     private String fee;
 }
