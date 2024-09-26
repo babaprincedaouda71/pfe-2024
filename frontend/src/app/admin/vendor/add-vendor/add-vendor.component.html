@@ -198,6 +198,25 @@
               <input #fileInput (change)="onRIBChange($event)" accept="application/pdf" type="file"/>
             </button>
           </div>
+        </div>
+
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Prestation
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select formControlName="service">
+              <mat-option disabled value="">Choisir une option</mat-option>
+              <mat-option value="SERVICE">Service</mat-option>
+              <mat-option value="TRADE">Négoce</mat-option>
+              <mat-option value="WORK">Travaux</mat-option>
+            </mat-select>
+            <mat-error *ngIf="addVendorForm.get('service')?.invalid && addVendorForm.get('service')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
 
           <!-- input -->
           <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block">
@@ -226,25 +245,6 @@
               <mat-option value="Langues">Langues</mat-option>
             </mat-select>
             <mat-error *ngIf="addVendorForm.get('subject')?.invalid && addVendorForm.get('subject')?.touched">
-              *Ce champ est obligatoire
-            </mat-error>
-          </mat-form-field>
-        </div>
-
-        <div class="col-lg-6">
-          <!-- input -->
-          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
-          >Prestation
-          </mat-label
-          >
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-select formControlName="service">
-              <mat-option disabled value="">Choisir une option</mat-option>
-              <mat-option value="SERVICE">Service</mat-option>
-              <mat-option value="TRADE">Négoce</mat-option>
-              <mat-option value="WORK">Travaux</mat-option>
-            </mat-select>
-            <mat-error *ngIf="addVendorForm.get('service')?.invalid && addVendorForm.get('service')?.touched">
               *Ce champ est obligatoire
             </mat-error>
           </mat-form-field>

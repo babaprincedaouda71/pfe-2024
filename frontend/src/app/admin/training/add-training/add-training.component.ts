@@ -119,6 +119,7 @@ export class AddTrainingComponent implements OnInit, OnDestroy {
       location: [''],
       startDate: [''],
       endDate: [''],
+      idVendor: [''],
       groupDates: this.formBuilder.array([this.formBuilder.control('')]),
     });
 

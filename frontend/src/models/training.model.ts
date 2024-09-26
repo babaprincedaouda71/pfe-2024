@@ -31,6 +31,8 @@ export interface GroupModel {
   startDate : string;
   endDate : string;
   groupDates: Array<string>;
+  idVendor: number | null;
+  vendor: Vendor;
 }
 
 export interface LifecycleModel {

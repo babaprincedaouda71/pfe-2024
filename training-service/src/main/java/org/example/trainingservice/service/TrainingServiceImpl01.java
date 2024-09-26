@@ -136,6 +136,12 @@ public class TrainingServiceImpl01 implements TrainingService {
           training.setClient(client);
           Vendor vendor = vendorRest.findVendorById(training.getIdVendor());
           training.setVendor(vendor);
+          training.getGroups().forEach(
+                  trainingGroup -> {
+                    Vendor vendor1 = vendorRest.findVendorById(trainingGroup.getIdVendor());
+                    trainingGroup.setVendor(vendor1);
+                  }
+          );
           trainingDTOS.add(trainingMapper.fromTraining(training));
         });
     return trainingDTOS;

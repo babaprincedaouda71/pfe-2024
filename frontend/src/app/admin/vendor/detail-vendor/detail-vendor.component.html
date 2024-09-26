@@ -44,7 +44,7 @@
         <div class="col-lg-6">
           <!-- input -->
           <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
-          >Nom ou Raison Sociale
+          >Raison Sociale
           </mat-label
           >
           <mat-form-field appearance="outline" class="w-100">
@@ -67,6 +67,55 @@
           >
           <mat-form-field appearance="outline" class="w-100">
             <input matInput placeholder="" readonly value="{{ vendor.nic }}"/>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="p-16 bg-light-primary rounded">
+        <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+          <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler
+          >
+          Contact Principal
+        </h5>
+      </div>
+
+      <div class="row m-t-20">
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Nom & Prénoms
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input readonly value="{{vendor.nameMainContact}}" matInput placeholder=""/>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Téléphone
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input readonly value="{{vendor.phoneNumberMainContact}}" matInput placeholder=""/>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Email
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input readonly value="{{vendor.emailMainContact}}" matInput placeholder=""/>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Fonction
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input readonly value="{{vendor.positionMainContact}}" matInput placeholder=""/>
           </mat-form-field>
         </div>
       </div>

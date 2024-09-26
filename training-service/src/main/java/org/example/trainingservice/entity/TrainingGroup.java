@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.trainingservice.model.Vendor;
 
 import java.util.List;
 
@@ -22,6 +23,11 @@ public class TrainingGroup {
 
     private String startDate;
     private String endDate;
+
+    private Long idVendor;
+
+    @Transient
+    private Vendor vendor;
 
     @ElementCollection
     @CollectionTable(name = "group_dates", joinColumns = @JoinColumn(name = "groupe_id"))

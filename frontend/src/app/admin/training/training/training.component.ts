@@ -1,7 +1,7 @@
 import {Component, Inject, OnDestroy, OnInit, Optional, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {FormGroup} from "@angular/forms";
-import {TrainingModel} from "../../../../models/training.model";
+import {GroupModel, TrainingModel} from "../../../../models/training.model";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {TrainingService} from "../../../_services/training.service";
@@ -28,7 +28,7 @@ export class TrainingComponent implements OnInit, OnDestroy {
   vendors!: Vendor[]
   datasource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator = Object.create(null);
-  displayedColumns: string[] = ['client', 'theme', 'dates', 'vendor', 'days', 'staff', 'status', 'action'];
+  displayedColumns: string[] = ['client', 'theme', 'groups', 'vendor', 'dates', 'days', 'staff', 'status', 'action'];
   /*
   * Filter variables
   */
@@ -75,7 +75,6 @@ export class TrainingComponent implements OnInit, OnDestroy {
 
           this.datasource = new MatTableDataSource(this.trainings);
           this.datasource.paginator = this.paginator;
-          console.log(this.datasource)
 
           //Filter operations
           this.filteredTrainings = data
@@ -315,6 +314,13 @@ export class TrainingComponent implements OnInit, OnDestroy {
       })
     this.subscriptions.push(updateLifeCycleSubscription)
   }
+
+  // Method to check if it's the las group
+  isLastGroup(groups: GroupModel[], group: GroupModel): boolean {
+    return groups[groups.length - 1] === group;
+  }
+
+
 }
 
 
