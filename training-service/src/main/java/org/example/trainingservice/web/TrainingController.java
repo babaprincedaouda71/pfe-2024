@@ -92,6 +92,22 @@ public class TrainingController {
         return trainingService.removeTrainingSupport(idTraining, trainingDTO);
     }
 
+    @PutMapping(value = {"/add/referenceCertificate/{idTraining}"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PreAuthorize("hasAuthority('admin')")
+    public AddTrainingDTO addReferenceCertificate(
+            @RequestParam(value = "referenceCertificate", required = false) MultipartFile referenceCertificate,
+            @PathVariable Long idTraining) {
+        return trainingService.addReferenceCertificate(referenceCertificate, idTraining);
+    }
+
+    @PutMapping("/remove/referenceCertificate/{idTraining}")
+    @PreAuthorize("hasAuthority('admin')")
+    public TrainingDTO removeReferenceCertificate(
+            @PathVariable Long idTraining,
+            @RequestBody TrainingDTO trainingDTO) {
+        return trainingService.removeReferenceCertificate(idTraining, trainingDTO);
+    }
+
     @PutMapping(value = {"/add/trainingNotes/{idTraining}"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @PreAuthorize("hasAuthority('admin')")
     public AddTrainingDTO addTrainingNotes(

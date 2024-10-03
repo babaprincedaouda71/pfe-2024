@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Vendor} from "../../../../models/vendor.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {VendorService} from "../../../_services/vendor.service";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Subscription} from "rxjs";
 
@@ -56,6 +56,10 @@ export class EditVendorComponent implements OnInit, OnDestroy {
       phone: [this.vendor.phone, []],
       email: [this.vendor.email, []],
       address: [this.vendor.address, []],
+      nameMainContact: ['', [Validators.required]],
+      phoneNumberMainContact: ['', [Validators.required]],
+      emailMainContact: ['', [Validators.required, Validators.email]],
+      positionMainContact: ['', [Validators.required]],
       bankAccountNumber: [this.vendor.bankAccountNumber, []],
       deadline: [this.vendor.deadline, []],
       service: [this.vendor.service, []],

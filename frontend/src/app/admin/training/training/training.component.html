@@ -50,6 +50,35 @@
           </div>
         </div>
       </div>
+
+      <!--      Control Selection To Filter By Date-->
+      <div class="col-lg-3">
+        <div class="row">
+          <div class="col-sm-12">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+              >Filtrer par Année:
+              </mat-label>
+              <mat-select (selectionChange)="applyFilter($event, 'date')" [(value)]="selectedDate">
+                <mat-option value="">Tous</mat-option>
+                <mat-option value="0">Janvier</mat-option>
+                <mat-option value="1">Février</mat-option>
+                <mat-option value="2">Mars</mat-option>
+                <mat-option value="3">Avril</mat-option>
+                <mat-option value="4">Mai</mat-option>
+                <mat-option value="5">Juin</mat-option>
+                <mat-option value="6">Juillet</mat-option>
+                <mat-option value="7">Août</mat-option>
+                <mat-option value="8">Septembre</mat-option>
+                <mat-option value="9">Octobre</mat-option>
+                <mat-option value="10">Novembre</mat-option>
+                <mat-option value="11">Decembre</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
       <!--      Control Selection To Filter By Date-->
       <div class="col-lg-3">
         <div class="row">
@@ -288,6 +317,12 @@
             @if (element.status == 'Reglement') {
               <span class="p-x-8 p-y-4 bg-light f-w-600 rounded-pill f-s-12">
                 Payement
+              </span>
+            }
+
+            @if (element.status == 'Attestation_de_référence') {
+              <span class="p-x-8 p-y-4 bg-light f-w-600 rounded-pill f-s-12">
+                Attestation de Référence
               </span>
             }
 

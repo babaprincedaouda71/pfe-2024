@@ -71,23 +71,23 @@
           </td>
         </ng-container>
 
-        <!--        <ng-container matColumnDef="ht">-->
-        <!--          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">-->
-        <!--            HT-->
-        <!--          </th>-->
-        <!--          <td mat-cell *matCellDef="let element" class="f-s-14">-->
-        <!--            {{ element.ht }}-->
-        <!--          </td>-->
-        <!--        </ng-container>-->
+        <ng-container matColumnDef="tva">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            TVA
+          </th>
+          <td *matCellDef="let element" class="f-s-14" mat-cell>
+            {{ element.tva }}
+          </td>
+        </ng-container>
 
-        <!--        <ng-container matColumnDef="tva">-->
-        <!--          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">-->
-        <!--            TVA-->
-        <!--          </th>-->
-        <!--          <td mat-cell *matCellDef="let element" class="f-s-14">-->
-        <!--            {{ element.tva }}-->
-        <!--          </td>-->
-        <!--        </ng-container>-->
+        <ng-container matColumnDef="travel">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            Frais de déplacement
+          </th>
+          <td *matCellDef="let element" class="f-s-14" mat-cell>
+            {{ element.travelExpenes }}
+          </td>
+        </ng-container>
 
         <ng-container matColumnDef="ttc">
           <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
@@ -95,9 +95,8 @@
           </th>
           <td *matCellDef="let element" class="f-s-14" mat-cell>
             @if (element.ttc) {
-              <!--              {{ element.ttc.toFixed(2) }}-->
+              {{ element.ttc.toFixed(2) }}
             }
-            25000
           </td>
         </ng-container>
 
@@ -214,9 +213,9 @@
         <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
 
       </table>
-      <mat-paginator [pageSizeOptions]="[3, 5, 10, 20, 50, 100]"
-                     showFirstLastButtons>
-      </mat-paginator>
+      <!--      <mat-paginator [pageSizeOptions]="[3, 5, 10, 20, 50, 100]"-->
+      <!--                     showFirstLastButtons>-->
+      <!--      </mat-paginator>-->
     </div>
   </mat-card-content>
 </mat-card>

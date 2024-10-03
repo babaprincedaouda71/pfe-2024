@@ -12,7 +12,7 @@ import {StandardInvoice} from "../../../../../models/standardInvoice";
 import {KeycloakService} from "keycloak-angular";
 import {KeycloakProfile} from "keycloak-js";
 import {Router} from "@angular/router";
-import {referenceStandardValidator} from "../../../../_validators/invoice-format.validator";
+import {referenceStandardValidator, referenceValidator} from "../../../../_validators/invoice-format.validator";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Subscription} from "rxjs";
 
@@ -78,9 +78,13 @@ export class AddComponent implements OnInit, OnDestroy {
   buildForm() {
     this.addStandardInvoiceForm = this.formBuilder.group({
       idClient: [null, [Validators.required, Validators.minLength(6)]],
-      numberInvoice: [null, [referenceStandardValidator()]],
+      numberInvoice: [null, [referenceValidator()]],
       createdAt: [new Date(), [Validators.required, Validators.minLength(6)]],
-      products: this.formBuilder.array([])
+      products: this.formBuilder.array([]),
+      totalHT: [{ value: '', disabled: true }],
+      tva: [0.2, Validators.required],
+      totalTravelExpenses: [{ value: '', disabled: true }],
+      totalTTC: [{ value: '', disabled: true }],
     })
 
     // Ecouter les changements de sélection du client pour mettre à jour l'échéance
@@ -121,6 +125,7 @@ export class AddComponent implements OnInit, OnDestroy {
       name: ['', Validators.required],
       quantity: ['', Validators.required],
       unitPrice: ['', Validators.required],
+      travelExpenses : ['',],
       total: [{value: '', disabled: true}],
     });
 
@@ -187,23 +192,96 @@ export class AddComponent implements OnInit, OnDestroy {
     }
   }
 
+  // private addValueChangeSubscriptions(group: FormGroup) {
+  //   const quantitySubscription = group.get('quantity')?.valueChanges.subscribe(quantity => {
+  //     const unitPrice = group.get('unitPrice')?.value || 0;
+  //     group.get('total')?.setValue(quantity * unitPrice, {emitEvent: false});
+  //   });
+  //
+  //   const unitPriceSubscription = group.get('unitPrice')?.valueChanges.subscribe(unitPrice => {
+  //     const quantity = group.get('quantity')?.value || 0;
+  //     group.get('total')?.setValue(quantity * unitPrice, {emitEvent: false});
+  //   });
+  //
+  //   if (quantitySubscription) {
+  //     this.subscriptions.push(quantitySubscription)
+  //   }
+  //
+  //   if (unitPriceSubscription) {
+  //     this.subscriptions.push(unitPriceSubscription)
+  //   }
+  //
+  //   this.addStandardInvoiceForm.get('tva')?.valueChanges.subscribe(() => {
+  //     this.calculateTotals();
+  //   });
+  // }
+  //
+  // private calculateTotals() {
+  //   let totalHT = 0
+  //   let totalTravelExpenses = 0
+  //
+  //   this.productItem.controls.forEach(value => {
+  //     const total = value.get('total')?.value || 0
+  //     const travelExpenses = value.get('travelExpenses')?.value || 0
+  //
+  //     totalHT += total
+  //     totalTravelExpenses += travelExpenses
+  //   })
+  //
+  //   const totalTTC = (totalHT * 0.2).toFixed(2) + totalTravelExpenses
+  //
+  //   this.addStandardInvoiceForm.get('totalHT')?.setValue(totalHT, { emitEvent: false });
+  //   this.addStandardInvoiceForm.get('totalTravelExpenses')?.setValue(totalTravelExpenses, { emitEvent: false });
+  //   this.addStandardInvoiceForm.get('totalTTC')?.setValue(totalTTC, { emitEvent: false });
+  // }
+
   private addValueChangeSubscriptions(group: FormGroup) {
-    const quantitySubscription = group.get('quantity')?.valueChanges.subscribe(quantity => {
-      const unitPrice = group.get('unitPrice')?.value || 0;
-      group.get('total')?.setValue(quantity * unitPrice, {emitEvent: false});
+    const quantitySubscription = group.get('quantity')?.valueChanges.subscribe(() => {
+      this.updateLineTotal(group);
+      this.calculateTotals();
     });
 
-    const unitPriceSubscription = group.get('unitPrice')?.valueChanges.subscribe(unitPrice => {
-      const quantity = group.get('quantity')?.value || 0;
-      group.get('total')?.setValue(quantity * unitPrice, {emitEvent: false});
+    const unitPriceSubscription = group.get('unitPrice')?.valueChanges.subscribe(() => {
+      this.updateLineTotal(group);
+      this.calculateTotals();
     });
 
-    if (quantitySubscription) {
-      this.subscriptions.push(quantitySubscription)
-    }
+    const travelExpensesSubscription = group.get('travelExpenses')?.valueChanges.subscribe(() => {
+      this.calculateTotals();
+    });
 
-    if (unitPriceSubscription) {
-      this.subscriptions.push(unitPriceSubscription)
-    }
+    this.subscriptions.push(quantitySubscription!, unitPriceSubscription!, travelExpensesSubscription!);
+  }
+
+  private updateLineTotal(group: FormGroup) {
+    const quantity = group.get('quantity')?.value || 0;
+    const unitPrice = group.get('unitPrice')?.value || 0;
+    const total = quantity * unitPrice;
+    group.get('total')?.setValue(total, { emitEvent: false });
+  }
+
+  private calculateTotals() {
+    let totalHT = 0;
+    let totalTravelExpenses = 0;
+
+    this.productItem.controls.forEach(control => {
+      const total = control.get('total')?.value || 0;
+      const travelExpenses = control.get('travelExpenses')?.value || 0;
+
+      totalHT += total;
+      totalTravelExpenses += travelExpenses;
+    });
+
+    const totalTTC = totalHT + (totalHT * 0.2) + totalTravelExpenses;
+
+    this.addStandardInvoiceForm.get('totalHT')?.setValue(totalHT, { emitEvent: false });
+    this.addStandardInvoiceForm.get('totalTravelExpenses')?.setValue(totalTravelExpenses, { emitEvent: false });
+    this.addStandardInvoiceForm.get('totalTTC')?.setValue(totalTTC, { emitEvent: false });
+  }
+
+  addFormValueChangeSubscriptions() {
+    this.addStandardInvoiceForm.get('tva')?.valueChanges.subscribe(() => {
+      this.calculateTotals();
+    });
   }
 }

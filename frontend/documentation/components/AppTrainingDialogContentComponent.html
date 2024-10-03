@@ -233,7 +233,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="331" class="link-to-prism">src/app/admin/training/training/training.component.ts:331</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="337" class="link-to-prism">src/app/admin/training/training/training.component.ts:337</a></div>
                             </td>
                         </tr>
 
@@ -312,8 +312,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="344"
-                                    class="link-to-prism">src/app/admin/training/training/training.component.ts:344</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="350"
+                                    class="link-to-prism">src/app/admin/training/training/training.component.ts:350</a></div>
                         </td>
                     </tr>
 
@@ -349,8 +349,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="340"
-                                    class="link-to-prism">src/app/admin/training/training/training.component.ts:340</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="346"
+                                    class="link-to-prism">src/app/admin/training/training/training.component.ts:346</a></div>
                         </td>
                     </tr>
 
@@ -391,7 +391,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="329" class="link-to-prism">src/app/admin/training/training/training.component.ts:329</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="335" class="link-to-prism">src/app/admin/training/training/training.component.ts:335</a></div>
                         </td>
                     </tr>
 
@@ -429,7 +429,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="334" class="link-to-prism">src/app/admin/training/training/training.component.ts:334</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="340" class="link-to-prism">src/app/admin/training/training/training.component.ts:340</a></div>
                         </td>
                     </tr>
 
@@ -456,7 +456,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="333" class="link-to-prism">src/app/admin/training/training/training.component.ts:333</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="339" class="link-to-prism">src/app/admin/training/training/training.component.ts:339</a></div>
                         </td>
                     </tr>
 
@@ -482,7 +482,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="331" class="link-to-prism">src/app/admin/training/training/training.component.ts:331</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="337" class="link-to-prism">src/app/admin/training/training/training.component.ts:337</a></div>
                         </td>
                     </tr>
 
@@ -498,7 +498,7 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Inject, OnDestroy, OnInit, Optional, ViewChild} from &#x27;@angular/core&#x27;;
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from &quot;@angular/material/dialog&quot;;
 import {FormGroup} from &quot;@angular/forms&quot;;
-import {TrainingModel} from &quot;../../../../models/training.model&quot;;
+import {GroupModel, TrainingModel} from &quot;../../../../models/training.model&quot;;
 import {MatTableDataSource} from &quot;@angular/material/table&quot;;
 import {MatPaginator} from &quot;@angular/material/paginator&quot;;
 import {TrainingService} from &quot;../../../_services/training.service&quot;;
@@ -525,7 +525,7 @@ export class TrainingComponent implements OnInit, OnDestroy {
   vendors!: Vendor[]
   datasource!: MatTableDataSource&lt;any&gt;;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator &#x3D; Object.create(null);
-  displayedColumns: string[] &#x3D; [&#x27;client&#x27;, &#x27;theme&#x27;, &#x27;dates&#x27;, &#x27;vendor&#x27;, &#x27;days&#x27;, &#x27;staff&#x27;, &#x27;status&#x27;, &#x27;action&#x27;];
+  displayedColumns: string[] &#x3D; [&#x27;client&#x27;, &#x27;theme&#x27;, &#x27;groups&#x27;, &#x27;vendor&#x27;, &#x27;dates&#x27;, &#x27;days&#x27;, &#x27;staff&#x27;, &#x27;status&#x27;, &#x27;action&#x27;];
   /*
   * Filter variables
   */
@@ -572,7 +572,6 @@ export class TrainingComponent implements OnInit, OnDestroy {
 
           this.datasource &#x3D; new MatTableDataSource(this.trainings);
           this.datasource.paginator &#x3D; this.paginator;
-          console.log(this.datasource)
 
           //Filter operations
           this.filteredTrainings &#x3D; data
@@ -812,6 +811,13 @@ export class TrainingComponent implements OnInit, OnDestroy {
       })
     this.subscriptions.push(updateLifeCycleSubscription)
   }
+
+  // Method to check if it&#x27;s the las group
+  isLastGroup(groups: GroupModel[], group: GroupModel): boolean {
+    return groups[groups.length - 1] &#x3D;&#x3D;&#x3D; group;
+  }
+
+
 }
 
 

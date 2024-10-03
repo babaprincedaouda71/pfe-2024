@@ -1,5 +1,5 @@
 import {Component, Inject, OnDestroy, OnInit, Optional} from '@angular/core';
-import {TrainingModel} from "../../../../models/training.model";
+import {GroupModel, TrainingModel} from "../../../../models/training.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {TrainingService} from "../../../_services/training.service";
@@ -21,13 +21,15 @@ export class DetailTrainingComponent implements OnInit, OnDestroy {
   confirmFormVendor!: FormGroup;
   confirmFormClient!: FormGroup;
   datasource!: MatTableDataSource<any>;
-  displayedColumns: string[] = ['group', 'staff', 'dates', 'location'];
+  displayedColumns: string[] = ['group', 'vendor', 'staff', 'dates', 'location'];
   pdfBytes!: Uint8Array | undefined
   presenceBytes!: Uint8Array | undefined
   evaluationBytes!: Uint8Array | undefined
+  referenceBytes!: Uint8Array | undefined
   pdfUrl!: string | null;
   presenceUrl!: string | null;
   evaluationUrl!: string | null;
+  referenceUrl!: string | null;
   private subscriptions : Subscription[] = [];
 
   constructor(private route: ActivatedRoute,
@@ -67,8 +69,8 @@ export class DetailTrainingComponent implements OnInit, OnDestroy {
       next: value => {
         this.training = value
         this.datasource = new MatTableDataSource(this.training.groups)
-        this.buildSendMailFormVendor()
-        this.buildSendMailFormClient()
+        // this.buildSendMailFormVendor()
+        // this.buildSendMailFormClient()
         this.convertLogoToBytes()
       },
       error: error => {
@@ -77,21 +79,21 @@ export class DetailTrainingComponent implements OnInit, OnDestroy {
     this.subscriptions.push(trainingSubscription);
   }
 
-  buildSendMailFormVendor() {
-    this.confirmFormVendor = this.formBuilder.group({
-      receiver: [this.training.vendor.email, [Validators.email]],
-      subject: ['Confirmation des Détails de la formation'],
-      body: [`Bonjour ${this.training.vendor.name} Nous vous écivons pour confirmer la formation prévu pour ${this.training.trainingDates}`]
-    })
-  }
+  // buildSendMailFormVendor() {
+  //   this.confirmFormVendor = this.formBuilder.group({
+  //     receiver: [this.training.vendor.email, [Validators.email]],
+  //     subject: ['Confirmation des Détails de la formation'],
+  //     body: [`Bonjour ${this.training.vendor.name} Nous vous écivons pour confirmer la formation prévu pour ${this.training.trainingDates}`]
+  //   })
+  // }
 
-  buildSendMailFormClient() {
-    this.confirmFormClient = this.formBuilder.group({
-      receiver: [this.training.client.email, [Validators.email]],
-      subject: ['Confirmation des Détails de la formation'],
-      body: [`Bonjour Monsieur ${this.training.client.nameMainContact} Nous vous écivons pour confirmer la formation prévu pour ${this.training.trainingDates}`]
-    })
-  }
+  // buildSendMailFormClient() {
+  //   this.confirmFormClient = this.formBuilder.group({
+  //     receiver: [this.training.client.email, [Validators.email]],
+  //     subject: ['Confirmation des Détails de la formation'],
+  //     body: [`Bonjour Monsieur ${this.training.client.nameMainContact} Nous vous écivons pour confirmer la formation prévu pour ${this.training.trainingDates}`]
+  //   })
+  // }
 
   sendMail(receiver: string) {
     if (receiver === 'instructor') {
@@ -134,6 +136,10 @@ export class DetailTrainingComponent implements OnInit, OnDestroy {
 
   getEvaluationUrl() {
     return this.evaluationUrl
+  }
+
+  getReferenceUrl() {
+    return this.referenceUrl
   }
 
   /*********** Training Life Cycle ***********/
@@ -181,6 +187,24 @@ export class DetailTrainingComponent implements OnInit, OnDestroy {
     this.subscriptions.push(removeTrainingSupportSubscription)
   }
 
+  removeReferenceCertificate() {
+    const removeReferenceCertificateSubscription = this.trainingService.removeReferenceCertificate(this.training.idTraining, this.training).subscribe({
+      next: data => {
+        this.updateLifeCycle(this.training)
+          .then(() => {
+            this.loadTraining();
+          })
+          .catch(err => {
+            console.log(err.message);
+          });
+      },
+      error: error => {
+        console.log(error.message)
+      }
+    })
+    this.subscriptions.push(removeReferenceCertificateSubscription)
+  }
+
   removeTrainingNotes() {
     const removeTrainingNotesSubscription = this.trainingService.removeTrainingNotes(this.training.idTraining, this.training).subscribe({
       next: data => {
@@ -207,24 +231,26 @@ export class DetailTrainingComponent implements OnInit, OnDestroy {
   }
 
   checkVendor(event: any) {
-    if (!this.training.vendor || this.training.vendor.idVendor == null) {
-      event.preventDefault();
-      event.stopPropagation();
-      this.training.lifeCycle.trainerSearch = false;
-      this.openErrorDialog(this.training);
-    } else {
-      this.removeTrainingNotes()
-      this.removePv(this.training.idTraining)
-      this.removeTrainingSupport()
-      this.resetCheckboxes('trainerSearch');
-      this.updateLifeCycle(this.training)
-        .then(() => {
-          this.loadTraining(); // Recharger les données après la mise à jour
-        })
-        .catch(err => {
-          console.log(err.message);
-        });
-    }
+    this.training.groups.forEach((group: GroupModel) => {
+      if (!group.vendor || group.vendor.idVendor == null) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.training.lifeCycle.trainerSearch = false;
+        this.openErrorDialog(this.training);
+      } else {
+        this.removeTrainingNotes()
+        this.removePv(this.training.idTraining)
+        this.removeTrainingSupport()
+        this.resetCheckboxes('trainerSearch');
+        this.updateLifeCycle(this.training)
+          .then(() => {
+            this.loadTraining(); // Recharger les données après la mise à jour
+          })
+          .catch(err => {
+            console.log(err.message);
+          });
+      }
+    })
   }
 
   checkValidation() {
@@ -324,6 +350,19 @@ export class DetailTrainingComponent implements OnInit, OnDestroy {
       });
   }
 
+  checkReferenceCertificate(event: any) {
+    if (!this.training.lifeCycle.reference) {
+      // event.preventDefault();
+      // event.stopPropagation();
+      this.training.lifeCycle.reference = false
+      this.openLifeCycleDialog('referenceCertificate', this.training)
+    } else {
+      this.resetCheckboxes('reference');
+      this.training.lifeCycle.reference = false
+      this.removeReferenceCertificate()
+    }
+  }
+
   openLifeCycleDialog(action: string, obj: TrainingModel) {
     const dialogRef = this.dialog.open(TrainingLifecycleDialogComponent, {
       data: {
@@ -338,6 +377,9 @@ export class DetailTrainingComponent implements OnInit, OnDestroy {
       }
       if (result.event == 'trainingSupport') {
         this.resetCheckboxes('trainingSupport');
+      }
+      if (result.event == 'referenceCertificate') {
+        this.resetCheckboxes('reference');
       }
       if (result.event == 'trainingNotes') {
         this.resetCheckboxes('certif');
@@ -389,6 +431,19 @@ export class DetailTrainingComponent implements OnInit, OnDestroy {
       this.evaluationBytes = new Uint8Array(byteNumbers);
       this.createEvaluationUrl();
     }
+
+    if (this.training && this.training.referenceCertificate) {
+      console.log("k,zee,k,k,cdc,dk,dkc,")
+      // @ts-ignore
+      const byteCharacters = atob(this.training.referenceCertificate);
+      const byteNumbers = new Array(byteCharacters.length)
+
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      this.referenceBytes = new Uint8Array(byteNumbers);
+      this.createReferenceUrl();
+    }
   }
 
   private createPdfUrl() {
@@ -418,6 +473,15 @@ export class DetailTrainingComponent implements OnInit, OnDestroy {
     }
   }
 
+  private createReferenceUrl() {
+    if (this.referenceBytes) {
+      const blob = new Blob([this.referenceBytes], {type: 'application/pdf'});
+      this.referenceUrl = URL.createObjectURL(blob);
+    } else {
+      this.referenceUrl = null;
+    }
+  }
+
   private resetCheckboxes(currentCheckbox: string) {
     const checkboxOrder = [
       'trainerSearch',
@@ -428,7 +492,8 @@ export class DetailTrainingComponent implements OnInit, OnDestroy {
       'completion',
       'certif',
       'invoicing',
-      'payment'
+      'payment',
+      'reference'
     ];
 
     const currentIndex: number = checkboxOrder.indexOf(currentCheckbox);
@@ -454,6 +519,7 @@ export class TrainingLifecycleDialogComponent {
   local_data: any
   pv!: string
   selectedTrainingSupport!: File
+  selectedReferenceCertificate!: File
   selectedPresenceList!: File
   selectedEvaluation!: File
   private subscriptions : Subscription[] = []
@@ -505,6 +571,30 @@ export class TrainingLifecycleDialogComponent {
       .subscribe({
         next: data => {
           data.lifeCycle.trainingSupport = true
+          this.doAction(data)
+        },
+        error: error => {
+          console.log(error.message)
+        }
+      })
+  }
+
+  onReferenceCertificateChange(event: any) {
+    if (!event.target.files[0]) return
+    this.selectedReferenceCertificate = event.target.files[0];
+    console.log(event.target.files[0])
+  }
+
+  onSubmitReferenceCertificate() {
+    const formData: FormData = new FormData()
+    if (this.selectedReferenceCertificate) {
+      formData.append('referenceCertificate', this.selectedReferenceCertificate)
+    }
+
+    this.trainingService.addReferenceCertificate(formData, this.local_data.idTraining)
+      .subscribe({
+        next: data => {
+          data.lifeCycle.reference = true
           this.doAction(data)
         },
         error: error => {

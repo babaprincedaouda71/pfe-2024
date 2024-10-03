@@ -10,5 +10,6 @@ public enum TrainingStatus {
     Attestation,
     Facturation,
     Reglement,
-    Realisée
+    Realisée,
+    Attestation_de_référence
 }

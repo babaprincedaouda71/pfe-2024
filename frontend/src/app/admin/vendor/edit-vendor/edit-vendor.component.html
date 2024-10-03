@@ -8,7 +8,7 @@
         <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
           <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler
           >
-          <!--          1-->
+          Informations Générales
         </h5>
       </div>
 
@@ -16,7 +16,7 @@
         <div class="col-lg-6">
           <!-- input -->
           <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
-          >Statut
+          >Forme Juridique
           </mat-label
           >
           <mat-form-field appearance="outline" class="w-100">
@@ -61,7 +61,7 @@
         <div class="col-lg-6">
           <!-- input -->
           <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
-          >Nom ou Raison Sociale
+          >Raison Sociale
           </mat-label
           >
           <mat-form-field appearance="outline" class="w-100">
@@ -85,13 +85,81 @@
           </mat-form-field>
 
           <!-- input -->
+          @if (editVendorForm.get('status')?.value == 'SOLE_PROPRIETOR' || editVendorForm.get('status')?.value == 'INDIVIDUAL') {
+            <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+            >CIN
+            </mat-label
+            >
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput placeholder="" formControlName="nic"/>
+              <mat-error *ngIf="editVendorForm.get('nic')?.invalid && editVendorForm.get('nic')?.touched">
+                *Ce champ est obligatoire
+              </mat-error>
+            </mat-form-field>
+          }
+        </div>
+      </div>
+
+
+      <div class="p-16 bg-light-primary rounded">
+        <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+          <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler
+          >
+          Contact Principal
+        </h5>
+      </div>
+
+      <div class="row m-t-20">
+        <div class="col-lg-6">
+          <!-- input -->
           <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
-          >CIN
+          >Nom & Prénoms
           </mat-label
           >
           <mat-form-field appearance="outline" class="w-100">
-            <input formControlName="nic" matInput placeholder=""/>
-            <mat-error *ngIf="editVendorForm.get('nic')?.invalid && editVendorForm.get('nic')?.touched">
+            <input formControlName="nameMainContact" matInput placeholder=""/>
+            <mat-error
+              *ngIf="editVendorForm.get('nameMainContact')?.invalid && editVendorForm.get('nameMainContact')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Téléphone
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="phoneNumberMainContact" matInput placeholder=""/>
+            <mat-error
+              *ngIf="editVendorForm.get('phoneNumberMainContact')?.invalid && editVendorForm.get('phoneNumberMainContact')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Email
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="emailMainContact" matInput placeholder=""/>
+            <mat-error
+              *ngIf="editVendorForm.get('emailMainContact')?.invalid && editVendorForm.get('emailMainContact')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Fonction
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="positionMainContact" matInput placeholder=""/>
+            <mat-error
+              *ngIf="editVendorForm.get('positionMainContact')?.invalid && editVendorForm.get('positionMainContact')?.touched">
               *Ce champ est obligatoire
             </mat-error>
           </mat-form-field>
@@ -103,7 +171,7 @@
         <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
           <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler
           >
-          <!--          2-->
+          Informations Financières et Professionnelles
         </h5>
       </div>
       <div class="row m-t-20">
@@ -128,7 +196,6 @@
           <mat-form-field appearance="outline" class="w-100">
             <mat-select formControlName="subject">
               <mat-option disabled value="">Choisir une option</mat-option>
-              <mat-option disabled value="">Choisir une option</mat-option>
               <mat-option value="Qualité">Qualité</mat-option>
               <mat-option value="Sécurité">Sécurité</mat-option>
               <mat-option value="Environnement">Environnement</mat-option>
@@ -142,6 +209,11 @@
               <mat-option value="Communication">Communication</mat-option>
               <mat-option value="Informatique et Système d'Information">Informatique et Système d'Information
               </mat-option>
+              <mat-option value="Commerce et Marketing">Commerce et Marketing</mat-option>
+              <mat-option value="Technique">Technique</mat-option>
+              <mat-option value="Logistique">Logistique</mat-option>
+              <mat-option value="Affaires Juridiques">Affaires Juridiques</mat-option>
+              <mat-option value="Langues">Langues</mat-option>
             </mat-select>
             <mat-error *ngIf="editVendorForm.get('subject')?.invalid && editVendorForm.get('subject')?.touched">
               *Ce champ est obligatoire
@@ -186,7 +258,7 @@
         <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
           <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler
           >
-          <!--          3-->
+          Informations Juridiques
         </h5>
       </div>
 

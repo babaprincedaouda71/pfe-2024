@@ -18,6 +18,7 @@ public class TrainingLifeCycle {
     private boolean certif;
     private boolean invoicing;
     private boolean payment;
+    private boolean reference;
 
     @OneToOne(mappedBy = "lifeCycle")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

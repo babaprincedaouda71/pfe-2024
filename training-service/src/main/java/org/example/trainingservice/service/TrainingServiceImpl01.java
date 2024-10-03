@@ -136,12 +136,13 @@ public class TrainingServiceImpl01 implements TrainingService {
           training.setClient(client);
           Vendor vendor = vendorRest.findVendorById(training.getIdVendor());
           training.setVendor(vendor);
-          training.getGroups().forEach(
+          training
+              .getGroups()
+              .forEach(
                   trainingGroup -> {
                     Vendor vendor1 = vendorRest.findVendorById(trainingGroup.getIdVendor());
                     trainingGroup.setVendor(vendor1);
-                  }
-          );
+                  });
           trainingDTOS.add(trainingMapper.fromTraining(training));
         });
     return trainingDTOS;
@@ -154,8 +155,13 @@ public class TrainingServiceImpl01 implements TrainingService {
             .findById(idTraining)
             .orElseThrow(() -> new TrainingNotFoundException("Training Not Found"));
     Client client = clientRest.findClientById(training.getIdClient());
-    Vendor vendor = vendorRest.findVendorById(training.getIdVendor());
-    training.setVendor(vendor);
+    training
+        .getGroups()
+        .forEach(
+            trainingGroup -> {
+              Vendor vendor = vendorRest.findVendorById(trainingGroup.getIdVendor());
+              trainingGroup.setVendor(vendor);
+            });
     training.setClient(client);
     return trainingMapper.fromTraining(training);
   }
@@ -256,8 +262,10 @@ public class TrainingServiceImpl01 implements TrainingService {
   }
 
   private TrainingStatus determineStatusFromLifeCycle(TrainingLifeCycle lifeCycle) {
-    if (lifeCycle.isPayment()) {
+    if (lifeCycle.isReference()) {
       return TrainingStatus.Realisée;
+    } else if (lifeCycle.isPayment()) {
+      return TrainingStatus.Attestation_de_référence;
     } else if (lifeCycle.isInvoicing()) {
       return TrainingStatus.Reglement;
     } else if (lifeCycle.isCertif()) {
@@ -337,6 +345,39 @@ public class TrainingServiceImpl01 implements TrainingService {
                     new TrainingNotFoundException(
                         "La Formation avec id " + idTraining + " n'existe pas"));
     training.setTrainingSupport(null);
+    Training save = trainingRepository.save(training);
+    return trainingMapper.fromTraining(save);
+  }
+
+  @Override
+  public AddTrainingDTO addReferenceCertificate(
+      MultipartFile referenceCertificate, Long idTraining) {
+    Training training =
+        trainingRepository
+            .findById(idTraining)
+            .orElseThrow(
+                () ->
+                    new TrainingNotFoundException(
+                        "La Formation avec id " + idTraining + " n'existe pas"));
+    try {
+      training.setReferenceCertificate(referenceCertificate.getBytes());
+      trainingRepository.save(training);
+      return trainingMapper.fromTrainingToAddTrainingDTO(training);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public TrainingDTO removeReferenceCertificate(Long idTraining, TrainingDTO trainingDTO) {
+    Training training =
+        trainingRepository
+            .findById(idTraining)
+            .orElseThrow(
+                () ->
+                    new TrainingNotFoundException(
+                        "La Formation avec id " + idTraining + " n'existe pas"));
+    training.setReferenceCertificate(null);
     Training save = trainingRepository.save(training);
     return trainingMapper.fromTraining(save);
   }

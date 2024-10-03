@@ -8,7 +8,7 @@ import {InvoicingService} from "../../../../_services/invoicing.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {KeycloakService} from "keycloak-angular";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {referenceTrainingValidator} from "../../../../_validators/invoice-format.validator";
+import {referenceTrainingValidator, referenceValidator} from "../../../../_validators/invoice-format.validator";
 import {MatTableDataSource} from "@angular/material/table";
 import {TrainingModel} from "../../../../../models/training.model";
 import {SelectionModel} from "@angular/cdk/collections";
@@ -105,7 +105,7 @@ export class EditTrainingInvoiceComponent implements OnInit {
   buildForm() {
     this.editTrainingInvoiceForm = this.formBuilder.group({
       idClient: [this.invoice.idClient, [Validators.required, Validators.minLength(6)]],
-      numberInvoice: [this.invoice.numberInvoice, [referenceTrainingValidator()]],
+      numberInvoice: [this.invoice.numberInvoice, [referenceValidator()]],
       createdAt: [this.invoice.createdAt, [Validators.required, Validators.minLength(6)]],
     })
 

@@ -50,6 +50,8 @@ public class Invoice {
 
     private float tva;
 
+    private float travelExpenses;
+
     private Double ttc;
 
     @ElementCollection

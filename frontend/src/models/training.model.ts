@@ -21,6 +21,7 @@ export interface TrainingModel {
   pv : string | undefined;
   presenceList: Uint8Array | undefined;
   evaluation: Uint8Array | undefined;
+  referenceCertificate: Uint8Array | undefined;
   completionDate : string
 }
 
@@ -46,5 +47,6 @@ export interface LifecycleModel {
   certif: boolean;
   invoicing: boolean;
   payment: boolean;
+  reference : boolean;
 }
 

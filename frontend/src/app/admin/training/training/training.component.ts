@@ -41,6 +41,7 @@ export class TrainingComponent implements OnInit, OnDestroy {
   selectedClient!: any
   selectedVendor!: any
   selectedDate!: any
+  selectedYear!: any
   selectedStatus!: any
   private subscriptions: Subscription[] = []
 
@@ -189,6 +190,17 @@ export class TrainingComponent implements OnInit, OnDestroy {
             `${training.vendor.name.toLowerCase()}` === value
           );
           this.resetFilter('vendor')
+          break;
+        case 'date':
+          const selectedYear = parseInt(value, 10);
+          this.trainings = this.filteredTrainings.filter(training => {
+            if (!training.trainingDates) {
+              return false;
+            }
+            const trainingDates = training.trainingDates.map(trainingDate => new Date(trainingDate));
+            return trainingDates.some(trainingDate => this.isSameDate(selectedDate, trainingDate));
+          });
+          this.resetFilter('date')
           break;
         case 'date':
           const selectedDate = parseInt(value, 10);
@@ -428,6 +440,9 @@ export class TrainingLifecycleDialogContentComponent {
       if (result.event == 'trainingNotes') {
         this.resetCheckboxes('certif');
       }
+      if (result.event == 'referenceCertificate') {
+        this.resetCheckboxes('reference');
+      }
       if (result.data != undefined) {
         this.local_data = result.data
         this.updateLifeCycle(this.local_data)
@@ -468,20 +483,22 @@ export class TrainingLifecycleDialogContentComponent {
 
 
   checkVendor(event: any) {
-    if (!this.local_data.vendor || this.local_data.vendor.idVendor == null) {
-      event.preventDefault();
-      event.stopPropagation();
-      this.local_data.lifeCycle.trainerSearch = false;
-      this.closeDialog();
-      this.openErrorDialog(this.local_data);
-    }
-    this.resetCheckboxes('trainerSearch');
-    this.updateLifeCycle(this.local_data)
-      .then(() => {
-      })
-      .catch(err => {
-        console.log(err.message);
-      });
+    this.local_data.groups.forEach((group : GroupModel) => {
+      if (!group.vendor || group.vendor.idVendor == null) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.local_data.lifeCycle.trainerSearch = false;
+        this.closeDialog();
+        this.openErrorDialog(this.local_data);
+      }
+      this.resetCheckboxes('trainerSearch');
+      this.updateLifeCycle(this.local_data)
+        .then(() => {
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
+    })
   }
 
   checkValidation() {
@@ -595,6 +612,24 @@ export class TrainingLifecycleDialogContentComponent {
       .catch(err => {
         console.log(err.message);
       });
+  }
+
+  checkReference(event : any) {
+    if (this.local_data.lifeCycle.reference) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.local_data.lifeCycle.reference = false
+      this.openLifeCycleDialog('referenceCertificate', this.local_data)
+    } else {
+      this.local_data.lifeCycle.reference = false
+      this.resetCheckboxes('reference');
+      this.updateLifeCycle(this.local_data)
+        .then(() => {
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
+    }
   }
 
   onSubmitTrainingSupport() {

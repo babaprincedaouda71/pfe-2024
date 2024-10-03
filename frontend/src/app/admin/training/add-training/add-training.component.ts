@@ -18,6 +18,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatTableDataSource} from "@angular/material/table";
 import {TrainingModel} from "../../../../models/training.model";
 import {Subscription} from "rxjs";
+import {positiveNumberValidator} from "../../../_validators/positiveNumberValidator";
+import {staffMatchValidator} from "../../../_validators/staffMatchValidator";
 
 @Component({
   selector: 'app-add-training',
@@ -65,13 +67,12 @@ export class AddTrainingComponent implements OnInit, OnDestroy {
     this.addTrainingForm = this.formBuilder.group({
       idClient: ['', [Validators.required]],
       theme: ['', [Validators.required]],
-      days: [''],
-      staff: [''],
-      idVendor: [''],
+      days: ['', [Validators.required, positiveNumberValidator]],
+      staff: ['', [Validators.required]],
       location: [''],
-      amount: [''],
+      amount: ['', [Validators.required, positiveNumberValidator]],
       groups: this.formBuilder.array([]),
-    });
+    }, { validators: staffMatchValidator });
     // this.minStartDate = new Date().toLocaleDateString()
     // this.minEndDate = new Date().toLocaleDateString()
   }

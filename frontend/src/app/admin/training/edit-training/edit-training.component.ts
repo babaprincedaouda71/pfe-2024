@@ -65,6 +65,7 @@ export class EditTrainingComponent implements OnInit, OnDestroy {
       location: [group.location],
       startDate: [group.startDate ? group.startDate : ''],
       endDate: [group.endDate ? group.endDate : ''],
+      idVendor: [group.idVendor],
       groupDates: this.formBuilder.array(
         group.groupDates.map((date) => this.formBuilder.control(date))
       )
@@ -78,6 +79,7 @@ export class EditTrainingComponent implements OnInit, OnDestroy {
       location: [''],
       startDate: [''],
       endDate: [''],
+      idVendor: [''],
       groupDates: this.formBuilder.array([this.formBuilder.control('')])
     });
 
@@ -211,7 +213,6 @@ export class EditTrainingComponent implements OnInit, OnDestroy {
       theme: [this.training.theme, [Validators.required]],
       days: [this.training.days],
       staff: [this.training.staff],
-      idVendor: [this.training.idVendor],
       location: [this.training.location],
       amount: [this.training.amount],
       groups: this.formBuilder.array(

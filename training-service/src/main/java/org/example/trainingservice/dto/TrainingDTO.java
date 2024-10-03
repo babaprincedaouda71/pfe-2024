@@ -31,6 +31,7 @@ public class TrainingDTO {
     private byte[] trainingSupport;
     private String pv;
     private byte[] presenceList;
+    private byte[] referenceCertificate;
     private byte[] evaluation;
     private String completionDate;
 }

@@ -26,6 +26,10 @@ public interface TrainingService {
 
     TrainingDTO removeTrainingSupport(Long idTraining, TrainingDTO trainingDTO);
 
+    AddTrainingDTO addReferenceCertificate(MultipartFile referenceCertificate, Long idTraining);
+
+    TrainingDTO removeReferenceCertificate(Long idTraining, TrainingDTO trainingDTO);
+
     AddTrainingDTO addTrainingNotes(MultipartFile presenceList, MultipartFile evaluation, Long idTraining);
 
     TrainingDTO removeTrainingNotes(Long idTraining, TrainingDTO trainingDTO);

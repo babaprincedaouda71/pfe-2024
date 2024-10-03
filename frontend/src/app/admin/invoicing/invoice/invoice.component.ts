@@ -19,7 +19,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
   invoices: Array<InvoiceModel> = []
   datasource!: MatTableDataSource<any>
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator = Object.create(null);
-  displayedColumns: string[] = ['invoiceNumber', 'createdAt', 'client', 'ttc', 'editor', 'status', 'paymentDate', 'paymentMethod', 'action'];
+  displayedColumns: string[] = ['invoiceNumber', 'createdAt', 'client', 'tva', 'travel', 'ttc', 'editor', 'status', 'paymentDate', 'paymentMethod', 'action'];
   private subscriptions: Subscription[] = [];
 
   constructor(private invoiceService: InvoicingService,

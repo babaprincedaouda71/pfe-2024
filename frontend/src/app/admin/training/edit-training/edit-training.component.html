@@ -2,7 +2,14 @@
 <form (ngSubmit)="onSubmit()" *ngIf="updateTrainingForm && clients" [formGroup]="updateTrainingForm">
   <mat-card class="cardWithShadow theme-card">
     <mat-card-content>
-      <div class="row">
+      <div class="p-16 bg-light-primary rounded">
+        <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+          <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler
+          >
+          Informations Générales
+        </h5>
+      </div>
+      <div class="row m-t-20">
         <div class="col-lg-6">
           <div class="row">
             <div class="col-sm-12 d-flex align-items-center">
@@ -45,28 +52,13 @@
           <div class="row">
             <div class="col-sm-12 d-flex align-items-center">
               <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
-              >Nombre de jours
-              </mat-label>
-            </div>
-            <div class="col-sm-12">
-              <mat-form-field appearance="outline" class="w-100">
-                <input formControlName="days" matInput placeholder="" type="number"/>
-                <!--                <mat-error *ngIf="updateTrainingForm.get('days')?.invalid && updateTrainingForm.get('days')?.touched">-->
-                <!--                  *Ce champ est obligatoire-->
-                <!--                </mat-error>-->
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12 d-flex align-items-center">
-              <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
               >Éffectif Total
               </mat-label>
             </div>
             <div class="col-sm-12">
               <mat-form-field appearance="outline" class="w-100">
                 <input formControlName="staff" matInput placeholder="" type="number"/>
-                <!--                <mat-error *ngIf="updateTrainingForm.get('staff')?.invalid && updateTrainingForm.get('staff')?.touched">-->
+                <!--                <mat-error *ngIf="addTrainingForm.get('staff')?.invalid && addTrainingForm.get('staff')?.touched">-->
                 <!--                  *Ce champ est obligatoire-->
                 <!--                </mat-error>-->
               </mat-form-field>
@@ -77,20 +69,13 @@
           <div class="row">
             <div class="col-sm-12 d-flex align-items-center">
               <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
-              >Fournisseur
+              >Nombre de jours
               </mat-label>
             </div>
             <div class="col-sm-12">
               <mat-form-field appearance="outline" class="w-100">
-                <mat-select formControlName="idVendor">
-                  <mat-option disabled value="">Choisir un Fournisseur</mat-option>
-                  <mat-option value="">Aucun</mat-option>
-                  <mat-option *ngFor="let vendor of vendors" [value]="vendor.idVendor">{{ vendor.name }}</mat-option>
-                  <mat-option (click)="handleAdd('vendor')" class="mat-subtitle-2 f-s-16 f-w-600" value="">Ajouter un
-                    nouveau Formateur
-                  </mat-option>
-                </mat-select>
-                <!--                <mat-error *ngIf="updateTrainingForm.get('idVendor')?.invalid && updateTrainingForm.get('idVendor')?.touched">-->
+                <input formControlName="days" matInput placeholder="" type="number"/>
+                <!--                <mat-error *ngIf="addTrainingForm.get('days')?.invalid && addTrainingForm.get('days')?.touched">-->
                 <!--                  *Ce champ est obligatoire-->
                 <!--                </mat-error>-->
               </mat-form-field>
@@ -128,7 +113,13 @@
           </div>
         </div>
         <div class="col-lg-12">
-          <h2>Groupes</h2>
+          <div class="p-16 bg-light-primary rounded">
+            <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+              <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler
+              >
+              Groupes
+            </h5>
+          </div>
           <div class="row" formArrayName="groups">
             <div *ngFor="let group of trainingGroups; let i = index" [formGroupName]="i" class="col-md-4 mb-2">
               <span>Groupe Module {{ i + 1 }}</span>
@@ -189,6 +180,18 @@
                     </div>
                   </div>
                 </ng-template>
+              </div>
+              <div>
+                <mat-form-field>
+                  <mat-label>Formateur</mat-label>
+                  <mat-select formControlName="idVendor">
+                    <mat-option disabled value="">Choisir un Fournisseur</mat-option>
+                    <mat-option *ngFor="let vendor of vendors" [value]="vendor.idVendor">{{ vendor.name }}</mat-option>
+                    <mat-option (click)="handleAdd('vendor')" class="mat-subtitle-2 f-s-16 f-w-600" value="">Ajouter un
+                      nouveau Formateur
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
               </div>
               <div>
                 <mat-form-field>

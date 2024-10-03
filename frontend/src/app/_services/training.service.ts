@@ -56,6 +56,16 @@ export class TrainingService {
     return this.http.put<TrainingModel>(`${this.host}/training/remove/trainingSupport/${idTraining}`, training)
   }
 
+  public addReferenceCertificate(formData: FormData, idTraining : number) {
+    const headers = new HttpHeaders()
+    headers.append('Content-Type', 'multipart/form-data')
+    return this.http.put<TrainingModel>(`${this.host}/training/add/referenceCertificate/${idTraining}`, formData, { headers })
+  }
+
+  public removeReferenceCertificate(idTraining: number, training: TrainingModel) {
+    return this.http.put<TrainingModel>(`${this.host}/training/remove/referenceCertificate/${idTraining}`, training)
+  }
+
   public addTrainingNotes(trainingNotes: FormData, idTraining : number) {
     const headers = new HttpHeaders()
     headers.append('Content-Type', 'multipart/form-data')

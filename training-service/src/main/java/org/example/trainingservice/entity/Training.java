@@ -56,6 +56,10 @@ public class Training {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] trainingSupport;
 
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] referenceCertificate;
+
     private String pv;
 
     @Lob
