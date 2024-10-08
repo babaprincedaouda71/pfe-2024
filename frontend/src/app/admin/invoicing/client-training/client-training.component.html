@@ -115,8 +115,9 @@
       </table>
     </div>
     <div class="m-t-12 text-right">
-      <button (click)="onGenerateInvoice()" [disabled]="selection.selected.length <= 0" color="primary" mat-flat-button>
-        Valider
+<!--      <button (click)="onGenerateInvoice()" [disabled]="selection.selected.length <= 0" color="primary" mat-flat-button>-->
+      <button type="button" (click)="onGoToValidate()" [disabled]="selection.selected.length <= 0" color="primary" mat-flat-button>
+        Suivant
       </button>
     </div>
   </mat-card-content>

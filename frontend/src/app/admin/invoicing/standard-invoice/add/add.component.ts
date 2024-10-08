@@ -80,6 +80,7 @@ export class AddComponent implements OnInit, OnDestroy {
       idClient: [null, [Validators.required, Validators.minLength(6)]],
       numberInvoice: [null, [referenceValidator()]],
       createdAt: [new Date(), [Validators.required, Validators.minLength(6)]],
+      addDeadline: [],
       products: this.formBuilder.array([]),
       totalHT: [{ value: '', disabled: true }],
       tva: [0.2, Validators.required],
@@ -179,6 +180,7 @@ export class AddComponent implements OnInit, OnDestroy {
 
   removeProductItem(i: number) {
     this.productItem.removeAt(i); // Supprime la ligne du formulaire
+    this.calculateTotals()
   }
 
   // User Profile

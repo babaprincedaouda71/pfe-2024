@@ -178,8 +178,8 @@
                 <!--                </mat-error>-->
               </td>
               <td>
-                <button (click)="removeProductItem(i)" color="warn" mat-button type="button">Supprimer</button>
-                <!-- Bouton Supprimer -->
+                <!-- Bouton Supprimer, affiché uniquement si le nombre de produits est supérieur à 1 -->
+                <button *ngIf="productItem.length > 1" (click)="removeProductItem(i)" color="warn" mat-button type="button">Supprimer</button>
               </td>
             </tr>
             </tbody>
@@ -240,6 +240,18 @@
             à compter de la date d'émission.
           </div>
         </div>
+<!--        TODO-->
+<!--        <div *ngIf="deadline" class="col-lg-6">-->
+<!--          <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16">-->
+<!--            Ajouter l'échéance à la facture-->
+<!--          </mat-label>-->
+<!--          <div>-->
+<!--            <mat-radio-group formControlName="addDeadline">-->
+<!--              <mat-radio-button value="true">Oui</mat-radio-button>-->
+<!--              <mat-radio-button value="false">Non</mat-radio-button>-->
+<!--            </mat-radio-group>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
       <div class="m-t-12 text-right">
         <button [disabled]="addStandardInvoiceForm.invalid" color="primary" mat-flat-button type="submit">Enregistrer

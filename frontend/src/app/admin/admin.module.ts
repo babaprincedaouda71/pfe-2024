@@ -39,7 +39,6 @@ import {
 import {BrandingComponent} from "./layout/sidebar/branding.component";
 import {WelcomeComponent} from './welcome/welcome.component';
 
-
 @NgModule({
   declarations: [
     BlankComponent,
@@ -49,7 +48,7 @@ import {WelcomeComponent} from './welcome/welcome.component';
     HeaderComponent,
     BreadcrumbComponent,
     CustomizerComponent,
-    WelcomeComponent
+    WelcomeComponent,
   ],
   imports: [
     CommonModule,

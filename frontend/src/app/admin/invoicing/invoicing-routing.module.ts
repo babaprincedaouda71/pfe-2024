@@ -11,6 +11,7 @@ import {EditComponent} from "./standard-invoice/edit/edit.component";
 import {DetailPdfComponent} from "./standard-invoice/detail-pdf/detail-pdf.component";
 import {DetailInvoiceComponent} from "./detail-invoice/detail-invoice.component";
 import {EditTrainingInvoiceComponent} from "./training-invoice/edit-training-invoice/edit-training-invoice.component";
+import {ValidateClientTrainingComponent} from "./validate-client-training/validate-client-training.component";
 const routes: Routes = [
   {
     path : '',
@@ -22,6 +23,13 @@ const routes: Routes = [
   {
     path : 'client-training',
     component: ClientTrainingComponent,
+    data : {
+      title: 'Facturation'
+    }
+  },
+  {
+    path : 'validate-client-training/:idTrainings',
+    component: ValidateClientTrainingComponent,
     data : {
       title: 'Facturation'
     }

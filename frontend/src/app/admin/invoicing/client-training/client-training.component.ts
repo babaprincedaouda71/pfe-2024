@@ -167,4 +167,18 @@ export class ClientTrainingComponent implements OnInit, OnDestroy {
       )
     }
   }
+
+  onGoToValidate() {
+    const trainingInvoice: TrainingInvoice = {
+      idClient: this.selection.selected[0].idClient,
+      trainings: this.selection.selected,
+      editor: this.userProfile.firstName + ' ' + this.userProfile.lastName
+    }
+
+    const idTrainings : Array<number> = []
+    trainingInvoice.trainings.forEach(training => {
+      idTrainings.push(training.idTraining)
+    })
+    this.router.navigate(['invoicing/validate-client-training', idTrainings])
+  }
 }
