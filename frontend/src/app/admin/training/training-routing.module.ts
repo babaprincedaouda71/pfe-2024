@@ -4,6 +4,7 @@ import {TrainingComponent} from "./training/training.component";
 import {AddTrainingComponent} from "./add-training/add-training.component";
 import {EditTrainingComponent} from "./edit-training/edit-training.component";
 import {DetailTrainingComponent} from "./detail-training/detail-training.component";
+import {GroupComponent} from "./group/group.component";
 
 const routes: Routes = [
   {
@@ -11,6 +12,13 @@ const routes: Routes = [
     component: TrainingComponent,
     data : {
       title: 'Formation'
+    }
+  },
+  {
+    path : 'group',
+    component: GroupComponent,
+    data : {
+      title: 'Groupes de Formation'
     }
   },
   {

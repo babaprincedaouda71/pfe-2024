@@ -20,7 +20,7 @@ public class TrainingGroupLifeCycle {
     private boolean payment;
     private boolean reference;
 
-    @OneToOne(mappedBy = "lifeCycle")
+    @OneToOne(mappedBy = "groupLifeCycle")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Training training;
+    private TrainingGroup trainingGroup;
 }

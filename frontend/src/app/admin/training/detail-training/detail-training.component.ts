@@ -232,7 +232,7 @@ export class DetailTrainingComponent implements OnInit, OnDestroy {
 
   checkVendor(event: any) {
     this.training.groups.forEach((group: GroupModel) => {
-      if (!group.vendor || group.vendor.idVendor == null) {
+      if (!group.supplier || group.supplier.idVendor == null) {
         event.preventDefault();
         event.stopPropagation();
         this.training.lifeCycle.trainerSearch = false;

@@ -1,0 +1,52 @@
+a {
+  text-decoration: none; /* Enlever le soulignement par défaut */
+  color: inherit; /* Utiliser la couleur par défaut du texte */
+  /* Ajoutez d'autres styles si nécessaire */
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+.checkbox-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkbox-container mat-checkbox {
+  margin-bottom: 8px;
+}
+
+#alert-message {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.group-separator-line {
+  border: none;
+  border-top: 2px solid #000; /* Ligne de séparation noire */
+  margin: 0; /* Supprimer les marges pour que la ligne couvre toute la largeur */
+}
+
+.group-separator td {
+  padding: 0; /* Réduire les marges internes des cellules de cette ligne */
+}
+
+hr {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+
+//.f-s-14 {
+//  white-space: pre-line;
+//}
+
+

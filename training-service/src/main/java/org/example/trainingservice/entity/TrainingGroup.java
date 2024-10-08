@@ -1,10 +1,9 @@
 package org.example.trainingservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.trainingservice.enums.TrainingGroupStatus;
 import org.example.trainingservice.model.Vendor;
 
 import java.util.List;
@@ -17,40 +16,56 @@ import java.util.List;
 @Builder
 @ToString
 public class TrainingGroup {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idGroup;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long idGroup;
 
-    private String startDate;
-    private String endDate;
+  private String startDate;
+  private String endDate;
 
-    private Long idVendor;
+  private Long idVendor;
 
-    @Transient
-    private Vendor vendor;
+  @Transient private Vendor supplier;
 
-    @ElementCollection
-    @CollectionTable(name = "group_dates", joinColumns = @JoinColumn(name = "groupe_id"))
-    @Column(name = "group_date")
-    @SuppressWarnings("JpaAttributeTypeInspection")
-    private List<String> groupDates;
-    private int groupStaff;
-    private String location;
+  @ElementCollection
+  @CollectionTable(name = "group_dates", joinColumns = @JoinColumn(name = "groupe_id"))
+  @Column(name = "group_date")
+  @SuppressWarnings("JpaAttributeTypeInspection")
+  private List<String> groupDates;
 
-    @ManyToOne
-    @JoinColumn(name = "training_id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Training training;
+  private int groupStaff;
+  private String location;
 
-    @Override
-    public String toString() {
-        return "TrainingGroup{" +
-                "idGroup=" + idGroup +
-                ", startDate='" + startDate + '\'' +
-                ", endDate='" + endDate + '\'' +
-                ", groupStaff=" + groupStaff +
-                ", location='" + location + '\'' +
-                '}';
-    }
+  private String completionDate;
 
+  @Enumerated(EnumType.STRING)
+  private TrainingGroupStatus status;
+
+  @ManyToOne
+  @JoinColumn(name = "training_id")
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+  private Training training;
+
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "lifecycle_id", referencedColumnName = "idLifeCycle")
+  private TrainingGroupLifeCycle groupLifeCycle;
+
+  @Override
+  public String toString() {
+    return "TrainingGroup{"
+        + "idGroup="
+        + idGroup
+        + ", startDate='"
+        + startDate
+        + '\''
+        + ", endDate='"
+        + endDate
+        + '\''
+        + ", groupStaff="
+        + groupStaff
+        + ", location='"
+        + location
+        + '\''
+        + '}';
+  }
 }

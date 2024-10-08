@@ -191,7 +191,7 @@ export class TrainingComponent implements OnInit, OnDestroy {
           );
           this.resetFilter('vendor')
           break;
-        case 'date':
+        case 'year':
           const selectedYear = parseInt(value, 10);
           this.trainings = this.filteredTrainings.filter(training => {
             if (!training.trainingDates) {
@@ -388,6 +388,7 @@ export class TrainingLifecycleDialogContentComponent {
               private snackBar: MatSnackBar,
               private router: Router) {
     this.local_data = {...data.obj}
+    console.log(this.local_data)
     this.action = data.action
     this.selectedTrainingSupport = this.local_data.trainingSupport
   }
@@ -400,11 +401,6 @@ export class TrainingLifecycleDialogContentComponent {
       horizontalPosition: 'center',
       verticalPosition: 'top',
     })
-    // this.dialog.open(OkDialogComponent, {
-    //   data: {
-    //     obj : this.local_data
-    //   }
-    // });
   }
 
   closeDialog(): void {
@@ -484,7 +480,7 @@ export class TrainingLifecycleDialogContentComponent {
 
   checkVendor(event: any) {
     this.local_data.groups.forEach((group : GroupModel) => {
-      if (!group.vendor || group.vendor.idVendor == null) {
+      if (!group.supplier || group.supplier.idVendor == null) {
         event.preventDefault();
         event.stopPropagation();
         this.local_data.lifeCycle.trainerSearch = false;

@@ -38,7 +38,7 @@ public class InvoicingServiceApplication {
             Training training = trainingRest.findTrainingById(1L);
 
             Invoice standardInvoice = Invoice.builder()
-                    .numberInvoice("FS-2406-001")
+                    .numberInvoice("2406-001")
                     .createdAt("2024-06-03")
                     .idClient(client.getIdClient())
                     .client(clientRest.findClientById(client.getIdClient()))

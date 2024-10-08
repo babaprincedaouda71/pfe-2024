@@ -8,7 +8,9 @@ import org.example.trainingservice.dto.TrainingDTO;
 import org.example.trainingservice.dto.TrainingInvoiceDTO;
 import org.example.trainingservice.entity.Training;
 import org.example.trainingservice.entity.TrainingGroup;
+import org.example.trainingservice.entity.TrainingGroupLifeCycle;
 import org.example.trainingservice.entity.TrainingLifeCycle;
+import org.example.trainingservice.enums.TrainingGroupStatus;
 import org.example.trainingservice.enums.TrainingStatus;
 import org.example.trainingservice.exceptions.TrainingNotFoundException;
 import org.example.trainingservice.exceptions.TrainingsNotFoundException;
@@ -103,6 +105,16 @@ public class TrainingServiceImpl01 implements TrainingService {
     training.setStatus(TrainingStatus.Recherche_formateur);
     training.setLifeCycle(new TrainingLifeCycle());
 
+    // Set status
+    training
+        .getGroups()
+        .forEach(
+            trainingGroup -> {
+              trainingGroup.setStatus(TrainingGroupStatus.Recherche_formateur);
+              trainingGroup.setGroupLifeCycle(new TrainingGroupLifeCycle());
+            });
+
+
     // Set dates
     training.setTrainingDates(datesList);
 
@@ -141,7 +153,7 @@ public class TrainingServiceImpl01 implements TrainingService {
               .forEach(
                   trainingGroup -> {
                     Vendor vendor1 = vendorRest.findVendorById(trainingGroup.getIdVendor());
-                    trainingGroup.setVendor(vendor1);
+                    trainingGroup.setSupplier(vendor1);
                   });
           trainingDTOS.add(trainingMapper.fromTraining(training));
         });
@@ -160,7 +172,7 @@ public class TrainingServiceImpl01 implements TrainingService {
         .forEach(
             trainingGroup -> {
               Vendor vendor = vendorRest.findVendorById(trainingGroup.getIdVendor());
-              trainingGroup.setVendor(vendor);
+              trainingGroup.setSupplier(vendor);
             });
     training.setClient(client);
     return trainingMapper.fromTraining(training);

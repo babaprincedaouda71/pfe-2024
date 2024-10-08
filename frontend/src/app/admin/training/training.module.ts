@@ -49,6 +49,11 @@ import {OkDialogComponent} from "./training/ok-dialog/ok-dialog.component";
 import {LifeCycleComponent} from './life-cycle/life-cycle.component';
 import {MatChipListbox, MatChipOption} from "@angular/material/chips";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
+import {
+  GroupComponent,
+  LifecycleDialogContentComponent,
+  LifecycleDocumentsDialogComponent
+} from './group/group.component';
 
 
 @NgModule({
@@ -59,10 +64,13 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
     DetailTrainingComponent,
     EditTrainingComponent,
     TrainingLifecycleDialogContentComponent,
+    LifecycleDialogContentComponent,
+    LifecycleDocumentsDialogComponent,
     ErrorDialogComponent,
     OkDialogComponent,
     LifeCycleComponent,
     TrainingLifecycleDialogComponent,
+    GroupComponent,
   ],
     imports: [
         CommonModule,

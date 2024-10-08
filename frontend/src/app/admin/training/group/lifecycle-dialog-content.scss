@@ -1,0 +1,35 @@
+.lifecycle-container {
+  width: 600px;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.lifecycle-steps {
+  margin-bottom: 24px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.step-checkbox {
+  flex-grow: 1;
+}
+
+.step-icon {
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.lifecycle-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.lifecycle-actions button {
+  margin-left: 8px;
+}

@@ -33,7 +33,10 @@ export interface GroupModel {
   endDate : string;
   groupDates: Array<string>;
   idVendor: number | null;
-  vendor: Vendor;
+  supplier: Vendor;
+  completionDate : string
+  groupLifeCycle: LifecycleModel
+  status: string;
 }
 
 export interface LifecycleModel {
