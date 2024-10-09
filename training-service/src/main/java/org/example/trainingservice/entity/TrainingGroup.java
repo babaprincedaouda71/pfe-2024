@@ -36,6 +36,24 @@ public class TrainingGroup {
   private int groupStaff;
   private String location;
 
+  @Lob
+  @Column(columnDefinition = "LONGBLOB")
+  private byte[] trainingSupport;
+
+  @Lob
+  @Column(columnDefinition = "LONGBLOB")
+  private byte[] referenceCertificate;
+
+  private String pv;
+
+  @Lob
+  @Column(columnDefinition = "LONGBLOB")
+  private byte[] presenceList;
+
+  @Lob
+  @Column(columnDefinition = "LONGBLOB")
+  private byte[] evaluation;
+
   private String completionDate;
 
   @Enumerated(EnumType.STRING)

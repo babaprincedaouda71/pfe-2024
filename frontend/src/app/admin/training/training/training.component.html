@@ -264,80 +264,58 @@
           <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
             État
           </th>
-          <td (click)="openLifeCycleDialog('lifeCycle', element)" *matCellDef="let element" class="f-s-14" mat-cell>
+          <td *matCellDef="let element" class="f-s-14" mat-cell>
             <ng-container *ngFor="let group of element.groups">
               <ul>
-                <li>
-                  @if (element.status == 'Recherche_formateur') {
-                    <span class="p-x-8 p-y-4 bg-light-primary f-w-600 rounded-pill f-s-12">
-                Recherche Formateur
-              </span>
-                  }
-
-                  @if (element.status == 'Validation_formateur') {
-                    <span class="p-x-8 p-y-4 bg-light-accent f-w-600 rounded-pill f-s-12">
-                Validation Formateur
-              </span>
-                  }
-
-                  @if (element.status == 'Reunion_de_cadrage') {
-                    <span class="p-x-8 p-y-4 bg-light-error f-w-600 rounded-pill f-s-12">
-                Reunion de Cadrage
-              </span>
-                  }
-
-                  @if (element.status == 'Support_de_formation') {
-                    <span class="p-x-8 p-y-4 bg-light-success f-w-600 rounded-pill f-s-12">
-                Support de Formation
-              </span>
-                  }
-
-                  @if (element.status == 'Impression') {
-                    <span class="p-x-8 p-y-4 bg-light-warning f-w-600 rounded-pill f-s-12">
-                Impression
-              </span>
-                  }
-
-                  @if (element.status == 'Realisation') {
-                    <span class="p-x-8 p-y-4 bg-light- f-w-600 rounded-pill f-s-12">
-                Réalisation
-              </span>
-                  }
-
-                  @if (element.status == 'Attestation') {
-                    <span class="p-x-8 p-y-4 bg-light f-w-600 rounded-pill f-s-12">
-                Livrable Formation
-              </span>
-                  }
-
-                  @if (element.status == 'Facturation') {
-                    <span class="p-x-8 p-y-4 bg-light f-w-600 rounded-pill f-s-12">
-                Facturation
-              </span>
-                  }
-
-                  @if (element.status == 'Reglement') {
-                    <span class="p-x-8 p-y-4 bg-light f-w-600 rounded-pill f-s-12">
-                Payement
-              </span>
-                  }
-
-                  @if (element.status == 'Attestation_de_référence') {
-                    <span class="p-x-8 p-y-4 bg-light f-w-600 rounded-pill f-s-12">
-                Attestation de Référence
-              </span>
-                  }
-
-                  @if (element.status == 'Realisée') {
-                    <span class="p-x-8 p-y-4 bg-light f-w-600 rounded-pill f-s-12">
-                Realisée
-              </span>
-                  }
+                <li (click)="openLifeCycleDialog('lifeCycle', group, element.idTraining)">
+          <span *ngIf="group.status === 'Recherche_formateur'"
+                class="p-x-8 p-y-4 bg-light-primary f-w-600 rounded-pill f-s-12">
+            Recherche Formateur
+          </span>
+                  <span *ngIf="group.status === 'Validation_formateur'"
+                        class="p-x-8 p-y-4 bg-light-accent f-w-600 rounded-pill f-s-12">
+            Validation Formateur
+          </span>
+                  <span *ngIf="group.status === 'Reunion_de_cadrage'"
+                        class="p-x-8 p-y-4 bg-light-error f-w-600 rounded-pill f-s-12">
+            Reunion de Cadrage
+          </span>
+                  <span *ngIf="group.status === 'Support_de_formation'"
+                        class="p-x-8 p-y-4 bg-light-success f-w-600 rounded-pill f-s-12">
+            Support de Formation
+          </span>
+                  <span *ngIf="group.status === 'Impression'"
+                        class="p-x-8 p-y-4 bg-light-warning f-w-600 rounded-pill f-s-12">
+            Impression
+          </span>
+                  <span *ngIf="group.status === 'Realisation'"
+                        class="p-x-8 p-y-4 bg-light f-w-600 rounded-pill f-s-12">
+            Réalisation
+          </span>
+                  <span *ngIf="group.status === 'Attestation'"
+                        class="p-x-8 p-y-4 bg-light f-w-600 rounded-pill f-s-12">
+            Livrable Formation
+          </span>
+                  <span *ngIf="group.status === 'Facturation'"
+                        class="p-x-8 p-y-4 bg-light f-w-600 rounded-pill f-s-12">
+            Facturation
+          </span>
+                  <span *ngIf="group.status === 'Reglement'" class="p-x-8 p-y-4 bg-light f-w-600 rounded-pill f-s-12">
+            Payement
+          </span>
+                  <span *ngIf="group.status === 'Attestation_de_référence'"
+                        class="p-x-8 p-y-4 bg-light f-w-600 rounded-pill f-s-12">
+            Attestation de Référence
+          </span>
+                  <span *ngIf="element.status === 'Realisée'" class="p-x-8 p-y-4 bg-light f-w-600 rounded-pill f-s-12">
+            Realisée
+          </span>
                 </li>
               </ul>
             </ng-container>
           </td>
         </ng-container>
+
 
         <!--        <ng-container matColumnDef="confirmed">-->
         <!--          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">-->

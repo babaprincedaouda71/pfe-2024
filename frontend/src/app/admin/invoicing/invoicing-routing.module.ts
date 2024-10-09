@@ -12,6 +12,7 @@ import {DetailPdfComponent} from "./standard-invoice/detail-pdf/detail-pdf.compo
 import {DetailInvoiceComponent} from "./detail-invoice/detail-invoice.component";
 import {EditTrainingInvoiceComponent} from "./training-invoice/edit-training-invoice/edit-training-invoice.component";
 import {ValidateClientTrainingComponent} from "./validate-client-training/validate-client-training.component";
+import {InvoiceGroupsComponent} from "./invoice-groups/invoice-groups.component";
 const routes: Routes = [
   {
     path : '',
@@ -25,6 +26,13 @@ const routes: Routes = [
     component: ClientTrainingComponent,
     data : {
       title: 'Facturation'
+    }
+  },
+  {
+    path : 'invoice-groups/:idTraining',
+    component: InvoiceGroupsComponent,
+    data : {
+      title: 'Facturation de Groupes de Formation'
     }
   },
   {

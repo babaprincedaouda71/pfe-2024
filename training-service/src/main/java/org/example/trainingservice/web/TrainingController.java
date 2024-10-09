@@ -136,4 +136,11 @@ public class TrainingController {
     public List<TrainingInvoiceDTO> getTrainingsByClient(@PathVariable Long idClient) {
         return trainingService.getTrainingsByClient(idClient);
     }
+
+    /************************** Gestion des groupes *****************************/
+    @GetMapping("/find/groupsByTraining/{idTraining}")
+    @PreAuthorize("hasAnyAuthority('admin','user')")
+    public TrainingDTO getGroupsByTraining(@PathVariable Long idTraining) {
+        return trainingService.getGroupsByTraining(idTraining);
+    }
 }

@@ -16,6 +16,8 @@ import {TrainingLifecycleDialogComponent} from "../detail-training/detail-traini
 import {DatesService} from "../../../_services/dates.service";
 import {Router} from "@angular/router";
 import {firstValueFrom, Subscription} from "rxjs";
+import {LifecycleDialogContentComponent} from "../group/group.component";
+import {GroupService} from "../../../_services/group.service";
 
 @Component({
   selector: 'app-training',
@@ -51,7 +53,8 @@ export class TrainingComponent implements OnInit, OnDestroy {
               public keycloakService: KeycloakService,
               public dialog: MatDialog,
               private snackBar: MatSnackBar,
-              public dateService: DatesService) {
+              public dateService: DatesService,
+              private groupService : GroupService) {
 
   }
 
@@ -296,14 +299,55 @@ export class TrainingComponent implements OnInit, OnDestroy {
   }
 
   /* Training Life Cycle*/
-  openLifeCycleDialog(action: string, obj: TrainingModel) {
-    const dialogRef = this.dialog.open(TrainingLifecycleDialogContentComponent, {
+  // openLifeCycleDialog(action: string, obj: TrainingModel) {
+  //   const dialogRef = this.dialog.open(TrainingLifecycleDialogContentComponent, {
+  //     data: {
+  //       obj: obj,
+  //       action: action
+  //     }
+  //   })
+  //
+  //   const openLifeCycleSubscription = dialogRef.afterClosed().subscribe((result) => {
+  //     if (result.event == 'lifeCycle') {
+  //       this.updateLifeCycle(result.data)
+  //     }
+  //   })
+  //
+  //   this.subscriptions.push(openLifeCycleSubscription)
+  // }
+
+  // Update training life cycle
+  // updateLifeCycle(training: TrainingModel) {
+  //   const updateLifeCycleSubscription = this.trainingService.updateLifeCycle(training.idTraining, training)
+  //     .subscribe({
+  //       next: data => {
+  //         this.getTrainings()
+  //       },
+  //       error: err => {
+  //         console.log(err.message)
+  //       }
+  //     })
+  //   this.subscriptions.push(updateLifeCycleSubscription)
+  // }
+
+  // Method to check if it's the las group
+  isLastGroup(groups: GroupModel[], group: GroupModel): boolean {
+    return groups[groups.length - 1] === group;
+  }
+
+
+  /********************************************************************************/
+  /********* Gestion du cycle de vie du groupe *********/
+
+  /* Group Life Cycle*/
+  openLifeCycleDialog(action: string, group: GroupModel, idTraining : number) {
+    const dialogRef = this.dialog.open(LifecycleDialogContentComponent, {
       data: {
-        obj: obj,
-        action: action
+        obj: group,
+        action: action,
+        idTraining : idTraining
       }
     })
-
     const openLifeCycleSubscription = dialogRef.afterClosed().subscribe((result) => {
       if (result.event == 'lifeCycle') {
         this.updateLifeCycle(result.data)
@@ -313,9 +357,9 @@ export class TrainingComponent implements OnInit, OnDestroy {
     this.subscriptions.push(openLifeCycleSubscription)
   }
 
-  // Update training life cycle
-  updateLifeCycle(training: TrainingModel) {
-    const updateLifeCycleSubscription = this.trainingService.updateLifeCycle(training.idTraining, training)
+  // Update group life cycle
+  updateLifeCycle(group: GroupModel) {
+    const updateLifeCycleSubscription = this.groupService.updateLifeCycle(group.idGroup, group)
       .subscribe({
         next: data => {
           this.getTrainings()
@@ -326,12 +370,6 @@ export class TrainingComponent implements OnInit, OnDestroy {
       })
     this.subscriptions.push(updateLifeCycleSubscription)
   }
-
-  // Method to check if it's the las group
-  isLastGroup(groups: GroupModel[], group: GroupModel): boolean {
-    return groups[groups.length - 1] === group;
-  }
-
 
 }
 
@@ -388,7 +426,6 @@ export class TrainingLifecycleDialogContentComponent {
               private snackBar: MatSnackBar,
               private router: Router) {
     this.local_data = {...data.obj}
-    console.log(this.local_data)
     this.action = data.action
     this.selectedTrainingSupport = this.local_data.trainingSupport
   }
@@ -722,3 +759,5 @@ export class TrainingLifecycleDialogContentComponent {
     }
   }
 }
+
+/**  Cycle de vie du groupe */

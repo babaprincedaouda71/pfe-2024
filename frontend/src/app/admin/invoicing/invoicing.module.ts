@@ -48,7 +48,7 @@ import { DetailInvoiceComponent } from './detail-invoice/detail-invoice.componen
 import { EditTrainingInvoiceComponent } from './training-invoice/edit-training-invoice/edit-training-invoice.component';
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import { ValidateClientTrainingComponent } from './validate-client-training/validate-client-training.component';
-
+import {InvoiceGroupsComponent} from "./invoice-groups/invoice-groups.component";
 
 @NgModule({
   declarations: [
@@ -63,7 +63,8 @@ import { ValidateClientTrainingComponent } from './validate-client-training/vali
     DetailPdfComponent,
     DetailInvoiceComponent,
     EditTrainingInvoiceComponent,
-    ValidateClientTrainingComponent
+    ValidateClientTrainingComponent,
+    InvoiceGroupsComponent
   ],
   imports: [
     CommonModule,

@@ -190,55 +190,55 @@
       <br>
       <br>
       <!--     ******************************* Start ***********************-->
-      <table [dataSource]="datasource" class="w-100" mat-table>
+<!--      <table [dataSource]="datasource" class="w-100" mat-table>-->
 
-        <ng-container matColumnDef="group">
-          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>Groupe Module</th>
-          <td *matCellDef="let element; let i = index" mat-cell style="word-wrap: break-word;">
-            {{ i + 1 }}
-          </td>
-        </ng-container>
+<!--        <ng-container matColumnDef="group">-->
+<!--          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>Groupe Module</th>-->
+<!--          <td *matCellDef="let element; let i = index" mat-cell style="word-wrap: break-word;">-->
+<!--            {{ i + 1 }}-->
+<!--          </td>-->
+<!--        </ng-container>-->
 
-        <ng-container matColumnDef="vendor">
-          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
-            Formateur
-          </th>
-          <td *matCellDef="let element" class="f-s-14" mat-cell>{{ element.vendor.name }}</td>
-        </ng-container>
+<!--        <ng-container matColumnDef="vendor">-->
+<!--          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>-->
+<!--            Formateur-->
+<!--          </th>-->
+<!--          <td *matCellDef="let element" class="f-s-14" mat-cell>{{ element.vendor.name }}</td>-->
+<!--        </ng-container>-->
 
-        <ng-container matColumnDef="staff">
-          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
-            Éffectif
-          </th>
-          <td *matCellDef="let element" class="f-s-14" mat-cell>{{ element.groupStaff }}</td>
-        </ng-container>
+<!--        <ng-container matColumnDef="staff">-->
+<!--          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>-->
+<!--            Éffectif-->
+<!--          </th>-->
+<!--          <td *matCellDef="let element" class="f-s-14" mat-cell>{{ element.groupStaff }}</td>-->
+<!--        </ng-container>-->
 
-        <ng-container matColumnDef="dates">
-          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
-            Dates
-          </th>
-          <td *matCellDef="let element" class="f-s-14" mat-cell>
-            @if (element.startDate != "" && element.startDate != null) {
-              du <b>{{ element.startDate | date : 'd' }}</b> au <b>{{ element.endDate | date : 'longDate' }}</b>
-            } @else {
-              {{ dateService.formatNonConsecutiveDates(element.groupDates) }}
-            }
-          </td>
-        </ng-container>
+<!--        <ng-container matColumnDef="dates">-->
+<!--          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>-->
+<!--            Dates-->
+<!--          </th>-->
+<!--          <td *matCellDef="let element" class="f-s-14" mat-cell>-->
+<!--            @if (element.startDate != "" && element.startDate != null) {-->
+<!--              du <b>{{ element.startDate | date : 'd' }}</b> au <b>{{ element.endDate | date : 'longDate' }}</b>-->
+<!--            } @else {-->
+<!--              {{ dateService.formatNonConsecutiveDates(element.groupDates) }}-->
+<!--            }-->
+<!--          </td>-->
+<!--        </ng-container>-->
 
-        <ng-container matColumnDef="location">
-          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
-            Lieu
-          </th>
-          <td *matCellDef="let element" class="f-s-14" mat-cell>
-            {{ element.location }}
-          </td>
-        </ng-container>
+<!--        <ng-container matColumnDef="location">-->
+<!--          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>-->
+<!--            Lieu-->
+<!--          </th>-->
+<!--          <td *matCellDef="let element" class="f-s-14" mat-cell>-->
+<!--            {{ element.location }}-->
+<!--          </td>-->
+<!--        </ng-container>-->
 
-        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-        <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+<!--        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>-->
+<!--        <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>-->
 
-      </table>
+<!--      </table>-->
       <!--     ******************************* End ***********************-->
       <div class="row">
         <div class="col-lg-3">

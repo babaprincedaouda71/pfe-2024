@@ -41,4 +41,6 @@ public interface TrainingService {
     List<TrainingInvoiceDTO> getTrainingsClient();
 
     List<TrainingInvoiceDTO> getTrainingsByClient(Long idClient);
+
+    TrainingDTO getGroupsByTraining(Long idTraining);
 }

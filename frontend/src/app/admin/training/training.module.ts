@@ -51,8 +51,7 @@ import {MatChipListbox, MatChipOption} from "@angular/material/chips";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {
   GroupComponent,
-  LifecycleDialogContentComponent,
-  LifecycleDocumentsDialogComponent
+  LifecycleDialogContentComponent, LifecycleDocumentsDialogComponent,
 } from './group/group.component';
 
 

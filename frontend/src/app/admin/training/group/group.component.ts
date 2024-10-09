@@ -1,7 +1,7 @@
 import {Component, Inject, OnDestroy, OnInit, Optional, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
-import {GroupModel, TrainingModel} from "../../../../models/training.model";
+import {GroupModel} from "../../../../models/training.model";
 import {DatesService} from "../../../_services/dates.service";
 import {firstValueFrom, Subscription} from "rxjs";
 import {TrainingLifecycleDialogContentComponent} from "../training/training.component";
@@ -93,6 +93,7 @@ export class GroupComponent implements OnInit, OnDestroy{
 export class LifecycleDialogContentComponent{
   action!: string;
   local_data: any
+  idTraining! : number
   showTrainingSupportForm: boolean = false;
   showPV: boolean = false;
   pv!: string
@@ -109,6 +110,7 @@ export class LifecycleDialogContentComponent{
               private router: Router) {
     this.local_data = {...data.obj}
     this.action = data.action
+    this.idTraining = data.idTraining
     this.selectedTrainingSupport = this.local_data.trainingSupport
   }
 
@@ -184,13 +186,13 @@ export class LifecycleDialogContentComponent{
       event.preventDefault();
       event.stopPropagation();
       this.local_data.groupLifeCycle.kickOfMeeting = false;
-      // this.openLifeCycleDialog('pv', this.local_data)
+      this.openLifeCycleDocumentsDialog('pv', this.local_data)
     } else {
       this.local_data.groupLifeCycle.kickOfMeeting = false;
       this.resetCheckboxes('kickOfMeeting');
       this.updateLifeCycle(this.local_data)
         .then(() => {
-          // this.removePv(this.local_data.idTraining)
+          // this.removePv(this.local_data.idGroup)
         })
         .catch(err => {
           console.log(err.message);
@@ -203,7 +205,7 @@ export class LifecycleDialogContentComponent{
       event.preventDefault();
       event.stopPropagation();
       this.local_data.groupLifeCycle.trainingSupport = false
-      // this.openLifeCycleDialog('trainingSupport', this.local_data)
+      this.openLifeCycleDocumentsDialog('trainingSupport', this.local_data)
     } else {
       this.resetCheckboxes('trainingSupport');
       this.local_data.groupLifeCycle.trainingSupport = false
@@ -242,7 +244,7 @@ export class LifecycleDialogContentComponent{
       event.preventDefault();
       event.stopPropagation();
       this.local_data.groupLifeCycle.certif = false
-      // this.openLifeCycleDialog('trainingNotes', this.local_data)
+      this.openLifeCycleDocumentsDialog('trainingNotes', this.local_data)
     } else {
       this.local_data.groupLifeCycle.certif = false
       this.resetCheckboxes('certif');
@@ -260,7 +262,7 @@ export class LifecycleDialogContentComponent{
       event.preventDefault();
       event.stopPropagation();
       this.closeDialog()
-      this.router.navigate(['invoicing/client-training'])
+      this.router.navigate([`invoicing/invoice-groups/${this.idTraining}`])
     } else {
       this.resetCheckboxes('invoicing');
       this.updateLifeCycle(this.local_data)
@@ -287,7 +289,7 @@ export class LifecycleDialogContentComponent{
       event.preventDefault();
       event.stopPropagation();
       this.local_data.groupLifeCycle.reference = false
-      // this.openLifeCycleDialog('referenceCertificate', this.local_data)
+      this.openLifeCycleDocumentsDialog('referenceCertificate', this.local_data)
     } else {
       this.local_data.groupLifeCycle.reference = false
       this.resetCheckboxes('reference');
@@ -301,7 +303,7 @@ export class LifecycleDialogContentComponent{
   }
 
   openLifeCycleDocumentsDialog(action: string, obj: GroupModel) {
-    const dialogRef = this.dialog.open(TrainingLifecycleDialogComponent, {
+    const dialogRef = this.dialog.open(LifecycleDocumentsDialogComponent, {
       data: {
         obj: obj,
         action: action
@@ -338,8 +340,8 @@ export class LifecycleDialogContentComponent{
 
 /*****************************************************************************************/
 @Component({
-  selector: 'training-life-cycle-dialog',
-  templateUrl: 'training-life-cycle-dialog.html'
+  selector: 'lifecycle-documents-dialog',
+  templateUrl: 'lifecycle-documents-dialog.html'
 })
 export class LifecycleDocumentsDialogComponent {
   action!: string;
@@ -372,7 +374,8 @@ export class LifecycleDocumentsDialogComponent {
   onAddPV() {
     this.groupService.addPv(this.pv, this.local_data.idGroup)
       .subscribe({
-        next: value => {
+        next: (value: GroupModel) => {
+          console.log(value)
           value.groupLifeCycle.kickOfMeeting = true
           this.doAction(value)
         },

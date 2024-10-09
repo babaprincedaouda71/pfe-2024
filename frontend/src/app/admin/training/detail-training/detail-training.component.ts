@@ -174,6 +174,7 @@ export class DetailTrainingComponent implements OnInit, OnDestroy {
       next: data => {
         this.updateLifeCycle(this.training)
           .then(() => {
+            console.log(data)
             this.loadTraining();
           })
           .catch(err => {
@@ -546,6 +547,7 @@ export class TrainingLifecycleDialogComponent {
     this.trainingService.addPv(this.pv, this.local_data.idTraining)
       .subscribe({
         next: value => {
+          console.log(value.idTraining)
           value.lifeCycle.kickOfMeeting = true
           this.doAction(value)
         },

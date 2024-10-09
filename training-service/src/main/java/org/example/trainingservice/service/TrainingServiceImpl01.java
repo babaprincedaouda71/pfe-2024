@@ -1,7 +1,6 @@
 package org.example.trainingservice.service;
 
 import org.example.trainingservice.clients.ClientRest;
-import org.example.trainingservice.clients.InstructorRest;
 import org.example.trainingservice.clients.VendorRest;
 import org.example.trainingservice.dto.AddTrainingDTO;
 import org.example.trainingservice.dto.TrainingDTO;
@@ -14,7 +13,6 @@ import org.example.trainingservice.enums.TrainingGroupStatus;
 import org.example.trainingservice.enums.TrainingStatus;
 import org.example.trainingservice.exceptions.TrainingNotFoundException;
 import org.example.trainingservice.exceptions.TrainingsNotFoundException;
-import org.example.trainingservice.mapper.GroupMapper;
 import org.example.trainingservice.mapper.TrainingMapper;
 import org.example.trainingservice.model.Client;
 import org.example.trainingservice.model.Vendor;
@@ -550,5 +548,17 @@ public class TrainingServiceImpl01 implements TrainingService {
         currentDate = currentDate.plusDays(1);
       }
     }
+  }
+
+  /*********************** Gestion des groupes *****************/
+  @Override
+  public TrainingDTO getGroupsByTraining(Long idTraining) {
+    Training training =
+            trainingRepository
+                    .findById(idTraining)
+                    .orElseThrow(() -> new TrainingNotFoundException("Training Not Found"));
+    Client client = clientRest.findClientById(training.getIdClient());
+    training.setClient(client);
+    return trainingMapper.fromTraining(training);
   }
 }

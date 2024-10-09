@@ -4,16 +4,16 @@ import org.example.trainingservice.clients.ClientRest;
 import org.example.trainingservice.clients.VendorRest;
 import org.example.trainingservice.entity.TrainingGroup;
 import org.example.trainingservice.entity.TrainingGroupLifeCycle;
-import org.example.trainingservice.entity.TrainingLifeCycle;
 import org.example.trainingservice.enums.TrainingGroupStatus;
-import org.example.trainingservice.enums.TrainingStatus;
 import org.example.trainingservice.exceptions.TrainingGroupNotFoundException;
 import org.example.trainingservice.model.Vendor;
 import org.example.trainingservice.repo.TrainingGroupRepo;
 import org.example.trainingservice.repo.TrainingRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -41,10 +41,11 @@ public class TrainingGroupServiceImpl01 implements TrainingGroupService {
   @Override
   public List<TrainingGroup> getAllTrainingGroups() {
     List<TrainingGroup> all = trainingGroupRepo.findAll();
-    all.forEach(trainingGroup -> {
-      Vendor supplier = vendorRest.findVendorById(trainingGroup.getIdVendor());
-      trainingGroup.setSupplier(supplier);
-    });
+    all.forEach(
+        trainingGroup -> {
+          Vendor supplier = vendorRest.findVendorById(trainingGroup.getIdVendor());
+          trainingGroup.setSupplier(supplier);
+        });
     return all;
   }
 
@@ -131,5 +132,125 @@ public class TrainingGroupServiceImpl01 implements TrainingGroupService {
   private String formatCurrentDate() {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     return formatter.format(new Date());
+  }
+
+  /*Documents de la formation*/
+  @Override
+  public TrainingGroup addPv(String pv, Long idGroup) {
+    TrainingGroup group =
+        trainingGroupRepo
+            .findById(idGroup)
+            .orElseThrow(
+                () ->
+                    new TrainingGroupNotFoundException(
+                        "Le groupe avec id " + idGroup + " n'existe pas"));
+    group.setPv(pv);
+    return trainingGroupRepo.save(group);
+  }
+
+  @Override
+  public TrainingGroup removePv(Long idGroup, TrainingGroup trainingGroup) {
+    TrainingGroup group =
+        trainingGroupRepo
+            .findById(idGroup)
+            .orElseThrow(
+                () ->
+                    new TrainingGroupNotFoundException(
+                        "Le groupe avec id " + idGroup + " n'existe pas"));
+    group.setPv(null);
+    return trainingGroupRepo.save(group);
+  }
+
+  @Override
+  public TrainingGroup addTrainingSupport(MultipartFile trainingSupport, Long idGroup) {
+    TrainingGroup group =
+        trainingGroupRepo
+            .findById(idGroup)
+            .orElseThrow(
+                () ->
+                    new TrainingGroupNotFoundException(
+                        "Le Groupe avec id " + idGroup + " n'existe pas"));
+    try {
+      group.setTrainingSupport(trainingSupport.getBytes());
+      return trainingGroupRepo.save(group);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public TrainingGroup removeTrainingSupport(Long idGroup, TrainingGroup trainingGroup) {
+    TrainingGroup group =
+        trainingGroupRepo
+            .findById(idGroup)
+            .orElseThrow(
+                () ->
+                    new TrainingGroupNotFoundException(
+                        "Le Groupe avec id " + idGroup + " n'existe pas"));
+    group.setTrainingSupport(null);
+    return trainingGroupRepo.save(group);
+  }
+
+  @Override
+  public TrainingGroup addReferenceCertificate(MultipartFile referenceCertificate, Long idGroup) {
+    TrainingGroup group =
+        trainingGroupRepo
+            .findById(idGroup)
+            .orElseThrow(
+                () ->
+                    new TrainingGroupNotFoundException(
+                        "Le Groupe avec id " + idGroup + " n'existe pas"));
+    try {
+      group.setReferenceCertificate(referenceCertificate.getBytes());
+      return trainingGroupRepo.save(group);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public TrainingGroup removeReferenceCertificate(Long idGroup, TrainingGroup trainingGroup) {
+    TrainingGroup group =
+        trainingGroupRepo
+            .findById(idGroup)
+            .orElseThrow(
+                () ->
+                    new TrainingGroupNotFoundException(
+                        "Le Groupe avec id " + idGroup + " n'existe pas"));
+    group.setReferenceCertificate(null);
+    return trainingGroupRepo.save(group);
+  }
+
+  @Override
+  public TrainingGroup addTrainingNotes(
+      MultipartFile presenceList, MultipartFile evaluation, Long idGroup) {
+    TrainingGroup group =
+        trainingGroupRepo
+            .findById(idGroup)
+            .orElseThrow(
+                () ->
+                    new TrainingGroupNotFoundException(
+                        "Le Groupe avec id " + idGroup + " n'existe pas"));
+    try {
+      group.setPresenceList(presenceList.getBytes());
+      group.setEvaluation(evaluation.getBytes());
+      return trainingGroupRepo.save(group);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public TrainingGroup removeTrainingNotes(Long idGroup, TrainingGroup trainingGroup) {
+    TrainingGroup group =
+        trainingGroupRepo
+            .findById(idGroup)
+            .orElseThrow(
+                () ->
+                    new TrainingGroupNotFoundException(
+                        "Le Groupe avec id " + idGroup + " n'existe pas"));
+    group.setPresenceList(null);
+    group.setEvaluation(null);
+    return trainingGroupRepo.save(group);
   }
 }
