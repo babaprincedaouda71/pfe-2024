@@ -70,7 +70,7 @@ export class AddTrainingComponent implements OnInit, OnDestroy {
       days: ['', [Validators.required, positiveNumberValidator]],
       staff: ['', [Validators.required]],
       location: [''],
-      amount: ['', [Validators.required, positiveNumberValidator]],
+      dailyAmount: ['', [Validators.required, positiveNumberValidator]],
       groups: this.formBuilder.array([]),
     }, { validators: staffMatchValidator });
     // this.minStartDate = new Date().toLocaleDateString()
@@ -178,6 +178,7 @@ export class AddTrainingComponent implements OnInit, OnDestroy {
   onSubmit() {
     // console.log(this.addTrainingForm.value)
     const training: TrainingModel = this.addTrainingForm.value
+    training.amount = this.addTrainingForm.get('dailyAmount')?.value * this.addTrainingForm.get('days')?.value
     console.log(training)
     const addTrainingSubscription = this.trainingService.addTraining(training)
       .subscribe({

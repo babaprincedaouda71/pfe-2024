@@ -72,29 +72,33 @@ export class TrainingComponent implements OnInit, OnDestroy {
   * Get All Trainings
   * */
   getTrainings() {
-    const trainingSubscription = this.trainingService.getTrainings()
-      .subscribe({
-        next: data => {
-          this.trainings = data
+    const trainingSubscription = this.trainingService.getTrainings().subscribe({
+      next: (data) => {
+        this.trainings = data.map(training => ({
+          ...training,
+          groups: training.groups.map(group => ({
+            ...group,
+            idTraining: training.idTraining
+          }))
+        }));
 
-          this.datasource = new MatTableDataSource(this.trainings);
-          this.datasource.paginator = this.paginator;
+        // Setup table data and pagination
+        this.datasource = new MatTableDataSource(this.trainings);
+        this.datasource.paginator = this.paginator;
 
-          //Filter operations
-          this.filteredTrainings = data
-          // Initialisez uniqueVendors avec les valeurs uniques des formateurs dans les formations
-          this.uniqueVendors = this.getAllUniqueVendors();
-          // Initialisez uniqueClients avec les valeurs uniques des formateurs dans les formations
-          this.uniqueClients = this.getAllUniqueClients()
+        // Filter operations
+        this.filteredTrainings = [...this.trainings];
+        this.uniqueVendors = this.getAllUniqueVendors();
+        this.uniqueClients = this.getAllUniqueClients();
+      },
+      error: (err) => {
+        console.error('Error fetching trainings:', err.message);
+      }
+    });
 
-
-        },
-        // error: err => {
-        //   console.log(err.message)
-        // }
-      })
-    this.subscriptions.push(trainingSubscription)
+    this.subscriptions.push(trainingSubscription);
   }
+
 
   /*
   * Get All Clients
@@ -340,12 +344,11 @@ export class TrainingComponent implements OnInit, OnDestroy {
   /********* Gestion du cycle de vie du groupe *********/
 
   /* Group Life Cycle*/
-  openLifeCycleDialog(action: string, group: GroupModel, idTraining : number) {
+  openLifeCycleDialog(action: string, group: GroupModel) {
     const dialogRef = this.dialog.open(LifecycleDialogContentComponent, {
       data: {
         obj: group,
         action: action,
-        idTraining : idTraining
       }
     })
     const openLifeCycleSubscription = dialogRef.afterClosed().subscribe((result) => {

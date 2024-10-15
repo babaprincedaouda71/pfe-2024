@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +30,8 @@ public class InvoiceServiceImpl implements InvoiceService {
   private final ClientRest clientRest;
   private final TrainingRest trainingRest;
   private final ProductRepo productRepo;
+  private double total;
+  private float tva;
 
   public InvoiceServiceImpl(
       InvoiceRepo invoiceRepo,
@@ -70,7 +73,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 
   @Override
   public Invoice saveTrainingInvoice(Invoice invoice) {
-    double total = 0;
     LocalDate createdAt = LocalDate.now();
     invoice.setNumberInvoice(generateInvoiceNumber("training"));
     invoice.setCreatedAt(createdAt.toString());
@@ -89,6 +91,36 @@ public class InvoiceServiceImpl implements InvoiceService {
               training -> {
                 invoice.setTtc(training.getAmount());
               });
+    }
+    invoice.setIdClient(invoice.getIdClient());
+    invoice.setStatus(InvoiceStatus.Non_Réglée);
+    return invoiceRepo.save(invoice);
+  }
+
+  @Override
+  public Invoice saveGroupsInvoice(Invoice invoice) {
+    double total = 0d;
+    LocalDate createdAt = LocalDate.now();
+    //    invoice.setNumberInvoice(generateInvoiceNumber("training"));
+    invoice.setCreatedAt(createdAt.toString());
+    invoice.setInvoiceType(InvoiceType.groupInvoice);
+    Client client = clientRest.findClientById(invoice.getIdClient());
+    invoice.setDeadline(client.getDeadline());
+    System.out.println(invoice.getTrainings());
+    if (invoice.getTrainings() != null) {
+      invoice.setTrainingIds(
+          invoice.getTrainings().stream()
+              .map(Training::getIdTraining)
+              .collect(Collectors.toList()));
+      invoice
+          .getTrainings()
+          .forEach(
+              training -> {
+                this.total += training.getAmount();
+              });
+      this.tva = (float) (this.total * 0.2);
+      invoice.setTva((float) (this.total * 0.2));
+      invoice.setTtc(this.tva + this.total);
     }
     invoice.setIdClient(invoice.getIdClient());
     invoice.setStatus(InvoiceStatus.Non_Réglée);
@@ -298,5 +330,23 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     return numberInvoice;
+  }
+
+  @Override
+  public String generateNewInvoiceNumber(int year, int month) {
+    String yearMonth = String.format("%02d%02d", year % 100, month);
+    List<Invoice> invoices = invoiceRepo.findInvoicesByYearAndMonth(yearMonth);
+
+    int newInvoiceNumber =
+        invoices.stream()
+            .findFirst()
+            .map(
+                invoice -> {
+                  String lastNum = invoice.getNumberInvoice();
+                  return Integer.parseInt(lastNum.substring(7)) + 1;
+                })
+            .orElse(1); // Si aucune facture n'existe, commencer à 1
+
+    return String.format("%02d%02d-%03d", year % 100, month, newInvoiceNumber);
   }
 }

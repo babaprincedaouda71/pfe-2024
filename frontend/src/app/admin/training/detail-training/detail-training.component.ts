@@ -95,31 +95,31 @@ export class DetailTrainingComponent implements OnInit, OnDestroy {
   //   })
   // }
 
-  sendMail(receiver: string) {
-    if (receiver === 'instructor') {
-      document.getElementById('btn-closeIns')?.click()
-      this.trainingService.sendMail(this.confirmFormVendor.value)
-        .subscribe({
-          next: value => {
-            console.log(value)
-          },
-          error: err => {
-            console.error(err.message)
-          }
-        })
-    } else if (receiver === 'client') {
-      document.getElementById('btn-closeCl')?.click()
-      this.trainingService.sendMail(this.confirmFormClient.value)
-        .subscribe({
-          next: value => {
-            console.log(value)
-          },
-          error: err => {
-            console.error(err.message)
-          }
-        })
-    }
-  }
+  // sendMail(receiver: string) {
+  //   if (receiver === 'instructor') {
+  //     document.getElementById('btn-closeIns')?.click()
+  //     this.trainingService.sendMail(this.confirmFormVendor.value)
+  //       .subscribe({
+  //         next: value => {
+  //           console.log(value)
+  //         },
+  //         error: err => {
+  //           console.error(err.message)
+  //         }
+  //       })
+  //   } else if (receiver === 'client') {
+  //     document.getElementById('btn-closeCl')?.click()
+  //     this.trainingService.sendMail(this.confirmFormClient.value)
+  //       .subscribe({
+  //         next: value => {
+  //           console.log(value)
+  //         },
+  //         error: err => {
+  //           console.error(err.message)
+  //         }
+  //       })
+  //   }
+  // }
 
   handleEdit(idTraining: number) {
     this.router.navigate([`training/edit/${idTraining}`])
@@ -151,252 +151,7 @@ export class DetailTrainingComponent implements OnInit, OnDestroy {
     })
   }
 
-  removePv(idTraining: number) {
-    const removePvSubscription = this.trainingService.removePv(idTraining, this.training).subscribe({
-      next: data => {
-        this.updateLifeCycle(this.training)
-          .then(() => {
-            this.loadTraining();
-          })
-          .catch(err => {
-            console.log(err.message);
-          });
-      },
-      error: error => {
-        console.log(error.message)
-      }
-    })
-    this.subscriptions.push(removePvSubscription)
-  }
-
-  removeTrainingSupport() {
-    const removeTrainingSupportSubscription = this.trainingService.removeTrainingSupport(this.training.idTraining, this.training).subscribe({
-      next: data => {
-        this.updateLifeCycle(this.training)
-          .then(() => {
-            console.log(data)
-            this.loadTraining();
-          })
-          .catch(err => {
-            console.log(err.message);
-          });
-      },
-      error: error => {
-        console.log(error.message)
-      }
-    })
-    this.subscriptions.push(removeTrainingSupportSubscription)
-  }
-
-  removeReferenceCertificate() {
-    const removeReferenceCertificateSubscription = this.trainingService.removeReferenceCertificate(this.training.idTraining, this.training).subscribe({
-      next: data => {
-        this.updateLifeCycle(this.training)
-          .then(() => {
-            this.loadTraining();
-          })
-          .catch(err => {
-            console.log(err.message);
-          });
-      },
-      error: error => {
-        console.log(error.message)
-      }
-    })
-    this.subscriptions.push(removeReferenceCertificateSubscription)
-  }
-
-  removeTrainingNotes() {
-    const removeTrainingNotesSubscription = this.trainingService.removeTrainingNotes(this.training.idTraining, this.training).subscribe({
-      next: data => {
-        this.updateLifeCycle(this.training)
-          .then(() => {
-            this.loadTraining();
-          })
-          .catch(err => {
-            console.log(err.message);
-          });
-      },
-      error: error => {
-        console.log(error.message)
-      }
-    })
-    this.subscriptions.push(removeTrainingNotesSubscription)
-  }
-
   /********** End **********/
-
-  // Update training life cycle
-  updateLifeCycle(training: TrainingModel): Promise<TrainingModel> {
-    return firstValueFrom(this.trainingService.updateLifeCycle(training.idTraining, training));
-  }
-
-  checkVendor(event: any) {
-    this.training.groups.forEach((group: GroupModel) => {
-      if (!group.supplier || group.supplier.idVendor == null) {
-        event.preventDefault();
-        event.stopPropagation();
-        this.training.lifeCycle.trainerSearch = false;
-        this.openErrorDialog(this.training);
-      } else {
-        this.removeTrainingNotes()
-        this.removePv(this.training.idTraining)
-        this.removeTrainingSupport()
-        this.resetCheckboxes('trainerSearch');
-        this.updateLifeCycle(this.training)
-          .then(() => {
-            this.loadTraining(); // Recharger les données après la mise à jour
-          })
-          .catch(err => {
-            console.log(err.message);
-          });
-      }
-    })
-  }
-
-  checkValidation() {
-    this.resetCheckboxes('trainerValidation');
-    this.updateLifeCycle(this.training)
-      .then(() => {
-        this.loadTraining()
-      })
-      .catch(err => {
-        console.log(err.message);
-      });
-  }
-
-  checkKickOfMeeting(event: any) {
-    if (this.training.lifeCycle.kickOfMeeting && !this.training.lifeCycle.trainingSupport) {
-      event.preventDefault();
-      event.stopPropagation();
-      this.training.lifeCycle.kickOfMeeting = false;
-      this.openLifeCycleDialog('pv', this.training)
-    } else {
-      this.resetCheckboxes('kickOfMeeting');
-      this.training.lifeCycle.kickOfMeeting = false;
-      this.removePv(this.training.idTraining)
-      this.removeTrainingSupport()
-      this.removeTrainingNotes()
-    }
-  }
-
-  checkTrainingSupport(event: any) {
-    if (this.training.lifeCycle.trainingSupport && !this.training.lifeCycle.impression) {
-      event.preventDefault();
-      event.stopPropagation();
-      this.training.lifeCycle.trainingSupport = false
-      this.openLifeCycleDialog('trainingSupport', this.training)
-    } else {
-      this.resetCheckboxes('trainingSupport');
-      this.training.lifeCycle.trainingSupport = false
-      this.removeTrainingSupport()
-      this.removeTrainingNotes()
-    }
-  }
-
-  checkImpression() {
-    this.resetCheckboxes('impression');
-    this.updateLifeCycle(this.training)
-      .then(() => {
-        this.loadTraining()
-      })
-      .catch(err => {
-        console.log(err.message);
-      });
-  }
-
-  checkCompletion() {
-    this.resetCheckboxes('completion');
-    this.updateLifeCycle(this.training)
-      .then(() => {
-        this.loadTraining()
-      })
-      .catch(err => {
-        console.log(err.message);
-      });
-  }
-
-  checkCertif(event: any) {
-    if (this.training.lifeCycle.certif && !this.training.lifeCycle.invoicing) {
-      event.preventDefault();
-      event.stopPropagation();
-      this.training.lifeCycle.certif = false
-      this.openLifeCycleDialog('trainingNotes', this.training)
-    } else {
-      this.training.lifeCycle.certif = false
-      this.resetCheckboxes('certif');
-      this.removeTrainingNotes()
-    }
-  }
-
-  checkInvoicing() {
-    this.resetCheckboxes('invoicing');
-    this.updateLifeCycle(this.training)
-      .then(() => {
-        this.loadTraining()
-      })
-      .catch(err => {
-        console.log(err.message);
-      });
-  }
-
-  checkPayment() {
-    this.resetCheckboxes('payment');
-    this.updateLifeCycle(this.training)
-      .then(() => {
-        this.loadTraining()
-      })
-      .catch(err => {
-        console.log(err.message);
-      });
-  }
-
-  checkReferenceCertificate(event: any) {
-    if (!this.training.lifeCycle.reference) {
-      // event.preventDefault();
-      // event.stopPropagation();
-      this.training.lifeCycle.reference = false
-      this.openLifeCycleDialog('referenceCertificate', this.training)
-    } else {
-      this.resetCheckboxes('reference');
-      this.training.lifeCycle.reference = false
-      this.removeReferenceCertificate()
-    }
-  }
-
-  openLifeCycleDialog(action: string, obj: TrainingModel) {
-    const dialogRef = this.dialog.open(TrainingLifecycleDialogComponent, {
-      data: {
-        obj: obj,
-        action: action
-      }
-    })
-
-    const openLifeCycleDialogSubscription = dialogRef.afterClosed().subscribe((result) => {
-      if (result.event == 'pv') {
-        this.resetCheckboxes('kickOfMeeting');
-      }
-      if (result.event == 'trainingSupport') {
-        this.resetCheckboxes('trainingSupport');
-      }
-      if (result.event == 'referenceCertificate') {
-        this.resetCheckboxes('reference');
-      }
-      if (result.event == 'trainingNotes') {
-        this.resetCheckboxes('certif');
-      }
-      if (result.data != undefined) {
-        this.updateLifeCycle(result.data)
-          .then(() => {
-            this.loadTraining()
-          })
-          .catch(err => {
-            console.log(err.message);
-          });
-      }
-    })
-    this.subscriptions.push(openLifeCycleDialogSubscription);
-  }
 
   private convertLogoToBytes() {
     if (this.training && this.training.trainingSupport) {
@@ -483,30 +238,15 @@ export class DetailTrainingComponent implements OnInit, OnDestroy {
     }
   }
 
-  private resetCheckboxes(currentCheckbox: string) {
-    const checkboxOrder = [
-      'trainerSearch',
-      'trainerValidation',
-      'kickOfMeeting',
-      'trainingSupport',
-      'impression',
-      'completion',
-      'certif',
-      'invoicing',
-      'payment',
-      'reference'
-    ];
-
-    const currentIndex: number = checkboxOrder.indexOf(currentCheckbox);
-    if (currentIndex !== -1) {
-      for (let i: number = currentIndex + 1; i < checkboxOrder.length; i++) {
-        // @ts-ignore
-        this.training.lifeCycle[checkboxOrder[i]] = false;
-      }
-    }
-  }
-
   /********** End Life Cycle **********/
+  onRowClick(row : any) {
+
+    // Stocker les données dans localStorage
+    localStorage.setItem('group', JSON.stringify(row));
+
+    this.router.navigate(['training/detail-group'])
+    console.log('Row clicked: ', row);
+  }
 }
 
 

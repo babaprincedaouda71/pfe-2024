@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {TrainingModel} from "../../models/training.model";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -84,4 +85,11 @@ export class TrainingService {
     return this.http.post<string>(`${this.host}/mail/send`, emailData, {responseType : 'text' as 'json'})
   }
 
+  public checkIfPvExists(idTraining: number) : Observable<boolean> {
+    return this.http.get<boolean>(`${this.host}/training/checkPv/${idTraining}`)
+  }
+
+  public checkIfTrainingSupportExists(idTraining: number) : Observable<boolean> {
+    return this.http.get<boolean>(`${this.host}/training/checkTrainingSupport/${idTraining}`)
+  }
 }

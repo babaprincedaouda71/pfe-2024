@@ -10,15 +10,15 @@ import java.util.Collections;
 @RestController
 @RequestMapping("/mail")
 public class EmailController {
-    private final EmailService emailService;
+//    private final EmailService emailService;
 
-    public EmailController(EmailService emailService) {
-        this.emailService = emailService;
-    }
+//    public EmailController(EmailService emailService) {
+//        this.emailService = emailService;
+//    }
 
-    @PostMapping("/send")
-    public String sendMail(@RequestBody Mail mail) {
-//        System.out.println(mail.toString());
-        return emailService.sendMail(mail);
-    }
+//    @PostMapping("/send")
+//    public String sendMail(@RequestBody Mail mail) {
+////        System.out.println(mail.toString());
+//        return emailService.sendMail(mail);
+//    }
 }

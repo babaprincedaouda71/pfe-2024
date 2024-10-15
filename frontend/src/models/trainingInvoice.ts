@@ -6,5 +6,7 @@ export interface TrainingInvoice {
   idClient : number | null;
   numberInvoice? : string
   createdAt? : string,
+  amount? : number,
+  tva? : number | null;
   trainings : Array<TrainingModel>;
 }

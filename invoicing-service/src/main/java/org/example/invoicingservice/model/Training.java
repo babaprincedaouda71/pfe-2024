@@ -15,6 +15,7 @@ public class Training {
     private Long idClient;
     private String theme;
     private List<String> trainingDates;
+    private List<Group> groups;
     private int days;
     private int staff;
     private Long idVendor;

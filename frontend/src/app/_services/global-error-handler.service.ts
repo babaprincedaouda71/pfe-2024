@@ -50,6 +50,7 @@ export class GlobalErrorHandlerService implements ErrorHandler {
           errorMessage = 'Service non disponible : le service est temporairement indisponible.';
           this.printErrorMessage(errorMessage);
           break;
+
         default:
           // errorMessage = `Erreur du serveur : ${error.status}, message : ${error.error.message || error.statusText}`;
           this.printErrorMessage(error);

@@ -264,10 +264,10 @@
           <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
             État
           </th>
-          <td *matCellDef="let element" class="f-s-14" mat-cell>
+          <td *matCellDef="let element" class="lifecycle f-s-14" mat-cell>
             <ng-container *ngFor="let group of element.groups">
               <ul>
-                <li (click)="openLifeCycleDialog('lifeCycle', group, element.idTraining)">
+                <li (click)="openLifeCycleDialog('lifeCycle', group)">
           <span *ngIf="group.status === 'Recherche_formateur'"
                 class="p-x-8 p-y-4 bg-light-primary f-w-600 rounded-pill f-s-12">
             Recherche Formateur

@@ -52,6 +52,13 @@ export class DetailInvoiceComponent implements OnInit, OnDestroy {
           this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         })
     }
+    if (invoice.invoiceType == 'groupInvoice') {
+      this.invoicingService.generateGroupsInvoicePDF(invoice.numberInvoice, invoice.trainings, invoice.client)
+        .then((blob: any) => {
+          const url = URL.createObjectURL(blob);
+          this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        })
+    }
   }
 
   onEditInvoice(invoice: InvoiceModel) {

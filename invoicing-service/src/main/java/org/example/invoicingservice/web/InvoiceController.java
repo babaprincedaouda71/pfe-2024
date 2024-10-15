@@ -2,11 +2,15 @@ package org.example.invoicingservice.web;
 
 import org.example.invoicingservice.entity.Invoice;
 import org.example.invoicingservice.service.InvoiceService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/invoice")
@@ -27,6 +31,12 @@ public class InvoiceController {
     @PreAuthorize("hasAuthority('admin')")
     Invoice addInvoice(@RequestBody Invoice invoice) {
         return invoiceService.saveTrainingInvoice(invoice);
+    }
+
+    @PostMapping("/add/group-invoice")
+    @PreAuthorize("hasAuthority('admin')")
+    Invoice addGroupsInvoice(@RequestBody Invoice invoice) {
+        return invoiceService.saveGroupsInvoice(invoice);
     }
 
     @GetMapping("/find/all")
@@ -80,4 +90,15 @@ public class InvoiceController {
             @RequestParam(value = "copyRemise", required = false) MultipartFile copyRemise) {
         return invoiceService.updateStatus(invoiceData, cheque, copyRemise);
     }
+
+    @GetMapping("/nextInvoiceNumber")
+    public ResponseEntity<Map<String, String>> getNewInvoiceNumber(@RequestParam int year, @RequestParam int month) {
+        String newInvoiceNumber = invoiceService.generateNewInvoiceNumber(year, month);
+        // Créez une réponse JSON
+        Map<String, String> response = new HashMap<>();
+        response.put("invoiceNumber", newInvoiceNumber);
+
+        return ResponseEntity.ok(response);
+    }
+
 }

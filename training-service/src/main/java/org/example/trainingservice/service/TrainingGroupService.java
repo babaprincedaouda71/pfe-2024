@@ -1,12 +1,13 @@
 package org.example.trainingservice.service;
 
+import org.example.trainingservice.dto.TrainingGroupDTO;
 import org.example.trainingservice.entity.TrainingGroup;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface TrainingGroupService {
-  List<TrainingGroup> getAllTrainingGroups();
+  List<TrainingGroupDTO> getAllTrainingGroups();
 
   TrainingGroup updateStatus(Long groupId, TrainingGroup trainingGroup, String status);
 
@@ -27,4 +28,6 @@ public interface TrainingGroupService {
       MultipartFile presenceList, MultipartFile evaluation, Long idGroup);
 
   TrainingGroup removeTrainingNotes(Long idGroup, TrainingGroup trainingGroup);
+
+  List<TrainingGroupDTO> getGroupsToBeInvoiced();
 }

@@ -16,4 +16,8 @@ public class GroupMapper {
     public TrainingGroup fromTrainingGroupDTO(TrainingGroupDTO trainingGroupDTO) {
         return modelMapper.map(trainingGroupDTO, TrainingGroup.class);
     }
+
+    public TrainingGroupDTO fromTrainingGroupToDTO(TrainingGroup trainingGroup) {
+        return modelMapper.map(trainingGroup, TrainingGroupDTO.class);
+    }
 }

@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {CommonModule, DatePipe} from '@angular/common';
 
 import {TrainingRoutingModule} from './training-routing.module';
@@ -53,9 +53,10 @@ import {
   GroupComponent,
   LifecycleDialogContentComponent, LifecycleDocumentsDialogComponent,
 } from './group/group.component';
-
+import {DetailGroupComponent} from "./groups/detail-group/detail-group.component";
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     TrainingComponent,
     AppTrainingDialogContentComponent,
@@ -70,6 +71,7 @@ import {
     LifeCycleComponent,
     TrainingLifecycleDialogComponent,
     GroupComponent,
+    DetailGroupComponent
   ],
     imports: [
         CommonModule,

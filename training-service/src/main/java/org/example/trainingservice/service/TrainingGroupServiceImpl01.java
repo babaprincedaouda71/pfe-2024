@@ -2,11 +2,16 @@ package org.example.trainingservice.service;
 
 import org.example.trainingservice.clients.ClientRest;
 import org.example.trainingservice.clients.VendorRest;
+import org.example.trainingservice.dto.TrainingDTO;
+import org.example.trainingservice.dto.TrainingForGroupDTO;
+import org.example.trainingservice.dto.TrainingGroupDTO;
+import org.example.trainingservice.entity.Training;
 import org.example.trainingservice.entity.TrainingGroup;
 import org.example.trainingservice.entity.TrainingGroupLifeCycle;
 import org.example.trainingservice.enums.TrainingGroupStatus;
 import org.example.trainingservice.exceptions.TrainingGroupNotFoundException;
-import org.example.trainingservice.model.Vendor;
+import org.example.trainingservice.mapper.GroupMapper;
+import org.example.trainingservice.model.Client;
 import org.example.trainingservice.repo.TrainingGroupRepo;
 import org.example.trainingservice.repo.TrainingRepository;
 import org.springframework.stereotype.Service;
@@ -15,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,28 +31,40 @@ public class TrainingGroupServiceImpl01 implements TrainingGroupService {
   private final TrainingGroupRepo trainingGroupRepo;
   private final ClientRest clientRest;
   private final VendorRest vendorRest;
+  private final GroupMapper groupMapper;
   private int staff;
 
   public TrainingGroupServiceImpl01(
-      TrainingRepository trainingRepository,
-      TrainingGroupRepo trainingGroupRepo,
-      ClientRest clientRest,
-      VendorRest vendorRest) {
+          TrainingRepository trainingRepository,
+          TrainingGroupRepo trainingGroupRepo,
+          ClientRest clientRest,
+          VendorRest vendorRest, GroupMapper groupMapper) {
     this.trainingRepository = trainingRepository;
     this.trainingGroupRepo = trainingGroupRepo;
     this.clientRest = clientRest;
     this.vendorRest = vendorRest;
+      this.groupMapper = groupMapper;
   }
 
   @Override
-  public List<TrainingGroup> getAllTrainingGroups() {
+  public List<TrainingGroupDTO> getAllTrainingGroups() {
     List<TrainingGroup> all = trainingGroupRepo.findAll();
+    List<TrainingGroupDTO> groupDTOS = new ArrayList<>();
     all.forEach(
         trainingGroup -> {
-          Vendor supplier = vendorRest.findVendorById(trainingGroup.getIdVendor());
-          trainingGroup.setSupplier(supplier);
+          TrainingGroupDTO groupDTO = groupMapper.fromTrainingGroupToDTO(trainingGroup);
+          // Mapper le training vers le DTO
+          TrainingForGroupDTO trainingDTO = new TrainingForGroupDTO();
+          Training training = trainingGroup.getTraining();
+          if (training != null) {
+            trainingDTO.setIdTraining(training.getIdTraining());
+            trainingDTO.setTheme(training.getTheme());
+            trainingDTO.setIdClient(training.getIdClient());
+          }
+          groupDTO.setTraining(trainingDTO);
+          groupDTOS.add(groupDTO);
         });
-    return all;
+    return groupDTOS;
   }
 
   @Override
@@ -137,6 +155,7 @@ public class TrainingGroupServiceImpl01 implements TrainingGroupService {
   /*Documents de la formation*/
   @Override
   public TrainingGroup addPv(String pv, Long idGroup) {
+
     TrainingGroup group =
         trainingGroupRepo
             .findById(idGroup)
@@ -144,7 +163,7 @@ public class TrainingGroupServiceImpl01 implements TrainingGroupService {
                 () ->
                     new TrainingGroupNotFoundException(
                         "Le groupe avec id " + idGroup + " n'existe pas"));
-    group.setPv(pv);
+    group.getTraining().setPv(pv);
     return trainingGroupRepo.save(group);
   }
 
@@ -171,7 +190,7 @@ public class TrainingGroupServiceImpl01 implements TrainingGroupService {
                     new TrainingGroupNotFoundException(
                         "Le Groupe avec id " + idGroup + " n'existe pas"));
     try {
-      group.setTrainingSupport(trainingSupport.getBytes());
+      group.getTraining().setTrainingSupport(trainingSupport.getBytes());
       return trainingGroupRepo.save(group);
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -252,5 +271,18 @@ public class TrainingGroupServiceImpl01 implements TrainingGroupService {
     group.setPresenceList(null);
     group.setEvaluation(null);
     return trainingGroupRepo.save(group);
+  }
+
+  @Override
+  public List<TrainingGroupDTO> getGroupsToBeInvoiced() {
+    List<TrainingGroup> groupsByStatus = trainingGroupRepo.findTrainingGroupsByStatus(TrainingGroupStatus.Facturation);
+    List<TrainingGroupDTO> dtos = new ArrayList<>();
+    groupsByStatus.forEach(trainingGroup -> {
+      Client clientById = clientRest.findClientById(trainingGroup.getTraining().getIdClient());
+      TrainingGroupDTO trainingGroupDTO = groupMapper.fromTrainingGroupToDTO(trainingGroup);
+      trainingGroupDTO.getTraining().setCorporateName(clientById.getCorporateName());
+      dtos.add(trainingGroupDTO);
+    });
+    return dtos;
   }
 }

@@ -98,7 +98,12 @@
     <a mat-button [routerLink]="['client']">Client</a>
     <a mat-button [routerLink]="['vendor']">Fournisseur</a>
     <a mat-button [routerLink]="['training']">Formation</a>
-    <a mat-button [routerLink]="['invoicing']">Facturation</a>
+<!--    <a mat-button [routerLink]="['invoicing']">Facturation</a>-->
+    <button mat-button [matMenuTriggerFor]="menu">Facturation</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item [routerLink]="['invoicing']">Liste des Factures</button>
+      <button mat-menu-item [routerLink]="['/invoicing/invoice-groups']">Liste des groupes à facturer</button>
+    </mat-menu>
   </div>
 
   <span class="flex-1-auto"></span>

@@ -1,5 +1,5 @@
 import {ClientModel} from "./client.model";
-import {TrainingModel} from "./training.model";
+import {GroupModel, TrainingModel} from "./training.model";
 import {ProductItem} from "./standardInvoice";
 
 export interface InvoiceModel {
@@ -10,6 +10,7 @@ export interface InvoiceModel {
   client : ClientModel,
   idTraining: number;
   trainings : Array<TrainingModel>,
+  groups : Array<GroupModel>,
   products : Array<ProductItem>,
   ht : number;
   tva : number;

@@ -57,7 +57,7 @@ export class GroupService {
     return this.http.put<GroupModel>(`${this.host}/trainingGroup/remove/trainingNotes/${idTraining}`, group)
   }
 
-  public getGroupsByTraining(idTraining : number) {
-    return this.http.get<TrainingModel>(`${this.host}/training/find/groupsByTraining/${idTraining}`)
+  public getGroupsToBeInvoiced() {
+    return this.http.get<Array<GroupModel>>(`${this.host}/trainingGroup/find/groupsToBeInvoiced`)
   }
 }

@@ -43,4 +43,8 @@ public interface TrainingService {
     List<TrainingInvoiceDTO> getTrainingsByClient(Long idClient);
 
     TrainingDTO getGroupsByTraining(Long idTraining);
+
+    boolean checkIfPvExists(Long idTraining);
+
+    boolean checkIfTrainingSupportExists(Long idTraining);
 }

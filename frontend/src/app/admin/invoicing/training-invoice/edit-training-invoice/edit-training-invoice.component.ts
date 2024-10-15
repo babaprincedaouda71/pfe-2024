@@ -40,6 +40,9 @@ export class EditTrainingInvoiceComponent implements OnInit {
   trainings!: Array<TrainingModel>;
   private userProfile!: KeycloakProfile;
 
+  selectedDate: Date = new Date(); // Date sélectionnée dans le calendrier
+  invoiceNumber: string = '';
+
   constructor(private clientService: ClientService,
               private invoicingService: InvoicingService,
               private router: Router,
@@ -105,7 +108,7 @@ export class EditTrainingInvoiceComponent implements OnInit {
   buildForm() {
     this.editTrainingInvoiceForm = this.formBuilder.group({
       idClient: [this.invoice.idClient, [Validators.required, Validators.minLength(6)]],
-      numberInvoice: [this.invoice.numberInvoice, [referenceValidator()]],
+      numberInvoice: [this.invoice.numberInvoice, [referenceValidator(this.selectedDate)]],
       createdAt: [this.invoice.createdAt, [Validators.required, Validators.minLength(6)]],
     })
 
@@ -219,5 +222,19 @@ export class EditTrainingInvoiceComponent implements OnInit {
     const rowMonth = new Date(row.completionDate).getMonth();
 
     return selectedClient === rowClient && selectedMonth === rowMonth;
+  }
+
+  updateInvoiceNumber() {
+    const year = this.selectedDate.getFullYear() % 100; // Récupérer les deux derniers chiffres de l'année
+    const month = this.selectedDate.getMonth() + 1; // Les mois commencent à 0 en JS
+
+    this.invoicingService.getNextInvoiceNumber(year, month).subscribe((nextNum: string) => {
+      this.invoiceNumber = nextNum;
+    });
+  }
+
+  onDateChange(event: any) {
+    this.selectedDate = event.value; // Mettre à jour la date sélectionnée
+    this.updateInvoiceNumber();
   }
 }

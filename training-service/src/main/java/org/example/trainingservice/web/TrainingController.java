@@ -143,4 +143,16 @@ public class TrainingController {
     public TrainingDTO getGroupsByTraining(@PathVariable Long idTraining) {
         return trainingService.getGroupsByTraining(idTraining);
     }
+
+    @GetMapping("/checkPv/{idTraining}")
+    @PreAuthorize("hasAnyAuthority('admin','user')")
+    public boolean checkIfPvExists(@PathVariable Long idTraining) {
+        return trainingService.checkIfPvExists(idTraining);
+    }
+
+    @GetMapping("/checkTrainingSupport/{idTraining}")
+    @PreAuthorize("hasAnyAuthority('admin','user')")
+    public boolean checkIfTrainingSupportExists(@PathVariable Long idTraining) {
+        return trainingService.checkIfTrainingSupportExists(idTraining);
+    }
 }

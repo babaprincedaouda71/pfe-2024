@@ -4,11 +4,14 @@ import org.example.invoicingservice.entity.Invoice;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface InvoiceService {
     Invoice saveStandardInvoice(Invoice invoice);
 
     Invoice saveTrainingInvoice(Invoice invoice);
+
+    Invoice saveGroupsInvoice(Invoice invoice);
 
     List<Invoice> findAllInvoices();
 
@@ -25,4 +28,6 @@ public interface InvoiceService {
     void deleteInvoice(Long idInvoice);
 
     Invoice updateStatus(String invoiceData, MultipartFile cheque, MultipartFile copyRemise);
+
+    String generateNewInvoiceNumber(int year, int month);
 }

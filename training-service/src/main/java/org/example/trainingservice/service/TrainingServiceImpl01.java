@@ -41,18 +41,21 @@ public class TrainingServiceImpl01 implements TrainingService {
   private final ClientRest clientRest;
   private final VendorRest vendorRest;
   private int staff;
+  private final TrainingGroupService trainingGroupService;
 
   public TrainingServiceImpl01(
       TrainingRepository trainingRepository,
       TrainingGroupRepo trainingGroupRepo,
       TrainingMapper trainingMapper,
       ClientRest clientRest,
-      VendorRest vendorRest) {
+      VendorRest vendorRest,
+      TrainingGroupService trainingGroupService) {
     this.trainingRepository = trainingRepository;
     this.trainingGroupRepo = trainingGroupRepo;
     this.trainingMapper = trainingMapper;
     this.clientRest = clientRest;
     this.vendorRest = vendorRest;
+    this.trainingGroupService = trainingGroupService;
     this.staff = 0;
   }
 
@@ -96,6 +99,7 @@ public class TrainingServiceImpl01 implements TrainingService {
 
     training.setStaff(staff);
     training.setGroups(trainingGroups);
+    training.setAmount(addTrainingDTO.getAmount());
     // Réinitialistion de staff
     staff = 0;
 
@@ -112,13 +116,22 @@ public class TrainingServiceImpl01 implements TrainingService {
               trainingGroup.setGroupLifeCycle(new TrainingGroupLifeCycle());
             });
 
-
     // Set dates
     training.setTrainingDates(datesList);
 
     // Enregistrement de la formation et des groupes
     Training savedTraining = trainingRepository.save(training);
-    trainingGroupRepo.saveAll(trainingGroups);
+    List<TrainingGroup> savedGroups = trainingGroupRepo.saveAll(trainingGroups);
+    savedGroups.forEach(
+        trainingGroup -> {
+          if (trainingGroup.getIdVendor() != null) {
+            trainingGroup.getGroupLifeCycle().setTrainerSearch(true);
+            trainingGroupService.updateStatus(
+                trainingGroup.getIdGroup(), trainingGroup, "Validation_Formateur");
+          }
+        });
+
+    trainingGroupRepo.saveAll(savedGroups);
 
     return trainingMapper.fromTrainingToAddTrainingDTO(savedTraining);
   }
@@ -554,11 +567,29 @@ public class TrainingServiceImpl01 implements TrainingService {
   @Override
   public TrainingDTO getGroupsByTraining(Long idTraining) {
     Training training =
-            trainingRepository
-                    .findById(idTraining)
-                    .orElseThrow(() -> new TrainingNotFoundException("Training Not Found"));
+        trainingRepository
+            .findById(idTraining)
+            .orElseThrow(() -> new TrainingNotFoundException("Training Not Found"));
     Client client = clientRest.findClientById(training.getIdClient());
     training.setClient(client);
     return trainingMapper.fromTraining(training);
+  }
+
+  @Override
+  public boolean checkIfPvExists(Long idTraining) {
+    return trainingRepository
+        .findById(idTraining)
+        .map(training -> training.getPv() != null && !training.getPv().isEmpty())
+        .orElse(false);
+  }
+
+  @Override
+  public boolean checkIfTrainingSupportExists(Long idTraining) {
+    return trainingRepository
+        .findById(idTraining)
+        .map(
+            training ->
+                training.getTrainingSupport() != null && training.getTrainingSupport().length > 0)
+        .orElse(false);
   }
 }

@@ -12,7 +12,9 @@ import {DetailPdfComponent} from "./standard-invoice/detail-pdf/detail-pdf.compo
 import {DetailInvoiceComponent} from "./detail-invoice/detail-invoice.component";
 import {EditTrainingInvoiceComponent} from "./training-invoice/edit-training-invoice/edit-training-invoice.component";
 import {ValidateClientTrainingComponent} from "./validate-client-training/validate-client-training.component";
-import {InvoiceGroupsComponent} from "./invoice-groups/invoice-groups.component";
+import {InvoiceGroupsComponent} from "./groups-invoice/groups-invoice/invoice-groups.component";
+import {EditGroupsInvoiceComponent} from "./groups-invoice/edit-groups-invoice/edit-groups-invoice.component";
+import {DetailGroupsInvoiceComponent} from "./groups-invoice/detail-groups-invoice/detail-groups-invoice.component";
 const routes: Routes = [
   {
     path : '',
@@ -29,7 +31,7 @@ const routes: Routes = [
     }
   },
   {
-    path : 'invoice-groups/:idTraining',
+    path : 'invoice-groups',
     component: InvoiceGroupsComponent,
     data : {
       title: 'Facturation de Groupes de Formation'
@@ -82,6 +84,20 @@ const routes: Routes = [
     component: EditTrainingInvoiceComponent,
     data : {
       title: 'Modification Facture'
+    }
+  },
+  {
+    path : 'edit-groups-invoice',
+    component: EditGroupsInvoiceComponent,
+    data : {
+      title: 'Édition de la Facture'
+    }
+  },
+  {
+    path : 'detail-groups-invoice',
+    component: DetailGroupsInvoiceComponent,
+    data : {
+      title: 'Détails de la Facture'
     }
   },
   {

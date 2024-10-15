@@ -193,6 +193,13 @@
                 <i-tabler name="edit" class="icon-18"></i-tabler>
               </a>
             }
+            @if (element.invoiceType == 'groupInvoice' && element.status == 'Non_Réglée') {
+              <a
+                [routerLink]="['edit-groups-invoice', element.idInvoice]"
+                class="m-r-10 cursor-pointer">
+                <i-tabler name="edit" class="icon-18"></i-tabler>
+              </a>
+            }
             @if (element.invoiceType == 'trainingModule') {
               <a
                 [routerLink]="['edit-training-invoice', element.idInvoice]"

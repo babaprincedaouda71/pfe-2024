@@ -29,6 +29,9 @@ export class AddComponent implements OnInit, OnDestroy {
   private userProfile!: KeycloakProfile;
   private subscriptions: Subscription[] = []
 
+  selectedDate: Date = new Date(); // Date sélectionnée dans le calendrier
+  invoiceNumber: string = '';
+
 
   constructor(private formBuilder: FormBuilder,
               private clientService: ClientService,
@@ -78,7 +81,7 @@ export class AddComponent implements OnInit, OnDestroy {
   buildForm() {
     this.addStandardInvoiceForm = this.formBuilder.group({
       idClient: [null, [Validators.required, Validators.minLength(6)]],
-      numberInvoice: [null, [referenceValidator()]],
+      numberInvoice: [null, [referenceValidator(this.selectedDate)]],
       createdAt: [new Date(), [Validators.required, Validators.minLength(6)]],
       addDeadline: [],
       products: this.formBuilder.array([]),
@@ -285,5 +288,19 @@ export class AddComponent implements OnInit, OnDestroy {
     this.addStandardInvoiceForm.get('tva')?.valueChanges.subscribe(() => {
       this.calculateTotals();
     });
+  }
+
+  updateInvoiceNumber() {
+    const year = this.selectedDate.getFullYear() % 100; // Récupérer les deux derniers chiffres de l'année
+    const month = this.selectedDate.getMonth() + 1; // Les mois commencent à 0 en JS
+
+    this.invoicingService.getNextInvoiceNumber(year, month).subscribe((nextNum: string) => {
+      this.invoiceNumber = nextNum;
+    });
+  }
+
+  onDateChange(event: any) {
+    this.selectedDate = event.value; // Mettre à jour la date sélectionnée
+    this.updateInvoiceNumber();
   }
 }

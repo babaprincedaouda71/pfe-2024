@@ -33,10 +33,12 @@ export interface GroupModel {
   endDate : string;
   groupDates: Array<string>;
   idVendor: number | null;
+  idTraining : number | null;
   supplier: Vendor;
   completionDate : string
   groupLifeCycle: LifecycleModel
   status: string;
+  training : TrainingDTO
 }
 
 export interface LifecycleModel {
@@ -51,5 +53,28 @@ export interface LifecycleModel {
   invoicing: boolean;
   payment: boolean;
   reference : boolean;
+}
+
+export interface TrainingDTO {
+  idTraining: number;
+  idClient: number;
+  theme: string;
+  trainingSupport: Uint8Array | undefined;
+  pv : string | undefined;
+}
+
+export interface GroupDTO {
+  idGroup: number;
+  groupStaff: number;
+  location: string;
+  startDate : string;
+  endDate : string;
+  groupDates: Array<string>;
+  idVendor: number | null;
+  supplier: Vendor;
+  completionDate : string
+  groupLifeCycle: LifecycleModel
+  status: string;
+  training: TrainingDTO;  // Contient uniquement les données filtrées
 }
 

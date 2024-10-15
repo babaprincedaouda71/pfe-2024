@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { InvoicingRoutingModule } from './invoicing-routing.module';
@@ -33,7 +33,6 @@ import {MatPaginator} from "@angular/material/paginator";
 import {TablerIconsModule} from "angular-tabler-icons";
 import {MatDialogActions, MatDialogTitle} from "@angular/material/dialog";
 import { ClientTrainingComponent } from './client-training/client-training.component';
-import {MatCheckbox} from "@angular/material/checkbox";
 import { AddComponent } from './standard-invoice/add/add.component';
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
 import {MatOption} from "@angular/material/autocomplete";
@@ -48,9 +47,13 @@ import { DetailInvoiceComponent } from './detail-invoice/detail-invoice.componen
 import { EditTrainingInvoiceComponent } from './training-invoice/edit-training-invoice/edit-training-invoice.component';
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import { ValidateClientTrainingComponent } from './validate-client-training/validate-client-training.component';
-import {InvoiceGroupsComponent} from "./invoice-groups/invoice-groups.component";
+import {InvoiceGroupsComponent} from "./groups-invoice/groups-invoice/invoice-groups.component";
+import {EditGroupsInvoiceComponent} from "./groups-invoice/edit-groups-invoice/edit-groups-invoice.component";
+import {MatCheckbox} from "@angular/material/checkbox";
+import { DetailGroupsInvoiceComponent } from './groups-invoice/detail-groups-invoice/detail-groups-invoice.component';
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     InvoiceComponent,
     InvoiceDialogContentComponent,
@@ -64,7 +67,9 @@ import {InvoiceGroupsComponent} from "./invoice-groups/invoice-groups.component"
     DetailInvoiceComponent,
     EditTrainingInvoiceComponent,
     ValidateClientTrainingComponent,
-    InvoiceGroupsComponent
+    InvoiceGroupsComponent,
+    EditGroupsInvoiceComponent,
+    DetailGroupsInvoiceComponent
   ],
   imports: [
     CommonModule,

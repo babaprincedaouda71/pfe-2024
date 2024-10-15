@@ -2,6 +2,7 @@ package org.example.trainingservice.web;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.example.trainingservice.dto.TrainingGroupDTO;
 import org.example.trainingservice.entity.TrainingGroup;
 import org.example.trainingservice.service.TrainingGroupService;import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,7 +17,7 @@ public class TrainingGroupController {
 
     @GetMapping("/all")
     @PreAuthorize("hasAnyAuthority('admin','user')")
-    public List<TrainingGroup> getAll() {
+    public List<TrainingGroupDTO> getAll() {
         return trainingGroupService.getAllTrainingGroups();
     }
 
@@ -87,5 +88,11 @@ public class TrainingGroupController {
             @PathVariable Long idGroup,
             @RequestBody TrainingGroup trainingGroup) {
         return trainingGroupService.removeTrainingNotes(idGroup, trainingGroup);
+    }
+
+    @GetMapping("/find/groupsToBeInvoiced")
+    @PreAuthorize("hasAnyAuthority('admin','user')")
+    public List<TrainingGroupDTO> getGroupsToBeInvoiced() {
+        return trainingGroupService.getGroupsToBeInvoiced();
     }
 }

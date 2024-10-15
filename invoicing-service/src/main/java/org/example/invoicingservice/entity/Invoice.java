@@ -5,6 +5,7 @@ import lombok.*;
 import org.example.invoicingservice.enums.InvoiceStatus;
 import org.example.invoicingservice.enums.InvoiceType;
 import org.example.invoicingservice.model.Client;
+import org.example.invoicingservice.model.Group;
 import org.example.invoicingservice.model.Product;
 import org.example.invoicingservice.model.Training;
 
@@ -18,56 +19,55 @@ import java.util.List;
 @Builder
 @ToString
 public class Invoice {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idInvoice;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long idInvoice;
 
-    private String numberInvoice;
+  private String numberInvoice;
 
-    @Enumerated(EnumType.STRING)
-    private InvoiceType invoiceType;
+  @Enumerated(EnumType.STRING)
+  private InvoiceType invoiceType;
 
-    private String createdAt;
+  private String createdAt;
 
-    private Long idClient;
+  private Long idClient;
 
-    @Transient
-    private Client client;
+  @Transient private Client client;
 
-    private String editor;
+  private String editor;
 
-    private InvoiceStatus status;
+  private InvoiceStatus status;
 
-    private boolean expired;
+  private boolean expired;
 
-    private String paymentDate;
+  private String paymentDate;
 
-    private String paymentMethod;
+  private String paymentMethod;
 
-    private int deadline;
+  private int deadline;
 
+  private double ht;
 
-    private Double ht;
+  private float tva;
 
-    private float tva;
+  private float travelExpenses;
 
-    private float travelExpenses;
+  private Double ttc;
 
-    private Double ttc;
+  @ElementCollection List<Long> trainingIds;
 
-    @ElementCollection
-    List<Long> trainingIds;
+  @Transient private List<Training> trainings;
 
-    @Transient
-    private List<Training> trainings;
+  @Transient List<Group> trainingGroups;
 
-    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
-    private List<Product> products;
+  @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
+  private List<Product> products;
 
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] cheque;
+  @Lob
+  @Column(columnDefinition = "LONGBLOB")
+  private byte[] cheque;
 
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] copyRemise;
+  @Lob
+  @Column(columnDefinition = "LONGBLOB")
+  private byte[] copyRemise;
 }

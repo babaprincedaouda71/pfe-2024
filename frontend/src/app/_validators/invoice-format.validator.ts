@@ -51,13 +51,13 @@ export function referenceTrainingValidator(): ValidatorFn {
 }
 
 
-export function referenceValidator(): ValidatorFn {
+export function referenceValidator(selectedDate : Date): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const value = control.value;
     if (!value) return null; // Ignore validation if no value
 
-    const year = new Date().getFullYear().toString().slice(-2); // les deux derniers chiffres de l'année
-    const month = ('0' + (new Date().getMonth() + 1)).slice(-2); // le mois actuel avec deux chiffres
+    const year = selectedDate.getFullYear().toString().slice(-2); // les deux derniers chiffres de l'année
+    const month = ('0' + (selectedDate.getMonth() + 1)).slice(-2); // le mois actuel avec deux chiffres
 
     // Créer un pattern pour correspondre au format AAmm-xxx
     const pattern = new RegExp(`^${year}${month}-\\d{3}$`);

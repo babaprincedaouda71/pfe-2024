@@ -3,30 +3,31 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {GroupModel} from "../../../../models/training.model";
 import {DatesService} from "../../../_services/dates.service";
-import {firstValueFrom, Subscription} from "rxjs";
+import {firstValueFrom, Observable, Subscription} from "rxjs";
 import {TrainingLifecycleDialogContentComponent} from "../training/training.component";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
 import {GroupService} from "../../../_services/group.service";
 import {TrainingLifecycleDialogComponent} from "../detail-training/detail-training.component";
+import {TrainingService} from "../../../_services/training.service";
 
 @Component({
   selector: 'app-group',
   templateUrl: './group.component.html',
   styleUrl: './group.component.scss'
 })
-export class GroupComponent implements OnInit, OnDestroy{
+export class GroupComponent implements OnInit, OnDestroy {
   dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator = Object.create(null);
   displayedColumns: string[] = ['group', 'supplier', 'dates', 'staff', 'status', 'action'];
-  groups! : Array<GroupModel>
+  groups!: Array<GroupModel>
 
   private subscriptions: Subscription[] = []
 
 
-  constructor(private groupService : GroupService,
-              public dateService : DatesService,
+  constructor(private groupService: GroupService,
+              public dateService: DatesService,
               public dialog: MatDialog,
   ) {
   }
@@ -41,8 +42,9 @@ export class GroupComponent implements OnInit, OnDestroy{
 
   getGroups() {
     const groupSubscription = this.groupService.getGroups().subscribe({
-      next : data => {
+      next: data => {
         this.groups = data
+        console.log(data)
         this.dataSource = new MatTableDataSource(this.groups)
         this.dataSource.paginator = this.paginator
       }
@@ -87,13 +89,12 @@ export class GroupComponent implements OnInit, OnDestroy{
 @Component({
   selector: 'lifecycle-dialog-content',
   templateUrl: 'lifecycle-dialog-content.html',
-  styleUrl : './lifecycle-dialog-content.scss'
+  styleUrl: './lifecycle-dialog-content.scss'
 })
 
-export class LifecycleDialogContentComponent{
+export class LifecycleDialogContentComponent {
   action!: string;
   local_data: any
-  idTraining! : number
   showTrainingSupportForm: boolean = false;
   showPV: boolean = false;
   pv!: string
@@ -101,16 +102,17 @@ export class LifecycleDialogContentComponent{
   selectedTrainingSupport!: File
   selectedPresenceList!: File
   selectedEvaluation!: File
+  private subscriptions: Subscription[] = [];
 
   constructor(public dialogRef: MatDialogRef<TrainingLifecycleDialogContentComponent>,
               @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
               public dialog: MatDialog,
               private groupService: GroupService,
               private snackBar: MatSnackBar,
-              private router: Router) {
+              private router: Router,
+              private trainingService: TrainingService) {
     this.local_data = {...data.obj}
     this.action = data.action
-    this.idTraining = data.idTraining
     this.selectedTrainingSupport = this.local_data.trainingSupport
   }
 
@@ -128,28 +130,6 @@ export class LifecycleDialogContentComponent{
     this.dialogRef.close({event: 'Cancel'});
   }
 
-  //Réinitialiser les checkbox en cas d'erreur
-  private resetCheckboxes(currentCheckbox: string) {
-    const checkboxOrder = [
-      'trainerSearch',
-      'trainerValidation',
-      'kickOfMeeting',
-      'trainingSupport',
-      'impression',
-      'completion',
-      'certif',
-      'invoicing',
-      'payment'
-    ];
-
-    const currentIndex = checkboxOrder.indexOf(currentCheckbox);
-    if (currentIndex !== -1) {
-      for (let i = currentIndex + 1; i < checkboxOrder.length; i++) {
-        this.local_data.groupLifeCycle[checkboxOrder[i]] = false;
-      }
-    }
-  }
-
   // Update training life cycle
   updateLifeCycle(group: GroupModel): Promise<GroupModel> {
     return firstValueFrom(this.groupService.updateLifeCycle(group.idGroup, group));
@@ -163,9 +143,13 @@ export class LifecycleDialogContentComponent{
       this.closeDialog()
       // appeler le dialog qui demande d'attribuer un formateur au groupe
     }
+    this.removeTrainingNotes()
+    this.removePv(this.local_data.idTraining)
+    this.removeTrainingSupport()
     this.resetCheckboxes('trainerSearch')
     this.updateLifeCycle(this.local_data)
-      .then(() => {})
+      .then(() => {
+      })
       .catch(err => {
         console.log(err.message)
       })
@@ -181,15 +165,41 @@ export class LifecycleDialogContentComponent{
       });
   }
 
+  checkIfPvExists(idTraining: number): Observable<boolean> {
+    return this.trainingService.checkIfPvExists(idTraining);
+  }
+
   checkKickOfMeeting(event: any) {
     if (this.local_data.groupLifeCycle.kickOfMeeting && !this.local_data.groupLifeCycle.trainingSupport) {
       event.preventDefault();
       event.stopPropagation();
       this.local_data.groupLifeCycle.kickOfMeeting = false;
-      this.openLifeCycleDocumentsDialog('pv', this.local_data)
+
+      // Vérifier l'existence du PV avant de continuer
+      this.checkIfPvExists(this.local_data.idTraining).subscribe((pvExists: boolean) => {
+        if (pvExists) {
+          // Cochez la checkbox si le PV existe
+          this.local_data.groupLifeCycle.kickOfMeeting = true;
+          this.resetCheckboxes('kickOfMeeting');
+          this.updateLifeCycle(this.local_data)
+            .then(() => {
+            })
+            .catch(err => {
+              console.log(err.message);
+            });
+        } else {
+          // Si le PV n'existe pas, ouvrez la boîte de dialogue pour le télécharger
+          this.openLifeCycleDocumentsDialog('pv', this.local_data);
+        }
+      });
+
+
     } else {
       this.local_data.groupLifeCycle.kickOfMeeting = false;
       this.resetCheckboxes('kickOfMeeting');
+      this.removePv(this.local_data.idGroup)
+      this.removeTrainingNotes()
+      this.removeTrainingSupport()
       this.updateLifeCycle(this.local_data)
         .then(() => {
           // this.removePv(this.local_data.idGroup)
@@ -200,15 +210,41 @@ export class LifecycleDialogContentComponent{
     }
   }
 
+  checkIfTrainingSupportExists(idTraining: number): Observable<boolean> {
+    return this.trainingService.checkIfTrainingSupportExists(idTraining);
+  }
+
   checkTrainingSupport(event: any) {
     if (this.local_data.groupLifeCycle.trainingSupport && !this.local_data.groupLifeCycle.impression) {
       event.preventDefault();
       event.stopPropagation();
       this.local_data.groupLifeCycle.trainingSupport = false
-      this.openLifeCycleDocumentsDialog('trainingSupport', this.local_data)
+
+
+      // Vérifier si le support de formation existe
+      this.checkIfTrainingSupportExists(this.local_data.idTraining).subscribe((trainingSupportExists: boolean) => {
+        if (trainingSupportExists) {
+          // Cocher la case et continuer
+          this.local_data.groupLifeCycle.trainingSupport = true
+          this.resetCheckboxes('trainingSupport');
+          this.updateLifeCycle(this.local_data)
+            .then(() => {
+              // Continuez le traitement ici, par exemple, supprimez le support de formation s'il existe
+              // this.removeTrainingSupport(this.local_data.idGroup)
+            })
+            .catch(err => {
+              console.log(err.message);
+            });
+        } else {
+          this.openLifeCycleDocumentsDialog('trainingSupport', this.local_data)
+        }
+      })
+
     } else {
       this.resetCheckboxes('trainingSupport');
       this.local_data.groupLifeCycle.trainingSupport = false
+      this.removeTrainingSupport()
+      this.removeTrainingNotes()
       this.updateLifeCycle(this.local_data)
         .then(() => {
           // this.removeTrainingSupport()
@@ -248,6 +284,7 @@ export class LifecycleDialogContentComponent{
     } else {
       this.local_data.groupLifeCycle.certif = false
       this.resetCheckboxes('certif');
+      this.removeTrainingNotes()
       this.updateLifeCycle(this.local_data)
         .then(() => {
         })
@@ -262,7 +299,7 @@ export class LifecycleDialogContentComponent{
       event.preventDefault();
       event.stopPropagation();
       this.closeDialog()
-      this.router.navigate([`invoicing/invoice-groups/${this.idTraining}`])
+      this.router.navigate([`invoicing/invoice-groups`])
     } else {
       this.resetCheckboxes('invoicing');
       this.updateLifeCycle(this.local_data)
@@ -284,7 +321,7 @@ export class LifecycleDialogContentComponent{
       });
   }
 
-  checkReference(event : any) {
+  checkReference(event: any) {
     if (this.local_data.groupLifeCycle.reference) {
       event.preventDefault();
       event.stopPropagation();
@@ -293,6 +330,7 @@ export class LifecycleDialogContentComponent{
     } else {
       this.local_data.groupLifeCycle.reference = false
       this.resetCheckboxes('reference');
+      this.removeReferenceCertificate()
       this.updateLifeCycle(this.local_data)
         .then(() => {
         })
@@ -334,6 +372,97 @@ export class LifecycleDialogContentComponent{
       }
     })
   }
+
+  removePv(idTraining: number) {
+    const removePvSubscription = this.groupService.removePv(idTraining, this.local_data).subscribe({
+      next: data => {
+        this.updateLifeCycle(this.local_data)
+          .then(() => {
+          })
+          .catch(err => {
+            console.log(err.message);
+          });
+      },
+      error: error => {
+        console.log(error.message)
+      }
+    })
+    this.subscriptions.push(removePvSubscription)
+  }
+
+  removeTrainingSupport() {
+    const removeTrainingSupportSubscription = this.groupService.removeTrainingSupport(this.local_data.idTraining, this.local_data).subscribe({
+      next: data => {
+        this.updateLifeCycle(this.local_data)
+          .then(() => {
+            console.log(data)
+          })
+          .catch(err => {
+            console.log(err.message);
+          });
+      },
+      error: error => {
+        console.log(error.message)
+      }
+    })
+    this.subscriptions.push(removeTrainingSupportSubscription)
+  }
+
+  removeTrainingNotes() {
+    const removeTrainingNotesSubscription = this.groupService.removeTrainingNotes(this.local_data.idTraining, this.local_data).subscribe({
+      next: data => {
+        this.updateLifeCycle(this.local_data)
+          .then(() => {
+          })
+          .catch(err => {
+            console.log(err.message);
+          });
+      },
+      error: error => {
+        console.log(error.message)
+      }
+    })
+    this.subscriptions.push(removeTrainingNotesSubscription)
+  }
+
+  removeReferenceCertificate() {
+    const removeReferenceCertificateSubscription = this.groupService.removeReferenceCertificate(this.local_data.idTraining, this.local_data).subscribe({
+      next: data => {
+        this.updateLifeCycle(this.local_data)
+          .then(() => {
+          })
+          .catch(err => {
+            console.log(err.message);
+          });
+      },
+      error: error => {
+        console.log(error.message)
+      }
+    })
+    this.subscriptions.push(removeReferenceCertificateSubscription)
+  }
+
+  //Réinitialiser les checkbox en cas d'erreur
+  private resetCheckboxes(currentCheckbox: string) {
+    const checkboxOrder = [
+      'trainerSearch',
+      'trainerValidation',
+      'kickOfMeeting',
+      'trainingSupport',
+      'impression',
+      'completion',
+      'certif',
+      'invoicing',
+      'payment'
+    ];
+
+    const currentIndex = checkboxOrder.indexOf(currentCheckbox);
+    if (currentIndex !== -1) {
+      for (let i = currentIndex + 1; i < checkboxOrder.length; i++) {
+        this.local_data.groupLifeCycle[checkboxOrder[i]] = false;
+      }
+    }
+  }
 }
 
 /**/
@@ -351,7 +480,7 @@ export class LifecycleDocumentsDialogComponent {
   selectedReferenceCertificate!: File
   selectedPresenceList!: File
   selectedEvaluation!: File
-  private subscriptions : Subscription[] = []
+  private subscriptions: Subscription[] = []
 
   constructor(public dialogRef: MatDialogRef<TrainingLifecycleDialogComponent>,
               @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
