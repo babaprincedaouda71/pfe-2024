@@ -39,6 +39,12 @@ public class InvoiceController {
         return invoiceService.saveGroupsInvoice(invoice);
     }
 
+    @PostMapping("/update/group-invoice/{idInvoice}")
+    @PreAuthorize("hasAuthority('admin')")
+    Invoice updateGroupsInvoice(@RequestBody Invoice invoice, @PathVariable Long idInvoice) {
+        return invoiceService.updateGroupsInvoice(invoice, idInvoice);
+    }
+
     @GetMapping("/find/all")
     @PreAuthorize("hasAnyAuthority('admin','user')")
     List<Invoice> findAll() {

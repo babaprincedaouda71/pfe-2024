@@ -1,10 +1,13 @@
 package org.example.invoicingservice.client;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import org.example.invoicingservice.model.Group;
 import org.example.invoicingservice.model.Training;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -25,4 +28,7 @@ public interface TrainingRest {
     default List<Training> getAllDefaultTrainings(Exception exception){
         return List.of();
     }
+
+    @PutMapping("/trainingGroup/updateGroupe")
+    void markGroupAsInvoiced(@RequestBody Group group);
 }

@@ -68,6 +68,7 @@ public class ClientServiceApplication {
               .cnss("45454654654")
               .field("Etudes, Conseils, Formations")
               .commercialRegister("54545465")
+              .commonCompanyIdentifier("0555454454545")
               .emailMainContact("ydaoud@galaxysolutions.ma")
               .positionMainContact("Directeur Général")
               .professionalTax("54545454")
@@ -85,6 +86,7 @@ public class ClientServiceApplication {
               .phoneNumber("+1693823094")
               .website("www.microsoft.ma")
               .nameMainContact("Bill Gate")
+              .commonCompanyIdentifier("0555454454545")
               .color("#000080")
               .deadline(60)
               .build();
@@ -96,6 +98,7 @@ public class ClientServiceApplication {
               .email("amazon@gmail.com")
               .phoneNumber("+1693823094")
               .website("www.amazon.ma")
+              .commonCompanyIdentifier("0555454454545")
               .nameMainContact("Jeff Bezos")
               .color("#4169E1")
               .deadline(80)
@@ -286,7 +289,7 @@ public class ClientServiceApplication {
       clientRepository.save(client);
       clientRepository.save(client1);
       clientRepository.save(client2);
-//      clientRepository.save(client3);
+      //      clientRepository.save(client3);
       //			clientRepository.save(client4);
       //			clientRepository.save(client5);
       //			clientRepository.save(client6);

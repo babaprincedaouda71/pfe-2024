@@ -169,6 +169,7 @@
             Action
           </th>
           <td *matCellDef="let element" class="action-link" mat-cell>
+            <!--            View Invoice-->
             @if (element.invoiceType == 'standard') {
               <a
                 (click)="generateInvoice(element)"
@@ -186,6 +187,17 @@
                 >
               </a>
             }
+
+            <!--            Print invoice-->
+            <a
+              (click)="openDialog('Supprimer', element)"
+              class="m-r-10 cursor-pointer"
+            >
+              Print
+              <i-tabler class="icon-18" name="IconPrinter"></i-tabler>
+            </a>
+
+            <!--            Edit Invoice-->
             @if (element.invoiceType == 'standard' && element.status == 'Non_Réglée') {
               <a
                 [routerLink]="['edit-standard-invoice', element.idInvoice]"
@@ -195,7 +207,7 @@
             }
             @if (element.invoiceType == 'groupInvoice' && element.status == 'Non_Réglée') {
               <a
-                [routerLink]="['edit-groups-invoice', element.idInvoice]"
+                [routerLink]="['update-groups-invoice', element.idInvoice]"
                 class="m-r-10 cursor-pointer">
                 <i-tabler name="edit" class="icon-18"></i-tabler>
               </a>
@@ -207,6 +219,8 @@
                 <i-tabler name="edit" class="icon-18"></i-tabler>
               </a>
             }
+
+            <!--            Delete Invoice-->
             <a
               (click)="openDialog('Supprimer', element)"
               class="m-r-10 cursor-pointer"

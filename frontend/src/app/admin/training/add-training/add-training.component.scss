@@ -1,0 +1,35 @@
+.w-100 {
+  width: 100%;
+}
+
+.mat-form-field {
+  max-width: 120px; /* Réduit la taille maximale des inputs */
+}
+
+.date-range-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 400px;
+  flex-wrap: wrap;
+}
+
+.date-range-container span {
+  margin: 0 8px;
+}
+
+.date-field {
+  flex: 1;
+  min-width: 100px;
+  max-width: 120px;
+  margin: 0 2px;
+}
+
+@media (max-width: 768px) {
+  .date-range-container {
+    flex-direction: column;
+  }
+  .date-field {
+    width: 100%;
+  }
+}

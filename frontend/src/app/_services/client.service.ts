@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ClientModel} from "../../models/client.model";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -58,4 +59,7 @@ export class ClientService {
   }
 
   /*******************************************************************************/
+  getDeadline(clientId: number) : Observable<number> {
+    return this.http.get<number>(`${this.host}/client/find/getDeadline/${clientId}`)
+  }
 }

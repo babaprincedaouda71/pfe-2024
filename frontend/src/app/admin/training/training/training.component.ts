@@ -302,38 +302,6 @@ export class TrainingComponent implements OnInit, OnDestroy {
     this.subscriptions.push(deleteTrainingSubscription)
   }
 
-  /* Training Life Cycle*/
-  // openLifeCycleDialog(action: string, obj: TrainingModel) {
-  //   const dialogRef = this.dialog.open(TrainingLifecycleDialogContentComponent, {
-  //     data: {
-  //       obj: obj,
-  //       action: action
-  //     }
-  //   })
-  //
-  //   const openLifeCycleSubscription = dialogRef.afterClosed().subscribe((result) => {
-  //     if (result.event == 'lifeCycle') {
-  //       this.updateLifeCycle(result.data)
-  //     }
-  //   })
-  //
-  //   this.subscriptions.push(openLifeCycleSubscription)
-  // }
-
-  // Update training life cycle
-  // updateLifeCycle(training: TrainingModel) {
-  //   const updateLifeCycleSubscription = this.trainingService.updateLifeCycle(training.idTraining, training)
-  //     .subscribe({
-  //       next: data => {
-  //         this.getTrainings()
-  //       },
-  //       error: err => {
-  //         console.log(err.message)
-  //       }
-  //     })
-  //   this.subscriptions.push(updateLifeCycleSubscription)
-  // }
-
   // Method to check if it's the las group
   isLastGroup(groups: GroupModel[], group: GroupModel): boolean {
     return groups[groups.length - 1] === group;
@@ -354,6 +322,9 @@ export class TrainingComponent implements OnInit, OnDestroy {
     const openLifeCycleSubscription = dialogRef.afterClosed().subscribe((result) => {
       if (result.event == 'lifeCycle') {
         this.updateLifeCycle(result.data)
+      }
+      else {
+        this.getTrainings()
       }
     })
 

@@ -64,6 +64,9 @@ export class GroupComponent implements OnInit, OnDestroy {
       if (result.event == 'lifeCycle') {
         this.updateLifeCycle(result.data)
       }
+      else {
+        this.getGroups()
+      }
     })
 
     this.subscriptions.push(openLifeCycleSubscription)
@@ -92,7 +95,7 @@ export class GroupComponent implements OnInit, OnDestroy {
   styleUrl: './lifecycle-dialog-content.scss'
 })
 
-export class LifecycleDialogContentComponent {
+export class LifecycleDialogContentComponent implements OnDestroy{
   action!: string;
   local_data: any
   showTrainingSupportForm: boolean = false;
@@ -104,7 +107,7 @@ export class LifecycleDialogContentComponent {
   selectedEvaluation!: File
   private subscriptions: Subscription[] = [];
 
-  constructor(public dialogRef: MatDialogRef<TrainingLifecycleDialogContentComponent>,
+  constructor(public dialogRef: MatDialogRef<LifecycleDialogContentComponent>,
               @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
               public dialog: MatDialog,
               private groupService: GroupService,
@@ -114,6 +117,10 @@ export class LifecycleDialogContentComponent {
     this.local_data = {...data.obj}
     this.action = data.action
     this.selectedTrainingSupport = this.local_data.trainingSupport
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe())
   }
 
   doAction() {
@@ -127,7 +134,10 @@ export class LifecycleDialogContentComponent {
   }
 
   closeDialog(): void {
-    this.dialogRef.close({event: 'Cancel'});
+    if ({event : 'Cancel'}) {
+      this.dialogRef.close({event: 'Cancel'});
+    }
+    else this.dialogRef.close()
   }
 
   // Update training life cycle
@@ -363,7 +373,7 @@ export class LifecycleDialogContentComponent {
       }
       if (result.data != undefined) {
         this.local_data = result.data
-        this.updateLifeCycle(this.local_data)
+        this.updateLifeCycle(result.data)
           .then(() => {
           })
           .catch(err => {
@@ -395,7 +405,6 @@ export class LifecycleDialogContentComponent {
       next: data => {
         this.updateLifeCycle(this.local_data)
           .then(() => {
-            console.log(data)
           })
           .catch(err => {
             console.log(err.message);

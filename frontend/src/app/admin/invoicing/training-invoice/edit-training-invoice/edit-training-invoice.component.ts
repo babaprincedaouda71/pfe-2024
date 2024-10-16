@@ -8,7 +8,7 @@ import {InvoicingService} from "../../../../_services/invoicing.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {KeycloakService} from "keycloak-angular";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {referenceTrainingValidator, referenceValidator} from "../../../../_validators/invoice-format.validator";
+import {referenceValidator} from "../../../../_validators/invoice-format.validator";
 import {MatTableDataSource} from "@angular/material/table";
 import {TrainingModel} from "../../../../../models/training.model";
 import {SelectionModel} from "@angular/cdk/collections";
@@ -92,9 +92,15 @@ export class EditTrainingInvoiceComponent implements OnInit {
         next: data => {
           this.trainings = data
           this.trainings.map(value => {
-            if (value.status === "Reglement" || value.status === "Realisée") {
-              this.selection.toggle(value)
-            }
+            console.log(value)
+            value.groups.map(groupe => {
+              if (groupe.status === "Reglement" || groupe.status === "Facturation") {
+                this.selection.toggle(value)
+              }
+            })
+            // if (value.status === "Reglement" || value.status === "Realisée") {
+            //   this.selection.toggle(value)
+            // }
           })
 
           this.datasource = new MatTableDataSource(this.trainings);

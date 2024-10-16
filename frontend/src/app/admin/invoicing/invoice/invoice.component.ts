@@ -115,7 +115,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
         const {cheque, copyRemise, ...rest} = result.data;
 
         const invoice: InvoiceModel = {
-          ...rest
+          ...rest,
         };
         const formData = new FormData();
         if (result.data.cheque) {
@@ -150,12 +150,15 @@ export class InvoiceComponent implements OnInit, OnDestroy {
           })
         this.subscriptions.push(updateInvoiceStatusSubscription)
       }
+      else if (result.event ==='Cancel') {
+        this.getInvoices()
+      }
     })
     this.subscriptions.push(openDialogSubscription)
   }
 
   onStatusChange(event: any, invoice: InvoiceModel) {
-    this.openDialog('status', invoice)
+    this.openDialog('status', { ...invoice }); // Passez le nouvel état à la boîte de dialogue
   }
 }
 
@@ -195,7 +198,7 @@ export class InvoiceDialogContentComponent {
   }
 
   closeDialog() {
-    this.dialogRef.close({event: 'Cancel'});
+    this.dialogRef.close({event: 'Cancel', data : this.local_data});
   }
 
   onCheckChange(event: any) {

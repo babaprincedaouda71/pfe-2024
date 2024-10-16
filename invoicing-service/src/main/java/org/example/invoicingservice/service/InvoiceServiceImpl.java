@@ -117,6 +117,12 @@ public class InvoiceServiceImpl implements InvoiceService {
           .forEach(
               training -> {
                 this.total += training.getAmount();
+
+                // Marquer le groupe comme facturé
+                training.getGroups().forEach(group -> {
+//                  group.setInvoiced(true);
+//                  trainingRest.markGroupAsInvoiced(group);
+                });
               });
       this.tva = (float) (this.total * 0.2);
       invoice.setTva((float) (this.total * 0.2));
@@ -124,6 +130,14 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
     invoice.setIdClient(invoice.getIdClient());
     invoice.setStatus(InvoiceStatus.Non_Réglée);
+    return invoiceRepo.save(invoice);
+  }
+
+
+  @Override
+  public Invoice updateGroupsInvoice(Invoice invoice, Long idInvoice) {
+    Invoice byId = invoiceRepo.findById(idInvoice).orElseThrow(() -> new RuntimeException("Invoice not found"));
+
     return invoiceRepo.save(invoice);
   }
 

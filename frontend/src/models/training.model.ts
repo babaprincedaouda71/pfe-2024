@@ -3,7 +3,7 @@ import {Vendor} from "./vendor.model";
 
 export interface TrainingModel {
   idTraining: number;
-  idClient: number | null;
+  idClient: number;
   client: ClientModel;
   theme: string;
   days?: number;
@@ -33,12 +33,16 @@ export interface GroupModel {
   endDate : string;
   groupDates: Array<string>;
   idVendor: number | null;
-  idTraining : number | null;
+  idTraining : number;
   supplier: Vendor;
   completionDate : string
   groupLifeCycle: LifecycleModel
   status: string;
+  presenceList: Uint8Array | undefined;
+  evaluation: Uint8Array | undefined;
+  referenceCertificate: Uint8Array | undefined;
   training : TrainingDTO
+  // invoiced : boolean;
 }
 
 export interface LifecycleModel {

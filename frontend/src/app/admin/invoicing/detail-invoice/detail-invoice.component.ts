@@ -4,6 +4,8 @@ import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {ActivatedRoute, Router} from "@angular/router";
 import {InvoicingService} from "../../../_services/invoicing.service";
 import {Subscription} from "rxjs";
+import {ClientService} from "../../../_services/client.service";
+import {ClientModel} from "../../../../models/client.model";
 
 @Component({
   selector: 'app-detail-invoice',
@@ -13,6 +15,7 @@ import {Subscription} from "rxjs";
 export class DetailInvoiceComponent implements OnInit, OnDestroy {
   invoice!: InvoiceModel;
   idInvoice!: number
+  client! : ClientModel;
   pdfUrl: SafeResourceUrl | null = null;
   height: number = 820
   chequeBytes!: Uint8Array | undefined;
@@ -24,7 +27,8 @@ export class DetailInvoiceComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
               private invoicingService: InvoicingService,
               private router: Router,
-              private sanitizer: DomSanitizer) {
+              private sanitizer: DomSanitizer,
+              private clientService : ClientService) {
     this.idInvoice = this.route.snapshot.params['idInvoice'];
   }
 
@@ -34,6 +38,35 @@ export class DetailInvoiceComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
+  }
+
+  private getInvoice(idInvoice: number) {
+    const invoiceSubscription = this.invoicingService.getInvoice(idInvoice)
+      .subscribe({
+        next: data => {
+          this.invoice = data;
+          this.getClient()
+        },
+        error: error => {
+          console.log(error)
+        }
+      })
+    this.subscriptions.push(invoiceSubscription)
+  }
+
+  getClient(){
+    const clientSubs = this.clientService.getClient(this.invoice.idClient)
+    .subscribe({
+      next: data => {
+        this.client = data
+        this.generateInvoice(this.invoice)
+        this.convertToBytes()
+      },
+      error: error => {
+        console.log("Erreur lors de la recherche du client")
+      }
+    })
+    this.subscriptions.push(clientSubs)
   }
 
   /**************************************************/
@@ -53,7 +86,7 @@ export class DetailInvoiceComponent implements OnInit, OnDestroy {
         })
     }
     if (invoice.invoiceType == 'groupInvoice') {
-      this.invoicingService.generateGroupsInvoicePDF(invoice.numberInvoice, invoice.trainings, invoice.client)
+      this.invoicingService.generateGroupsInvoicePDF(invoice.numberInvoice, invoice.trainings, this.client)
         .then((blob: any) => {
           const url = URL.createObjectURL(blob);
           this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
@@ -142,18 +175,4 @@ export class DetailInvoiceComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getInvoice(idInvoice: number) {
-    const invoiceSubscription = this.invoicingService.getInvoice(idInvoice)
-      .subscribe({
-        next: data => {
-          this.invoice = data;
-          this.generateInvoice(this.invoice)
-          this.convertToBytes()
-        },
-        error: error => {
-          console.log(error)
-        }
-      })
-    this.subscriptions.push(invoiceSubscription)
-  }
 }

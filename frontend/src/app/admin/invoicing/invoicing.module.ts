@@ -51,6 +51,7 @@ import {InvoiceGroupsComponent} from "./groups-invoice/groups-invoice/invoice-gr
 import {EditGroupsInvoiceComponent} from "./groups-invoice/edit-groups-invoice/edit-groups-invoice.component";
 import {MatCheckbox} from "@angular/material/checkbox";
 import { DetailGroupsInvoiceComponent } from './groups-invoice/detail-groups-invoice/detail-groups-invoice.component';
+import { UpdateGroupsInvoiceComponent } from './groups-invoice/update-groups-invoice/update-groups-invoice.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -69,7 +70,8 @@ import { DetailGroupsInvoiceComponent } from './groups-invoice/detail-groups-inv
     ValidateClientTrainingComponent,
     InvoiceGroupsComponent,
     EditGroupsInvoiceComponent,
-    DetailGroupsInvoiceComponent
+    DetailGroupsInvoiceComponent,
+    UpdateGroupsInvoiceComponent
   ],
   imports: [
     CommonModule,

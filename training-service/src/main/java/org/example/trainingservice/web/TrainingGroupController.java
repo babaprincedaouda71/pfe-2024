@@ -95,4 +95,10 @@ public class TrainingGroupController {
     public List<TrainingGroupDTO> getGroupsToBeInvoiced() {
         return trainingGroupService.getGroupsToBeInvoiced();
     }
+
+    @PutMapping("/updateGroupe")
+    @PreAuthorize("hasAuthority('admin')")
+    public void markGroupAsInvoiced(@RequestBody TrainingGroup group) {
+        trainingGroupService.markGroupAsInvoiced(group);
+    }
 }

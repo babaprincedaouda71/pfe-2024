@@ -87,24 +87,24 @@
         <!--          </td>-->
         <!--        </ng-container>-->
 
-<!--        &lt;!&ndash; Checkbox Column &ndash;&gt;-->
-<!--        <ng-container matColumnDef="select">-->
-<!--          <th *matHeaderCellDef class="p-l-0" mat-header-cell>-->
-<!--            &lt;!&ndash;            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"&ndash;&gt;-->
-<!--            &lt;!&ndash;                          color="primary" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">&ndash;&gt;-->
-<!--            &lt;!&ndash;            </mat-checkbox>&ndash;&gt;-->
-<!--          </th>-->
-<!--          <td *matCellDef="let row" class="p-l-0" mat-cell>-->
-<!--            <ul>-->
-<!--              <li *ngFor="let group of row.groups; let i = index">-->
-<!--                <mat-checkbox (change)="onCheckboxChange($event, row)"-->
-<!--                              (click)="$event.stopPropagation()"-->
-<!--                              [aria-label]="checkboxLabel(row)" [checked]="selection.isSelected(row)" color="primary">-->
-<!--                </mat-checkbox>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--          </td>-->
-<!--        </ng-container>-->
+        <!--        &lt;!&ndash; Checkbox Column &ndash;&gt;-->
+        <!--        <ng-container matColumnDef="select">-->
+        <!--          <th *matHeaderCellDef class="p-l-0" mat-header-cell>-->
+        <!--            &lt;!&ndash;            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"&ndash;&gt;-->
+        <!--            &lt;!&ndash;                          color="primary" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">&ndash;&gt;-->
+        <!--            &lt;!&ndash;            </mat-checkbox>&ndash;&gt;-->
+        <!--          </th>-->
+        <!--          <td *matCellDef="let row" class="p-l-0" mat-cell>-->
+        <!--            <ul>-->
+        <!--              <li *ngFor="let group of row.groups; let i = index">-->
+        <!--                <mat-checkbox (change)="onCheckboxChange($event, row)"-->
+        <!--                              (click)="$event.stopPropagation()"-->
+        <!--                              [aria-label]="checkboxLabel(row)" [checked]="selection.isSelected(row)" color="primary">-->
+        <!--                </mat-checkbox>-->
+        <!--              </li>-->
+        <!--            </ul>-->
+        <!--          </td>-->
+        <!--        </ng-container>-->
 
         <ng-container matColumnDef="select">
           <th *matHeaderCellDef class="p-l-0" mat-header-cell></th>

@@ -64,6 +64,8 @@ public class TrainingGroup {
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private Training training;
 
+//  private boolean invoiced;
+
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "lifecycle_id", referencedColumnName = "idLifeCycle")
   private TrainingGroupLifeCycle groupLifeCycle;

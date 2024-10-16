@@ -73,8 +73,6 @@ export class AddTrainingComponent implements OnInit, OnDestroy {
       dailyAmount: ['', [Validators.required, positiveNumberValidator]],
       groups: this.formBuilder.array([]),
     }, { validators: staffMatchValidator });
-    // this.minStartDate = new Date().toLocaleDateString()
-    // this.minEndDate = new Date().toLocaleDateString()
   }
 
   /*

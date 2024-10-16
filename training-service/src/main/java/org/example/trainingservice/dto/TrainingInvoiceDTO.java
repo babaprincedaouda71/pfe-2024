@@ -22,4 +22,5 @@ public class TrainingInvoiceDTO {
     private TrainingStatus status;
     private String completionDate;
     private int staff;
+    private List<TrainingGroup> groups;
 }

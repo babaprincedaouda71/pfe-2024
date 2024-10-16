@@ -1,8 +1,8 @@
 export interface StandardInvoice {
-  idInvoice : number;
+  idInvoice? : number;
   numberInvoice: string;
   idClient : number;
-  createdAt : number;
+  createdAt? : number;
   editor : string;
   products : Array<ProductItem>;
 }

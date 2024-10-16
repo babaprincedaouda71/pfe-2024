@@ -17,6 +17,7 @@ import {ClientService} from "../../../_services/client.service";
 import {VendorService} from "../../../_services/vendor.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Subscription} from "rxjs";
+import {positiveNumberValidator} from "../../../_validators/positiveNumberValidator";
 
 @Component({
   selector: 'app-edit-training',
@@ -56,6 +57,23 @@ export class EditTrainingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  /* ***************** Edit Form **************** */
+  private buildEditForm() {
+    this.updateTrainingForm = this.formBuilder.group({
+      idTraining: [this.training.idTraining, [Validators.required]],
+      idClient: [this.training.idClient, [Validators.required]],
+      theme: [this.training.theme, [Validators.required]],
+      days: [this.training.days],
+      staff: [this.training.staff],
+      dailyAmount: [this.training.amount, [Validators.required, positiveNumberValidator]],
+      groups: this.formBuilder.array(
+        this.training.groups.map(group => {
+          return this.initializeGroupForm(group)
+        })
+      ),
+    })
   }
 
   initializeGroupForm(group: GroupModel): FormGroup {
@@ -180,7 +198,6 @@ export class EditTrainingComponent implements OnInit, OnDestroy {
     this.subscriptions.push(vendorsSubscription)
   }
 
-  /* ***************** End Edit Form ******************* */
 
   handleAdd(action: string) {
     if (action === 'client') {
@@ -203,23 +220,5 @@ export class EditTrainingComponent implements OnInit, OnDestroy {
         }
       })
     this.subscriptions.push(trainingSubscription)
-  }
-
-  /* ***************** Edit Form **************** */
-  private buildEditForm() {
-    this.updateTrainingForm = this.formBuilder.group({
-      idTraining: [this.training.idTraining, [Validators.required]],
-      idClient: [this.training.idClient, [Validators.required]],
-      theme: [this.training.theme, [Validators.required]],
-      days: [this.training.days],
-      staff: [this.training.staff],
-      location: [this.training.location],
-      amount: [this.training.amount],
-      groups: this.formBuilder.array(
-        this.training.groups.map(group => {
-          return this.initializeGroupForm(group)
-        })
-      ),
-    })
   }
 }

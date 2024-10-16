@@ -2,20 +2,17 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {ClientService} from "../../../../_services/client.service";
 import {InvoicingService} from "../../../../_services/invoicing.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {KeycloakService} from "keycloak-angular";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {ClientModel} from "../../../../../models/client.model";
 import {MatTableDataSource} from "@angular/material/table";
 import {GroupModel, TrainingModel} from "../../../../../models/training.model";
 import {SelectionModel} from "@angular/cdk/collections";
 import {KeycloakProfile} from "keycloak-js";
-import {SelectionService} from "../../../../_services/selection.service";
 import {referenceValidator} from "../../../../_validators/invoice-format.validator";
 import {TrainingInvoice} from "../../../../../models/trainingInvoice";
 import {GroupService} from "../../../../_services/group.service";
-import {group} from "@angular/animations";
 
 @Component({
   selector: 'app-edit-groups-invoice',
@@ -36,21 +33,24 @@ export class EditGroupsInvoiceComponent implements OnInit, OnDestroy {
     'staff',
     'amount',
   ];
+  deadline!: number;
   datasource!: MatTableDataSource<TrainingModel>
   selection = new SelectionModel<GroupModel>(true, []);
   groups!: Array<GroupModel>
   private subscriptions: Subscription[] = []
   private userProfile!: KeycloakProfile;
 
+  tva! : number
+  ttc! : number
+  travelFees!: number
+
 
   constructor(private invoicingService: InvoicingService,
               private router: Router,
               private formBuilder: FormBuilder,
               private keycloakService: KeycloakService,
-              private route: ActivatedRoute,
-              private snackBar: MatSnackBar,
-              private selectionService: SelectionService,
-              private groupService: GroupService) {
+              private groupService: GroupService,
+              private clientService: ClientService,) {
   }
 
   ngOnInit() {
@@ -59,12 +59,14 @@ export class EditGroupsInvoiceComponent implements OnInit, OnDestroy {
       this.selectedTrainings = JSON.parse(selectedTrainings);
       this.datasource = new MatTableDataSource(this.selectedTrainings)
       this.buildForm()
+      this.getDeadlineForClient(this.selectedTrainings[0].idClient)
       this.updateInvoiceNumber()
     }
     this.getUserProfile()
   }
 
   ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe())
   }
 
   buildForm() {
@@ -72,6 +74,30 @@ export class EditGroupsInvoiceComponent implements OnInit, OnDestroy {
       idClient: [this.selectedTrainings[0].client.corporateName, [Validators.required, Validators.minLength(6)]],
       numberInvoice: [this.invoiceNumber, [referenceValidator(this.selectedDate)]],
       createdAt: [new Date(), [Validators.required, Validators.minLength(6)]],
+    })
+
+    this.tva = this.selectedTrainings[0].amount * 2
+    this.travelFees = 4500
+    this.ttc = this.tva + this.travelFees
+
+    // const deadlineSubscription = this.editGroupsInvoiceForm.get('idClient')?.valueChanges.subscribe((idClient) => {
+    //   // Mettre en place la logique pour récupérer l'échéance en fonction du client sélectionné
+    //   this.getDeadlineForClient(idClient);
+    // });
+    //
+    // if (deadlineSubscription) {
+    //   this.subscriptions.push(deadlineSubscription)
+    // }
+  }
+
+  // Fonction pour obtenir l'échéance en fonction du client sélectionné
+  getDeadlineForClient(clientId: number) {
+    this.clientService.getDeadline(clientId).subscribe({
+      next: (deadline) => {
+        if (deadline) {
+          this.deadline = deadline;
+        }
+      }
     })
   }
 
@@ -85,7 +111,8 @@ export class EditGroupsInvoiceComponent implements OnInit, OnDestroy {
   }
 
   onDateChange(event: any) {
-    this.selectedDate = event.value; // Mettre à jour la date sélectionnée
+    this.selectedDate = event.value;// Mettre à jour la date sélectionnée
+    console.log(this.selectedDate)
     this.updateInvoiceNumber();
   }
 

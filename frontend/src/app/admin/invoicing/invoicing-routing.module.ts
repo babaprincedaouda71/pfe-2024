@@ -15,6 +15,7 @@ import {ValidateClientTrainingComponent} from "./validate-client-training/valida
 import {InvoiceGroupsComponent} from "./groups-invoice/groups-invoice/invoice-groups.component";
 import {EditGroupsInvoiceComponent} from "./groups-invoice/edit-groups-invoice/edit-groups-invoice.component";
 import {DetailGroupsInvoiceComponent} from "./groups-invoice/detail-groups-invoice/detail-groups-invoice.component";
+import {UpdateGroupsInvoiceComponent} from "./groups-invoice/update-groups-invoice/update-groups-invoice.component";
 const routes: Routes = [
   {
     path : '',
@@ -91,6 +92,13 @@ const routes: Routes = [
     component: EditGroupsInvoiceComponent,
     data : {
       title: 'Édition de la Facture'
+    }
+  },
+  {
+    path : 'update-groups-invoice/:idInvoice',
+    component: UpdateGroupsInvoiceComponent,
+    data : {
+      title: 'Modification des données la Facture'
     }
   },
   {

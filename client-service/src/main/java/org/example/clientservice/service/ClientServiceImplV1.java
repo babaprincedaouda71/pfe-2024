@@ -88,4 +88,10 @@ public class ClientServiceImplV1 implements ClientService {
     clientRepository.delete(byID);
     return clientMapper.fromClient(byID);
   }
+
+  @Override
+  public int getDeadline(Long idClient) {
+    Client client = clientRepository.findById(idClient).orElseThrow(() -> new ClientNotFoundException("Le Client n'existe pas"));
+    return client.getDeadline();
+  }
 }

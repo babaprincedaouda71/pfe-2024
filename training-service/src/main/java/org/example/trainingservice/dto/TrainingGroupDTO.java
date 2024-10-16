@@ -45,4 +45,7 @@ public class TrainingGroupDTO {
     private TrainingGroupLifeCycle groupLifeCycle;
 
     private TrainingForGroupDTO training;
+
+//    private boolean invoiced;
+
 }

@@ -13,6 +13,7 @@ import org.example.trainingservice.enums.TrainingGroupStatus;
 import org.example.trainingservice.enums.TrainingStatus;
 import org.example.trainingservice.exceptions.TrainingNotFoundException;
 import org.example.trainingservice.exceptions.TrainingsNotFoundException;
+import org.example.trainingservice.mapper.GroupMapper;
 import org.example.trainingservice.mapper.TrainingMapper;
 import org.example.trainingservice.model.Client;
 import org.example.trainingservice.model.Vendor;
@@ -40,6 +41,7 @@ public class TrainingServiceImpl01 implements TrainingService {
   private final TrainingMapper trainingMapper;
   private final ClientRest clientRest;
   private final VendorRest vendorRest;
+  private final GroupMapper groupMapper;
   private int staff;
   private final TrainingGroupService trainingGroupService;
 
@@ -49,7 +51,8 @@ public class TrainingServiceImpl01 implements TrainingService {
       TrainingMapper trainingMapper,
       ClientRest clientRest,
       VendorRest vendorRest,
-      TrainingGroupService trainingGroupService) {
+      TrainingGroupService trainingGroupService,
+      GroupMapper groupMapper) {
     this.trainingRepository = trainingRepository;
     this.trainingGroupRepo = trainingGroupRepo;
     this.trainingMapper = trainingMapper;
@@ -57,6 +60,7 @@ public class TrainingServiceImpl01 implements TrainingService {
     this.vendorRest = vendorRest;
     this.trainingGroupService = trainingGroupService;
     this.staff = 0;
+    this.groupMapper = groupMapper;
   }
 
   @Override
@@ -114,6 +118,7 @@ public class TrainingServiceImpl01 implements TrainingService {
             trainingGroup -> {
               trainingGroup.setStatus(TrainingGroupStatus.Recherche_formateur);
               trainingGroup.setGroupLifeCycle(new TrainingGroupLifeCycle());
+//              trainingGroup.setInvoiced(false);
             });
 
     // Set dates
@@ -202,12 +207,21 @@ public class TrainingServiceImpl01 implements TrainingService {
     training.setDays(addTrainingDTO.getDays());
     training.setStaff(addTrainingDTO.getStaff());
     training.setIdVendor(addTrainingDTO.getIdVendor());
-    training.setLocation(addTrainingDTO.getLocation());
     training.setAmount(addTrainingDTO.getAmount());
 
-    training.getGroups().clear();
+//    training.getGroups().clear();
 
     training.getTrainingDates().clear();
+
+    training.getGroups().forEach(trainingGroup -> {
+      addTrainingDTO.getGroups().forEach(trainingGroup1 -> {
+        trainingGroup.setGroupStaff(trainingGroup1.getGroupStaff());
+        trainingGroup.setLocation(trainingGroup1.getLocation());
+        trainingGroup.setIdVendor(trainingGroup1.getIdVendor());
+        trainingGroup.setGroupDates(trainingGroup1.getGroupDates());
+        trainingGroupRepo.save(trainingGroup);
+      });
+    });
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     DateTimeFormatter isoFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
@@ -216,8 +230,8 @@ public class TrainingServiceImpl01 implements TrainingService {
         .getGroups()
         .forEach(
             group -> {
-              group.setTraining(training);
-              training.getGroups().add(group);
+//              group.setTraining(training);
+//              training.getGroups().add(group);
 
               if (containsNonEmptyDate(group.getGroupDates())) {
                 group
@@ -244,6 +258,83 @@ public class TrainingServiceImpl01 implements TrainingService {
     training.setTrainingDates(datesList);
     return trainingMapper.fromTrainingToAddTrainingDTO(trainingRepository.save(training));
   }
+
+  //  @Override
+  //  public AddTrainingDTO updateTraining(AddTrainingDTO addTrainingDTO, Long idTraining) {
+  //    Set<String> datesSet = new TreeSet<>();
+  //
+  //    // Récupération de la formation existante
+  //    Training training = trainingRepository
+  //            .findById(idTraining)
+  //            .orElseThrow(() -> new TrainingNotFoundException("La formation n'existe pas"));
+  //
+  //    // Mise à jour des informations de la formation
+  //    training.setIdClient(addTrainingDTO.getIdClient());
+  //    training.setTheme(addTrainingDTO.getTheme());
+  //    training.setDays(addTrainingDTO.getDays());
+  //    training.setStaff(addTrainingDTO.getStaff());
+  //    training.setIdVendor(addTrainingDTO.getIdVendor());
+  //    training.setLocation(addTrainingDTO.getLocation());
+  //    training.setAmount(addTrainingDTO.getAmount());
+  //
+  //    // Créer une liste temporaire pour conserver les groupes actuels
+  //    List<TrainingGroup> existingGroups = new ArrayList<>(training.getGroups());
+  //
+  //    // Traitement des nouveaux groupes
+  //    List<TrainingGroup> updatedGroups = new ArrayList<>();
+  //    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+  //    DateTimeFormatter isoFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+  //
+  //    addTrainingDTO.getGroups().forEach(group -> {
+  //      group.setTraining(training); // Associer le groupe à la formation
+  //      updatedGroups.add(group);
+  //
+  //      // Gestion des dates du groupe
+  //      if (containsNonEmptyDate(group.getGroupDates())) {
+  //        group.getGroupDates().forEach(dateString -> {
+  //          LocalDate date;
+  //          try {
+  //            date = LocalDate.parse(dateString, formatter);
+  //          } catch (DateTimeParseException e) {
+  //            OffsetDateTime dateTime = OffsetDateTime.parse(dateString, isoFormatter);
+  //            date = dateTime.toLocalDate().plusDays(1);
+  //          }
+  //          if (date.getDayOfWeek() != DayOfWeek.SUNDAY) {
+  //            datesSet.add(date.format(formatter));
+  //          }
+  //        });
+  //      }
+  //      manageDate(datesSet, formatter, isoFormatter, group);
+  //    });
+  //
+  //    // Supprimer les groupes qui ne sont plus dans la formation
+  //    existingGroups.forEach(existingGroup -> {
+  //      if (!updatedGroups.contains(existingGroup)) {
+  //        training.removeGroup(existingGroup); // Suppression explicite
+  //      }
+  //    });
+  //
+  //    // Ajouter ou mettre à jour les nouveaux groupes
+  //    updatedGroups.forEach(newGroup -> {
+  //      if (!training.getGroups().contains(newGroup)) {
+  //        training.addGroup(newGroup); // Ajout explicite
+  //      }
+  //    });
+  //
+  //    // Mise à jour des groupes dans la formation
+  //    training.setGroups(updatedGroups);
+  //
+  //    // Mise à jour des dates dans la formation
+  //    List<String> datesList = new ArrayList<>(datesSet);
+  //    training.setTrainingDates(datesList);
+  //
+  //    // Enregistrer les changements
+  //    Training updatedTraining = trainingRepository.save(training);
+  //    trainingGroupRepo.saveAll(updatedGroups);
+  //
+  //    // Retourner le DTO mis à jour
+  //    return trainingMapper.fromTrainingToAddTrainingDTO(updatedTraining);
+  //  }
 
   @Override
   public TrainingDTO updateStatus(Long idTraining, TrainingDTO trainingDTO, String status) {
@@ -509,9 +600,10 @@ public class TrainingServiceImpl01 implements TrainingService {
 
   @Override
   public List<TrainingInvoiceDTO> getTrainingsByClient(Long idClient) {
-    List<Training> trainings =
-        trainingRepository.findByStatusInAndIdClient(
-            List.of(TrainingStatus.Facturation, TrainingStatus.Reglement), idClient);
+    List<Training> trainings = trainingRepository.findByIdClient(idClient);
+//    List<Training> trainings =
+//        trainingRepository.findByStatusInAndIdClient(
+//            List.of(TrainingStatus.Facturation, TrainingStatus.Reglement), idClient);
     return getTrainingInvoiceDTOS(trainings);
   }
 

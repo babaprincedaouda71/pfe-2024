@@ -20,4 +20,7 @@ public interface TrainingRepository extends JpaRepository<Training, Long> {
 
     @Query("SELECT t FROM Training t WHERE t.status IN :statuses AND t.idClient = :idClient")
     List<Training> findByStatusInAndIdClient(List<TrainingStatus> statuses, Long idClient);
+
+    @Query("SELECT t FROM Training t WHERE t.idClient = :idClient")
+    List<Training> findByIdClient(Long idClient);
 }

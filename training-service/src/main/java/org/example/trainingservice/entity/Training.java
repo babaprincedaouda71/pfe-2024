@@ -6,6 +6,7 @@ import org.example.trainingservice.enums.TrainingStatus;
 import org.example.trainingservice.model.Client;
 import org.example.trainingservice.model.Vendor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -46,7 +47,7 @@ public class Training {
     private TrainingStatus status;
 
     @OneToMany(mappedBy = "training", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TrainingGroup> groups;
+    private List<TrainingGroup> groups = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "lifecycle_id", referencedColumnName = "idLifeCycle")
@@ -71,4 +72,15 @@ public class Training {
     private byte[] evaluation;
 
     private String completionDate;
+
+
+    public void addGroup(TrainingGroup trainingGroup) {
+        groups.add(trainingGroup);
+        trainingGroup.setTraining(this); // Lier le groupe à cette formation
+    }
+
+    public void removeGroup(TrainingGroup trainingGroup) {
+        groups.remove(trainingGroup);
+        trainingGroup.setTraining(null); // Détacher le groupe de cette formation
+    }
 }

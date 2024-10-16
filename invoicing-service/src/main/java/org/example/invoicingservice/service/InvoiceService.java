@@ -13,6 +13,8 @@ public interface InvoiceService {
 
     Invoice saveGroupsInvoice(Invoice invoice);
 
+    Invoice updateGroupsInvoice(Invoice invoice, Long idInvoice);
+
     List<Invoice> findAllInvoices();
 
     Invoice findInvoiceById(Long idInvoice);

@@ -1,8 +1,36 @@
 <!--<h4 class="mat-headline-6 m-y-24">Form with Tabs</h4>-->
-<form [formGroup]="editStandardInvoiceForm" (ngSubmit)="onSubmit()" *ngIf="editStandardInvoiceForm">
+<form (ngSubmit)="onSubmit()" *ngIf="editStandardInvoiceForm" [formGroup]="editStandardInvoiceForm">
   <mat-card class="cardWithShadow theme-card">
     <mat-card-content>
       <div class="row">
+        <div class="col-lg-6">
+          <div class="row">
+            <div class="col-sm-12 d-flex align-items-center">
+              <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+              >Date d'émission
+              </mat-label>
+            </div>
+            <div class="col-sm-12">
+              <mat-form-field>
+                <input (dateChange)="onDateChange($event)" [matDatepicker]="createdAtPicker"
+                       formControlName="createdAt" matInput
+                       placeholder="Choisir une date" readonly>
+<!--                <mat-datepicker-toggle [for]="createdAtPicker" matSuffix></mat-datepicker-toggle>-->
+                <mat-datepicker #createdAtPicker></mat-datepicker>
+<!--                <mat-error-->
+<!--                  *ngIf="editStandardInvoiceForm.get('numberInvoice')?.hasError('required') && editStandardInvoiceForm.get('numberInvoice')?.touched">-->
+<!--                  *Ce champ est obligatoire-->
+<!--                </mat-error>-->
+<!--                <mat-error *ngIf="editStandardInvoiceForm.get('numberInvoice')?.hasError('invalidMonth')">-->
+<!--                  *Le mois doit correspondre au mois en cours-->
+<!--                </mat-error>-->
+<!--                <mat-error *ngIf="editStandardInvoiceForm.get('numberInvoice')?.hasError('invalidFormat')">-->
+<!--                  *Le format doit être AAMM-00X-->
+<!--                </mat-error>-->
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
         <div class="col-lg-6">
           <div class="row">
             <div class="col-sm-12 d-flex align-items-center">
@@ -13,10 +41,10 @@
             <div class="col-sm-12">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-select formControlName="idClient">
-                  <mat-option value="" disabled>Choisir un Client</mat-option>
+                  <mat-option disabled value="">Choisir un Client</mat-option>
                   <mat-option *ngFor="let client of clients" [value]="client.idClient">{{ client.corporateName }}
                   </mat-option>
-                  <mat-option value="" (click)="handleAdd()" class="mat-subtitle-2 f-s-16 f-w-600">
+                  <mat-option (click)="handleAdd()" class="mat-subtitle-2 f-s-16 f-w-600" value="">
                     Ajouter un nouveau Client
                   </mat-option>
                 </mat-select>
@@ -27,8 +55,6 @@
               </mat-form-field>
             </div>
           </div>
-        </div>
-        <div class="col-lg-6">
           <div class="row">
             <div class="col-sm-12 d-flex align-items-center">
               <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
@@ -37,8 +63,9 @@
             </div>
             <div class="col-sm-12">
               <mat-form-field appearance="outline" class="w-100">
-                <input matInput placeholder="" formControlName="numberInvoice"/>
-                <mat-error *ngIf="editStandardInvoiceForm.get('numberInvoice')?.hasError('required') && editStandardInvoiceForm.get('numberInvoice')?.touched">
+                <input formControlName="numberInvoice" readonly [value]="invoiceNumber" matInput placeholder=""/>
+                <mat-error
+                  *ngIf="editStandardInvoiceForm.get('numberInvoice')?.hasError('required') && editStandardInvoiceForm.get('numberInvoice')?.touched">
                   *Ce champ est obligatoire
                 </mat-error>
                 <mat-error *ngIf="editStandardInvoiceForm.get('numberInvoice')?.hasError('invalidMonth')">
@@ -46,25 +73,6 @@
                 </mat-error>
                 <mat-error *ngIf="editStandardInvoiceForm.get('numberInvoice')?.hasError('invalidFormat')">
                   *Le format doit être FS-AAMM-00X
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12 d-flex align-items-center">
-              <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
-              >Date d'émission
-              </mat-label>
-            </div>
-            <div class="col-sm-12">
-              <mat-form-field>
-                <input placeholder="Choisir une date" [matDatepicker]="createdAtPicker" matInput
-                       formControlName="createdAt">
-                <mat-datepicker-toggle matSuffix [for]="createdAtPicker"></mat-datepicker-toggle>
-                <mat-datepicker #createdAtPicker></mat-datepicker>
-                <mat-error
-                  *ngIf="editStandardInvoiceForm.get('createdAt')?.invalid && editStandardInvoiceForm.get('createdAt')?.touched">
-                  *Ce champ est obligatoire
                 </mat-error>
               </mat-form-field>
             </div>
@@ -146,41 +154,42 @@
             <tr *ngFor="let item of productItem.controls; let i = index" [formGroupName]="i">
               <td class="f-s-14">
                 <div appearance="outline" class="w-100">
-                  <input class="custom-input" placeholder="" formControlName="name"/>
+                  <input class="custom-input" formControlName="name" placeholder=""/>
                   <!--                  <mat-error *ngIf="editStandardInvoiceForm.get('groupItem.' + i + '.name')?.invalid">-->
                   <!--                    *Ce champ est obligatoire-->
                   <!--                  </mat-error>-->
                 </div>
               </td>
               <td class="f-s-14">
-                <input class="custom-input" type="number" formControlName="quantity"/>
+                <input class="custom-input" formControlName="quantity" type="number"/>
                 <!--                <mat-error *ngIf="editStandardInvoiceForm.get('groupItem.' + i + '.quantity')?.invalid">-->
                 <!--                  *Ce champ est obligatoire-->
                 <!--                </mat-error>-->
               </td>
               <td class="f-s-14">
-                <input class="custom-input" type="number" formControlName="unitPrice"/>
+                <input class="custom-input" formControlName="unitPrice" type="number"/>
                 <!--                <mat-error *ngIf="editStandardInvoiceForm.get('groupItem.' + i + '.unitPrice')?.invalid">-->
                 <!--                  *Ce champ est obligatoire-->
                 <!--                </mat-error>-->
               </td>
               <td class="f-s-14">
-                <input class="custom-input" placeholder="" formControlName="total" readonly/>
+                <input class="custom-input" formControlName="total" placeholder="" readonly/>
                 <!--                <mat-error>-->
                 <!--                </mat-error>-->
               </td>
               <td>
-                <button type="button" mat-button color="warn" (click)="removeProductItem(i)">Supprimer</button> <!-- Bouton Supprimer -->
+                <button (click)="removeProductItem(i)" color="warn" mat-button type="button">Supprimer</button>
+                <!-- Bouton Supprimer -->
               </td>
             </tr>
             </tbody>
           </table>
-          <button type="button" mat-raised-button color="primary" class="m-3" (click)="addProductItem()">
+          <button (click)="addProductItem()" class="m-3" color="primary" mat-raised-button type="button">
             Ajouter une ligne
           </button>
           <!--     ******************************* End ***********************-->
         </div>
-        <div class="col-lg-6" *ngIf="deadline">
+        <div *ngIf="deadline" class="col-lg-6">
           <div class="deadline">
             <u><b>Échéance</b></u> : Conformément à nos nos accords, le délai de paiement
             pour cette facture est de <b>{{ deadline }}</b> jours
@@ -189,7 +198,7 @@
         </div>
       </div>
       <div class="m-t-12 text-right">
-        <button type="submit" mat-flat-button color="primary" [disabled]="editStandardInvoiceForm.invalid">Enregistrer
+        <button [disabled]="editStandardInvoiceForm.invalid" color="primary" mat-flat-button type="submit">Enregistrer
         </button>
       </div>
     </mat-card-content>

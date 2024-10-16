@@ -13,7 +13,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {KeycloakService} from "keycloak-angular";
 import {InvoiceModel} from "../../../../../models/invoice.model";
 import {ProductItem, StandardInvoice} from "../../../../../models/standardInvoice";
-import {referenceStandardValidator} from "../../../../_validators/invoice-format.validator";
+import {referenceStandardValidator, referenceValidator} from "../../../../_validators/invoice-format.validator";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Subscription} from "rxjs";
 
@@ -28,19 +28,25 @@ export class EditComponent implements OnInit, OnDestroy {
   clients!: Array<ClientModel>;
   displayedColumns: string[] = ['name', 'quantity', 'unitPrice', 'total'];
   deadline!: number;
-  private userProfile!: KeycloakProfile;
-  idInvoice! : number
+  idInvoice!: number
   invoice!: InvoiceModel;
+  selectedDate: Date = new Date(); // Date sélectionnée dans le calendrier
+  invoiceNumber: string = '';
+  private userProfile!: KeycloakProfile;
   private subscriptions: Subscription[] = []
 
 
   constructor(private clientService: ClientService,
               private invoicingService: InvoicingService,
-              private router : Router,
+              private router: Router,
               private formBuilder: FormBuilder,
               private keycloakService: KeycloakService,
-              private route : ActivatedRoute,
-              private snackBar : MatSnackBar) {
+              private route: ActivatedRoute,
+              private snackBar: MatSnackBar) {
+  }
+
+  get productItem(): FormArray {
+    return (this.editStandardInvoiceForm.get('products') as FormArray)
   }
 
   ngOnInit() {
@@ -54,25 +60,10 @@ export class EditComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  private getInvoice(idInvoice: number) {
-    const invoiceSubscription = this.invoicingService.getInvoice(idInvoice)
-      .subscribe({
-        next: data => {
-          this.invoice = data;
-          this.buildForm()
-          console.log(this.invoice)
-        },
-        error: error => {
-          console.log(error)
-        }
-      })
-    this.subscriptions.push(invoiceSubscription)
-  }
-
   getClients(): void {
     const clientsSubscription = this.clientService.getClients()
       .subscribe({
-        next : data => {
+        next: data => {
           this.clients = data
         },
         error: err => {
@@ -85,7 +76,7 @@ export class EditComponent implements OnInit, OnDestroy {
   buildForm() {
     this.editStandardInvoiceForm = this.formBuilder.group({
       idClient: [this.invoice.idClient, [Validators.required, Validators.minLength(6)]],
-      numberInvoice: [this.invoice.numberInvoice, [referenceStandardValidator()]],
+      numberInvoice: [this.invoice.numberInvoice],
       createdAt: [this.invoice.createdAt, [Validators.required, Validators.minLength(6)]],
       products: this.formBuilder.array(
         this.invoice.products.map(product => {
@@ -105,12 +96,12 @@ export class EditComponent implements OnInit, OnDestroy {
     }
   }
 
-  initializeProductForm(product : ProductItem) : FormGroup {
+  initializeProductForm(product: ProductItem): FormGroup {
     return this.formBuilder.group({
       name: product.name,
       quantity: product.quantity,
-      unitPrice : product.unitPrice,
-      total : product.unitPrice * product.quantity
+      unitPrice: product.unitPrice,
+      total: product.unitPrice * product.quantity
     })
   }
 
@@ -124,10 +115,6 @@ export class EditComponent implements OnInit, OnDestroy {
       // Si aucun client correspondant n'est trouvé, retournez une valeur par défaut (0 ou une autre valeur appropriée)
       return 0;
     }
-  }
-
-  get productItem() : FormArray {
-    return (this.editStandardInvoiceForm.get('products') as FormArray)
   }
 
   addProductItem() {
@@ -148,34 +135,13 @@ export class EditComponent implements OnInit, OnDestroy {
     this.productItem.removeAt(i); // Supprime la ligne du formulaire
   }
 
-  private addValueChangeSubscriptions(group: FormGroup) {
-    const quantitySubscription = group.get('quantity')?.valueChanges.subscribe(quantity => {
-      const unitPrice = group.get('unitPrice')?.value || 0;
-      group.get('total')?.setValue(quantity * unitPrice, {emitEvent: false});
-    });
-
-    const unitPriceSubscription = group.get('unitPrice')?.valueChanges.subscribe(unitPrice => {
-      const quantity = group.get('quantity')?.value || 0;
-      group.get('total')?.setValue(quantity * unitPrice, {emitEvent: false});
-    });
-
-    if (quantitySubscription) {
-      this.subscriptions.push(quantitySubscription)
-    }
-
-    if (unitPriceSubscription) {
-      this.subscriptions.push(unitPriceSubscription)
-    }
-  }
-
   onSubmit() {
-    const standardInvoice : StandardInvoice = this.editStandardInvoiceForm.value;
+    const standardInvoice: StandardInvoice = this.editStandardInvoiceForm.value;
     standardInvoice.editor = this.userProfile.firstName + ' ' + this.userProfile.lastName;
     standardInvoice.idInvoice = this.invoice.idInvoice
-    console.log(standardInvoice);
     const updateStandardInvoiceSubscription = this.invoicingService.updateStandardInvoice(standardInvoice)
       .subscribe({
-        next : data => {
+        next: data => {
           this.router.navigate(['invoicing'])
         },
         error: err => {
@@ -199,5 +165,53 @@ export class EditComponent implements OnInit, OnDestroy {
 
   handleAdd() {
     this.router.navigate(['/client/add'])
+  }
+
+  updateInvoiceNumber() {
+    const year = this.selectedDate.getFullYear() % 100; // Récupérer les deux derniers chiffres de l'année
+    const month = this.selectedDate.getMonth() + 1; // Les mois commencent à 0 en JS
+
+    this.invoicingService.getNextInvoiceNumber(year, month).subscribe((nextNum: string) => {
+      this.invoiceNumber = nextNum;
+    });
+  }
+
+  onDateChange(event: any) {
+    this.selectedDate = event.value; // Mettre à jour la date sélectionnée
+    this.updateInvoiceNumber();
+  }
+
+  private getInvoice(idInvoice: number) {
+    const invoiceSubscription = this.invoicingService.getInvoice(idInvoice)
+      .subscribe({
+        next: data => {
+          this.invoice = data;
+          this.buildForm()
+        },
+        error: error => {
+          console.log(error)
+        }
+      })
+    this.subscriptions.push(invoiceSubscription)
+  }
+
+  private addValueChangeSubscriptions(group: FormGroup) {
+    const quantitySubscription = group.get('quantity')?.valueChanges.subscribe(quantity => {
+      const unitPrice = group.get('unitPrice')?.value || 0;
+      group.get('total')?.setValue(quantity * unitPrice, {emitEvent: false});
+    });
+
+    const unitPriceSubscription = group.get('unitPrice')?.valueChanges.subscribe(unitPrice => {
+      const quantity = group.get('quantity')?.value || 0;
+      group.get('total')?.setValue(quantity * unitPrice, {emitEvent: false});
+    });
+
+    if (quantitySubscription) {
+      this.subscriptions.push(quantitySubscription)
+    }
+
+    if (unitPriceSubscription) {
+      this.subscriptions.push(unitPriceSubscription)
+    }
   }
 }

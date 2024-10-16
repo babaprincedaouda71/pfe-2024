@@ -235,13 +235,7 @@
             Nbr de Jours
           </th>
           <td *matCellDef="let element" class="f-s-14" mat-cell>
-            <ul>
-              <li *ngFor="let group of element.groups">
-                {{ group.groupDates.length }}
-                <hr *ngIf="!isLastGroup(element.groups, group)"/>
-              </li>
-            </ul>
-            <!--            {{ element.days }}-->
+            {{ element.days }}
           </td>
         </ng-container>
 

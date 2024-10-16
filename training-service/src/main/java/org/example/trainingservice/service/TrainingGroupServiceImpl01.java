@@ -285,4 +285,9 @@ public class TrainingGroupServiceImpl01 implements TrainingGroupService {
     });
     return dtos;
   }
+
+  @Override
+  public void markGroupAsInvoiced(TrainingGroup group) {
+    trainingGroupRepo.save(group);
+  }
 }

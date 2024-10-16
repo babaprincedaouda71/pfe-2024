@@ -1312,8 +1312,9 @@ export class InvoicingService {
   }
 
   /********************************************************************************/
+
   /************************************************************************/
-  public generateGroupsInvoicePDF(invoiceNumber : string, trainingList: TrainingModel[], client: ClientModel) {
+  public generateGroupsInvoicePDF(invoiceNumber: string, trainingList: TrainingModel[], client: ClientModel) {
     return new Promise((resolve) => {
       const year = new Date().getFullYear();
       const month = new Date().getMonth() + 1;
@@ -1321,16 +1322,6 @@ export class InvoicingService {
       const formattedDate = `${('0' + date.getDate()).slice(-2)}/${('0' + (date.getMonth() + 1)).slice(-2)}/${date.getFullYear()}`;
 
       let totalAmount = 0;
-
-      let groupRows = trainingList.map((training) => {
-        return training.groups.map((group, index) => {
-          // Assurez-vous que group.groupDates est correctement formaté
-          // const formattedGroupDates = group.groupDates.map((date: string, idx: number) => `GROUPE ${idx + 1} : Le ${this.formatDate(date)}`).join('\n');
-          return [
-            {text: group.status}, // Remplacez le contenu par le texte formaté
-          ];
-        });
-      });
 
 
       // Création des lignes de la table des formations
@@ -1578,6 +1569,7 @@ export class InvoicingService {
       });
     })
   }
+
   /********************************************************************************/
 
   // HTTP REQUESTS
@@ -1589,7 +1581,7 @@ export class InvoicingService {
     return this.http.post<InvoiceModel>(`${this.host}/invoice/add/training`, trainingInvoice);
   }
 
-  public saveGroupsInvoice(trainingsInvoice : TrainingInvoice) {
+  public saveGroupsInvoice(trainingsInvoice: TrainingInvoice) {
     return this.http.post<InvoiceModel>(`${this.host}/invoice/add/group-invoice`, trainingsInvoice);
   }
 
@@ -1637,7 +1629,8 @@ export class InvoicingService {
     }>(`${this.host}/invoice/nextInvoiceNumber`, {params}).pipe(map(response => response.invoiceNumber)); // Extraire le numéro de facture de la réponse;
   }
 
-  saveTrainingGroupsInvoice() {
 
+  public updateGroupsInvoice(trainingsInvoice: TrainingInvoice, idInvoice : number) {
+    return this.http.put<InvoiceModel>(`${this.host}/invoice/update/group-invoice/${idInvoice}`, trainingsInvoice);
   }
 }

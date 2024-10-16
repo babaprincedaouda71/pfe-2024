@@ -18,4 +18,6 @@ public interface ClientService {
   ClientDTO updateClient(AddClientDTO clientDTO);
 
   ClientDTO deleteClient(Long idClient);
+
+    int getDeadline(Long idClient);
 }

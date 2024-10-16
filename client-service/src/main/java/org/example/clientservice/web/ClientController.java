@@ -40,6 +40,12 @@ public class ClientController {
     return clientService.getById(idClient);
   }
 
+  @GetMapping("/find/getDeadline/{idClient}")
+  @PreAuthorize("hasAnyAuthority('admin','user')")
+  public int getDeadline(@PathVariable Long idClient) {
+    return clientService.getDeadline(idClient);
+  }
+
   @PutMapping("/update")
   @PreAuthorize("hasAuthority('admin')")
   public ClientDTO updateClient(@RequestBody AddClientDTO clientDTO) {

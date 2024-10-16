@@ -30,4 +30,6 @@ public interface TrainingGroupService {
   TrainingGroup removeTrainingNotes(Long idGroup, TrainingGroup trainingGroup);
 
   List<TrainingGroupDTO> getGroupsToBeInvoiced();
+
+    void markGroupAsInvoiced(TrainingGroup group);
 }
