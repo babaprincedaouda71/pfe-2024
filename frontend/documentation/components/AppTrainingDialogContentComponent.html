@@ -1,0 +1,1620 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">frontend documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  AppTrainingDialogContentComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/admin/training/training/training.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-dialog-content</code></td>
+            </tr>
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>training-dialog-content.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#action" >action</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Public</span>
+                                <a href="#data" >data</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#dialogRef" >dialogRef</a>
+                            </li>
+                            <li>
+                                <a href="#local_data" >local_data</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#closeDialog" >closeDialog</a>
+                            </li>
+                            <li>
+                                <a href="#doAction" >doAction</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(dialogRef: MatDialogRef<AppTrainingDialogContentComponent>, data: literal type)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="337" class="link-to-prism">src/app/admin/training/training/training.component.ts:337</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>dialogRef</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialogRef&lt;AppTrainingDialogContentComponent&gt;</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>data</td>
+                                                  
+                                                        <td>
+                                                                    <code>literal type</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeDialog"></a>
+                    <span class="name">
+                        <span ><b>closeDialog</b></span>
+                        <a href="#closeDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeDialog()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="350"
+                                    class="link-to-prism">src/app/admin/training/training/training.component.ts:350</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="doAction"></a>
+                    <span class="name">
+                        <span ><b>doAction</b></span>
+                        <a href="#doAction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>doAction()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="346"
+                                    class="link-to-prism">src/app/admin/training/training/training.component.ts:346</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="action"></a>
+                    <span class="name">
+                        <span ><b>action</b></span>
+                        <a href="#action"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="335" class="link-to-prism">src/app/admin/training/training/training.component.ts:335</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="data"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Public</span>
+                        <span ><b>data</b></span>
+                        <a href="#data"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Optional()<br />@Inject(MAT_DIALOG_DATA)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="340" class="link-to-prism">src/app/admin/training/training/training.component.ts:340</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dialogRef"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>dialogRef</b></span>
+                        <a href="#dialogRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>MatDialogRef&lt;AppTrainingDialogContentComponent&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="339" class="link-to-prism">src/app/admin/training/training/training.component.ts:339</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="local_data"></a>
+                    <span class="name">
+                        <span ><b>local_data</b></span>
+                        <a href="#local_data"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="337" class="link-to-prism">src/app/admin/training/training/training.component.ts:337</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Inject, OnDestroy, OnInit, Optional, ViewChild} from &#x27;@angular/core&#x27;;
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from &quot;@angular/material/dialog&quot;;
+import {FormGroup} from &quot;@angular/forms&quot;;
+import {GroupModel, TrainingModel} from &quot;../../../../models/training.model&quot;;
+import {MatTableDataSource} from &quot;@angular/material/table&quot;;
+import {MatPaginator} from &quot;@angular/material/paginator&quot;;
+import {TrainingService} from &quot;../../../_services/training.service&quot;;
+import {KeycloakService} from &quot;keycloak-angular&quot;;
+import {ClientService} from &quot;../../../_services/client.service&quot;;
+import {ClientModel} from &quot;../../../../models/client.model&quot;;
+import {Vendor} from &quot;../../../../models/vendor.model&quot;;
+import {VendorService} from &quot;../../../_services/vendor.service&quot;;
+import {ErrorDialogComponent} from &quot;./error-dialog/error-dialog.component&quot;;
+import {MatSnackBar} from &quot;@angular/material/snack-bar&quot;;
+import {TrainingLifecycleDialogComponent} from &quot;../detail-training/detail-training.component&quot;;
+import {DatesService} from &quot;../../../_services/dates.service&quot;;
+import {Router} from &quot;@angular/router&quot;;
+import {firstValueFrom, Subscription} from &quot;rxjs&quot;;
+
+@Component({
+  selector: &#x27;app-training&#x27;,
+  templateUrl: &#x27;./training.component.html&#x27;,
+  styleUrl: &#x27;./training.component.scss&#x27;
+})
+export class TrainingComponent implements OnInit, OnDestroy {
+  trainings!: TrainingModel[];
+  clients!: ClientModel[];
+  vendors!: Vendor[]
+  datasource!: MatTableDataSource&lt;any&gt;;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator &#x3D; Object.create(null);
+  displayedColumns: string[] &#x3D; [&#x27;client&#x27;, &#x27;theme&#x27;, &#x27;groups&#x27;, &#x27;vendor&#x27;, &#x27;dates&#x27;, &#x27;days&#x27;, &#x27;staff&#x27;, &#x27;status&#x27;, &#x27;action&#x27;];
+  /*
+  * Filter variables
+  */
+  filteredTrainings!: Array&lt;TrainingModel&gt;;
+  // Déclarez une propriété pour stocker les formateurs uniques pour les contrôles de sélection
+  uniqueVendors!: string[];
+  // Déclarez une propriété pour stocker les clients uniques pour les contrôles de sélection
+  uniqueClients!: string[];
+  // Selected field value
+  selectedClient!: any
+  selectedVendor!: any
+  selectedDate!: any
+  selectedStatus!: any
+  private subscriptions: Subscription[] &#x3D; []
+
+  constructor(private trainingService: TrainingService,
+              private clientService: ClientService,
+              private vendorService: VendorService,
+              public keycloakService: KeycloakService,
+              public dialog: MatDialog,
+              private snackBar: MatSnackBar,
+              public dateService: DatesService) {
+
+  }
+
+  ngOnInit() {
+    this.getTrainings();
+    this.getClients()
+    this.getVendors()
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(s &#x3D;&gt; s.unsubscribe())
+  }
+
+  /*
+  * Get All Trainings
+  * */
+  getTrainings() {
+    const trainingSubscription &#x3D; this.trainingService.getTrainings()
+      .subscribe({
+        next: data &#x3D;&gt; {
+          this.trainings &#x3D; data
+
+          this.datasource &#x3D; new MatTableDataSource(this.trainings);
+          this.datasource.paginator &#x3D; this.paginator;
+
+          //Filter operations
+          this.filteredTrainings &#x3D; data
+          // Initialisez uniqueVendors avec les valeurs uniques des formateurs dans les formations
+          this.uniqueVendors &#x3D; this.getAllUniqueVendors();
+          // Initialisez uniqueClients avec les valeurs uniques des formateurs dans les formations
+          this.uniqueClients &#x3D; this.getAllUniqueClients()
+
+
+        },
+        // error: err &#x3D;&gt; {
+        //   console.log(err.message)
+        // }
+      })
+    this.subscriptions.push(trainingSubscription)
+  }
+
+  /*
+  * Get All Clients
+  * */
+  getClients() {
+    const clientsSubscription &#x3D; this.clientService.getClients()
+      .subscribe({
+        next: data &#x3D;&gt; {
+          this.clients &#x3D; data
+        },
+        // error: err &#x3D;&gt; {
+        //   console.log(err.message)
+        // }
+      })
+    this.subscriptions.push(clientsSubscription)
+  }
+
+  /*
+  * Get All Vendors
+  * */
+  getVendors() {
+    const vendorSubscription &#x3D; this.vendorService.getVendors()
+      .subscribe({
+        next: data &#x3D;&gt; {
+          this.vendors &#x3D; data
+        },
+        // error: err &#x3D;&gt; {
+        //   console.log(err.message)
+        // }
+      })
+    this.subscriptions.push(vendorSubscription)
+  }
+
+
+  /*
+   * Search Trainings
+  * */
+  search(keyword: string) {
+    const results: TrainingModel[] &#x3D; []
+    for (const training of this.trainings) {
+      if (training.theme.toLowerCase().indexOf(keyword.toLowerCase()) !&#x3D;&#x3D; -1
+        || training.client.corporateName.toLowerCase().indexOf(keyword.toLowerCase()) !&#x3D;&#x3D; -1
+        || training.vendor.name.toLowerCase().indexOf(keyword.toLowerCase()) !&#x3D;&#x3D; -1
+        || training.location.toLowerCase().indexOf(keyword.toLowerCase()) !&#x3D;&#x3D; -1) {
+        results.push(training)
+        this.datasource &#x3D; new MatTableDataSource(results);
+        this.datasource.paginator &#x3D; this.paginator;
+      }
+    }
+    this.trainings &#x3D; results
+    if (results.length &#x3D;&#x3D;&#x3D; 0 || !keyword) {
+      this.getTrainings()
+    }
+  }
+
+  /**
+   * Advanced search
+   * */
+
+  // Get All Unique Vendors
+  getAllUniqueVendors() {
+    const vendors &#x3D; new Set&lt;string&gt;()
+    this.trainings.forEach(training &#x3D;&gt; {
+      vendors.add(training.vendor.name)
+    })
+    return Array.from(vendors)
+  }
+
+  // Fonction pour vérifier si deux dates sont les mêmes (même jour, mois et année)
+  isSameDate(date1: number, date2: Date): boolean {
+    return date1 &#x3D;&#x3D;&#x3D; date2.getMonth()
+  }
+
+
+  // Get All Unique Client
+  getAllUniqueClients() {
+    const clients &#x3D; new Set&lt;string&gt;()
+    this.trainings.forEach(training &#x3D;&gt; {
+      clients.add(training.client.corporateName)
+    })
+    return Array.from(clients)
+  }
+
+
+  // ********** Start *************
+  applyFilter(event: any, filterType: string) {
+    const value &#x3D; event.value.toLowerCase();
+    if (value &#x3D;&#x3D;&#x3D; &#x27;&#x27;) {
+      this.trainings &#x3D; this.filteredTrainings.slice();
+      this.datasource &#x3D; new MatTableDataSource(this.trainings);
+      this.datasource.paginator &#x3D; this.paginator;
+    } else {
+      switch (filterType) {
+        case &#x27;vendor&#x27;:
+          this.trainings &#x3D; this.filteredTrainings.filter(training &#x3D;&gt;
+            &#x60;${training.vendor.name.toLowerCase()}&#x60; &#x3D;&#x3D;&#x3D; value
+          );
+          this.resetFilter(&#x27;vendor&#x27;)
+          break;
+        case &#x27;date&#x27;:
+          const selectedDate &#x3D; parseInt(value, 10);
+          this.trainings &#x3D; this.filteredTrainings.filter(training &#x3D;&gt; {
+            if (!training.trainingDates) {
+              return false;
+            }
+            const trainingDates &#x3D; training.trainingDates.map(trainingDate &#x3D;&gt; new Date(trainingDate));
+            return trainingDates.some(trainingDate &#x3D;&gt; this.isSameDate(selectedDate, trainingDate));
+          });
+          this.resetFilter(&#x27;date&#x27;)
+          break;
+        case &#x27;client&#x27;:
+          this.trainings &#x3D; this.filteredTrainings.filter(training &#x3D;&gt;
+            &#x60;${training.client.corporateName.toLowerCase()}&#x60; &#x3D;&#x3D;&#x3D; value
+          );
+          this.resetFilter(&#x27;client&#x27;)
+          break;
+        case &#x27;status&#x27;:
+          this.trainings &#x3D; this.filteredTrainings.filter(training &#x3D;&gt;
+            &#x60;${training.status.toLowerCase()}&#x60; &#x3D;&#x3D;&#x3D; value.toLowerCase()
+          );
+          this.resetFilter(&#x27;status&#x27;)
+          break;
+        default:
+          console.error(&#x60;Unknown filter type: ${filterType}&#x60;);
+      }
+      this.datasource &#x3D; new MatTableDataSource(this.trainings);
+      this.datasource.paginator &#x3D; this.paginator;
+    }
+  }
+
+  resetFilter(filterType: string) {
+    if (filterType &#x3D;&#x3D;&#x3D; &#x27;vendor&#x27;) {
+      this.selectedStatus &#x3D; null;
+      this.selectedClient &#x3D; null;
+      this.selectedDate &#x3D; null;
+    }
+    if (filterType &#x3D;&#x3D;&#x3D; &#x27;date&#x27;) {
+      this.selectedVendor &#x3D; null;
+      this.selectedStatus &#x3D; null;
+      this.selectedClient &#x3D; null;
+    }
+    if (filterType &#x3D;&#x3D;&#x3D; &#x27;client&#x27;) {
+      this.selectedDate &#x3D; null;
+      this.selectedVendor &#x3D; null;
+      this.selectedStatus &#x3D; null;
+    }
+    if (filterType &#x3D;&#x3D;&#x3D; &#x27;status&#x27;) {
+      this.selectedClient &#x3D; null;
+      this.selectedVendor &#x3D; null;
+      this.selectedDate &#x3D; null;
+    }
+  }
+
+  // ********** End *************
+
+  // Handle delete and update dialog
+  openDialog(action: string, obj: any): void {
+    obj.action &#x3D; action;
+    const dialogRef &#x3D; this.dialog.open(AppTrainingDialogContentComponent, {
+      data: {
+        // form : this.buildClientForm(),
+        obj: obj
+      },
+    });
+    const openDialogSubscription &#x3D; dialogRef.afterClosed().subscribe((result) &#x3D;&gt; {
+      if (result.event &#x3D;&#x3D;&#x3D; &#x27;Supprimer&#x27;) {
+        this.deleteRowData(result.data);
+      }
+    });
+    this.subscriptions.push(openDialogSubscription)
+  }
+
+  // tslint:disable-next-line - Disables all
+  deleteRowData(row_obj: TrainingModel): boolean | any {
+    const deleteTrainingSubscription &#x3D; this.trainingService.deleteTraining(row_obj.idTraining)
+      .subscribe({
+        next: data &#x3D;&gt; {
+          this.getTrainings()
+          this.snackBar.open(&#x27;La Formation &#x27; + data.theme + &#x27; a été supprimée avec Succès&#x27;, &#x27;Fermer&#x27;, {
+            duration: 4000,
+            panelClass: [&#x27;green-snackbar&#x27;],
+            horizontalPosition: &#x27;center&#x27;,
+            verticalPosition: &#x27;top&#x27;,
+          })
+        },
+        error: err &#x3D;&gt; {
+          console.log(err.message)
+        }
+      })
+    this.subscriptions.push(deleteTrainingSubscription)
+  }
+
+  /* Training Life Cycle*/
+  openLifeCycleDialog(action: string, obj: TrainingModel) {
+    const dialogRef &#x3D; this.dialog.open(TrainingLifecycleDialogContentComponent, {
+      data: {
+        obj: obj,
+        action: action
+      }
+    })
+
+    const openLifeCycleSubscription &#x3D; dialogRef.afterClosed().subscribe((result) &#x3D;&gt; {
+      if (result.event &#x3D;&#x3D; &#x27;lifeCycle&#x27;) {
+        this.updateLifeCycle(result.data)
+      }
+    })
+
+    this.subscriptions.push(openLifeCycleSubscription)
+  }
+
+  // Update training life cycle
+  updateLifeCycle(training: TrainingModel) {
+    const updateLifeCycleSubscription &#x3D; this.trainingService.updateLifeCycle(training.idTraining, training)
+      .subscribe({
+        next: data &#x3D;&gt; {
+          this.getTrainings()
+        },
+        error: err &#x3D;&gt; {
+          console.log(err.message)
+        }
+      })
+    this.subscriptions.push(updateLifeCycleSubscription)
+  }
+
+  // Method to check if it&#x27;s the las group
+  isLastGroup(groups: GroupModel[], group: GroupModel): boolean {
+    return groups[groups.length - 1] &#x3D;&#x3D;&#x3D; group;
+  }
+
+
+}
+
+
+@Component({
+  // tslint:disable-next-line: component-selector
+  selector: &#x27;app-dialog-content&#x27;,
+  templateUrl: &#x27;training-dialog-content.html&#x27;
+})
+
+// tslint:disable-next-line: component-class-suffix
+export class AppTrainingDialogContentComponent {
+  action: string;
+  // tslint:disable-next-line - Disables all
+  local_data: any;
+
+  constructor(public dialogRef: MatDialogRef&lt;AppTrainingDialogContentComponent&gt;,
+              @Optional() @Inject(MAT_DIALOG_DATA) public data: { form: FormGroup, obj: TrainingModel },
+  ) {
+    this.local_data &#x3D; {...data.obj};
+    this.action &#x3D; this.local_data.action;
+  }
+
+  doAction(): void {
+    this.dialogRef.close({event: this.action, data: this.local_data});
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close({event: &#x27;Cancel&#x27;});
+  }
+}
+
+
+@Component({
+  selector: &#x27;training-lifecycle-dialog-content&#x27;,
+  templateUrl: &#x27;training-lifecycle-dialog-content.html&#x27;,
+  styleUrl : &#x27;./training-lifecycle-dialog-content.scss&#x27;
+})
+export class TrainingLifecycleDialogContentComponent {
+  action!: string;
+  local_data: any
+  showTrainingSupportForm: boolean &#x3D; false;
+  showPV: boolean &#x3D; false;
+  pv!: string
+  showCertifForm: boolean &#x3D; false;
+  selectedTrainingSupport!: File
+  selectedPresenceList!: File
+  selectedEvaluation!: File
+
+  constructor(public dialogRef: MatDialogRef&lt;TrainingLifecycleDialogContentComponent&gt;,
+              @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+              public dialog: MatDialog,
+              private trainingService: TrainingService,
+              private snackBar: MatSnackBar,
+              private router: Router) {
+    this.local_data &#x3D; {...data.obj}
+    this.action &#x3D; data.action
+    this.selectedTrainingSupport &#x3D; this.local_data.trainingSupport
+  }
+
+  doAction() {
+    this.dialogRef.close({event: this.action, data: this.local_data});
+    this.snackBar.open(&#x27;Le Cycle de Vie a été modifié avec Succès&#x27;, &#x27;Fermer&#x27;, {
+      duration: 4000,
+      panelClass: [&#x27;green-snackbar&#x27;],
+      horizontalPosition: &#x27;center&#x27;,
+      verticalPosition: &#x27;top&#x27;,
+    })
+    // this.dialog.open(OkDialogComponent, {
+    //   data: {
+    //     obj : this.local_data
+    //   }
+    // });
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close({event: &#x27;Cancel&#x27;});
+  }
+
+  openErrorDialog(obj: TrainingModel): void {
+    this.dialog.open(ErrorDialogComponent, {
+      data: {
+        obj: obj,
+      }
+    })
+  }
+
+  /*
+  * BLACK BOX AI CODE
+  * */
+  openLifeCycleDialog(action: string, obj: TrainingModel) {
+    const dialogRef &#x3D; this.dialog.open(TrainingLifecycleDialogComponent, {
+      data: {
+        obj: obj,
+        action: action
+      }
+    })
+
+    dialogRef.afterClosed().subscribe((result) &#x3D;&gt; {
+      if (result.event &#x3D;&#x3D; &#x27;pv&#x27;) {
+        this.resetCheckboxes(&#x27;kickOfMeeting&#x27;);
+      }
+      if (result.event &#x3D;&#x3D; &#x27;trainingSupport&#x27;) {
+        this.resetCheckboxes(&#x27;trainingSupport&#x27;);
+      }
+      if (result.event &#x3D;&#x3D; &#x27;trainingNotes&#x27;) {
+        this.resetCheckboxes(&#x27;certif&#x27;);
+      }
+      if (result.data !&#x3D; undefined) {
+        this.local_data &#x3D; result.data
+        this.updateLifeCycle(this.local_data)
+          .then(() &#x3D;&gt; {
+          })
+          .catch(err &#x3D;&gt; {
+            console.log(err.message);
+          });
+      }
+    })
+  }
+
+  removePv(idTraining: number) {
+    this.trainingService.removePv(idTraining, this.local_data).subscribe({
+      next: data &#x3D;&gt; {
+      },
+      error: error &#x3D;&gt; {
+        console.log(error.message)
+      }
+    })
+  }
+
+  removeTrainingSupport() {
+    this.trainingService.removeTrainingSupport(this.local_data.idTraining, this.local_data).subscribe({
+      next: data &#x3D;&gt; {
+        console.log(data)
+      },
+      error: error &#x3D;&gt; {
+        console.log(error.message)
+      }
+    })
+  }
+
+  // Update training life cycle
+  updateLifeCycle(training: TrainingModel): Promise&lt;TrainingModel&gt; {
+    return firstValueFrom(this.trainingService.updateLifeCycle(training.idTraining, training));
+  }
+
+
+  checkVendor(event: any) {
+    if (!this.local_data.vendor || this.local_data.vendor.idVendor &#x3D;&#x3D; null) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.local_data.lifeCycle.trainerSearch &#x3D; false;
+      this.closeDialog();
+      this.openErrorDialog(this.local_data);
+    }
+    this.resetCheckboxes(&#x27;trainerSearch&#x27;);
+    this.updateLifeCycle(this.local_data)
+      .then(() &#x3D;&gt; {
+      })
+      .catch(err &#x3D;&gt; {
+        console.log(err.message);
+      });
+  }
+
+  checkValidation() {
+    this.resetCheckboxes(&#x27;trainerValidation&#x27;);
+    this.updateLifeCycle(this.local_data)
+      .then(() &#x3D;&gt; {
+      })
+      .catch(err &#x3D;&gt; {
+        console.log(err.message);
+      });
+  }
+
+  checkKickOfMeeting(event: any) {
+    if (this.local_data.lifeCycle.kickOfMeeting &amp;&amp; !this.local_data.lifeCycle.trainingSupport) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.local_data.lifeCycle.kickOfMeeting &#x3D; false;
+      this.openLifeCycleDialog(&#x27;pv&#x27;, this.local_data)
+    } else {
+      this.local_data.lifeCycle.kickOfMeeting &#x3D; false;
+      this.resetCheckboxes(&#x27;kickOfMeeting&#x27;);
+      this.updateLifeCycle(this.local_data)
+        .then(() &#x3D;&gt; {
+          this.removePv(this.local_data.idTraining)
+        })
+        .catch(err &#x3D;&gt; {
+          console.log(err.message);
+        });
+    }
+  }
+
+  checkTrainingSupport(event: any) {
+    if (this.local_data.lifeCycle.trainingSupport &amp;&amp; !this.local_data.lifeCycle.impression) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.local_data.lifeCycle.trainingSupport &#x3D; false
+      this.openLifeCycleDialog(&#x27;trainingSupport&#x27;, this.local_data)
+    } else {
+      this.resetCheckboxes(&#x27;trainingSupport&#x27;);
+      this.local_data.lifeCycle.trainingSupport &#x3D; false
+      this.updateLifeCycle(this.local_data)
+        .then(() &#x3D;&gt; {
+          this.removeTrainingSupport()
+        })
+        .catch(err &#x3D;&gt; {
+          console.log(err.message);
+        });
+    }
+  }
+
+  checkImpression() {
+    this.resetCheckboxes(&#x27;impression&#x27;);
+    this.updateLifeCycle(this.local_data)
+      .then(() &#x3D;&gt; {
+      })
+      .catch(err &#x3D;&gt; {
+        console.log(err.message);
+      });
+  }
+
+  checkCompletion() {
+    this.resetCheckboxes(&#x27;completion&#x27;);
+    this.updateLifeCycle(this.local_data)
+      .then(() &#x3D;&gt; {
+      })
+      .catch(err &#x3D;&gt; {
+        console.log(err.message);
+      });
+  }
+
+  checkCertif(event: any) {
+    if (this.local_data.lifeCycle.certif &amp;&amp; !this.local_data.lifeCycle.invoicing) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.local_data.lifeCycle.certif &#x3D; false
+      this.openLifeCycleDialog(&#x27;trainingNotes&#x27;, this.local_data)
+    } else {
+      this.local_data.lifeCycle.certif &#x3D; false
+      this.resetCheckboxes(&#x27;certif&#x27;);
+      this.updateLifeCycle(this.local_data)
+        .then(() &#x3D;&gt; {
+        })
+        .catch(err &#x3D;&gt; {
+          console.log(err.message);
+        });
+    }
+  }
+
+  checkInvoicing(event: any) {
+    if (this.local_data.lifeCycle.invoicing &amp;&amp; !this.local_data.lifeCycle.payment) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.closeDialog()
+      this.router.navigate([&#x27;invoicing/client-training&#x27;])
+    } else {
+      this.resetCheckboxes(&#x27;invoicing&#x27;);
+      this.updateLifeCycle(this.local_data)
+        .then(() &#x3D;&gt; {
+        })
+        .catch(err &#x3D;&gt; {
+          console.log(err.message);
+        });
+    }
+  }
+
+  checkPayment() {
+    this.resetCheckboxes(&#x27;payment&#x27;);
+    this.updateLifeCycle(this.local_data)
+      .then(() &#x3D;&gt; {
+      })
+      .catch(err &#x3D;&gt; {
+        console.log(err.message);
+      });
+  }
+
+  onSubmitTrainingSupport() {
+    const formData: FormData &#x3D; new FormData()
+    if (this.selectedTrainingSupport) {
+      formData.append(&#x27;trainingSupport&#x27;, this.selectedTrainingSupport)
+    }
+
+    this.trainingService.addTrainingSupport(formData, this.local_data.idTraining)
+      .subscribe({
+        next: data &#x3D;&gt; {
+          console.log(&quot;OKKK&quot;)
+          console.log(data)
+          this.showTrainingSupportForm &#x3D; false
+        },
+        error: error &#x3D;&gt; {
+          console.log(error.message)
+        }
+      })
+  }
+
+  /*
+  * END BLACK BOX AI CODE
+  * */
+
+  onTrainingSupportChange(event: any) {
+    if (!event.target.files[0]) return
+    this.selectedTrainingSupport &#x3D; event.target.files[0];
+  }
+
+  onPresenceListChange(event: any) {
+    if (!event.target.files[0]) return
+    this.selectedPresenceList &#x3D; event.target.files[0];
+  }
+
+  onEvaluationChange(event: any) {
+    if (!event.target.files[0]) return
+    this.selectedEvaluation &#x3D; event.target.files[0];
+  }
+
+  onAddPV() {
+    this.trainingService.addPv(this.pv, this.local_data.idTraining)
+      .subscribe({
+        next: value &#x3D;&gt; {
+          this.showPV &#x3D; false
+          console.log(value)
+        },
+        error: err &#x3D;&gt; {
+          console.log(err.message)
+        }
+      })
+  }
+
+  onSubmitTrainingNotes() {
+    const formData: FormData &#x3D; new FormData()
+    if (this.selectedPresenceList) {
+      formData.append(&#x27;presenceList&#x27;, this.selectedPresenceList)
+    }
+    if (this.selectedEvaluation) {
+      formData.append(&#x27;evaluation&#x27;, this.selectedEvaluation)
+    }
+
+    this.trainingService.addTrainingNotes(formData, this.local_data.idTraining)
+      .subscribe({
+        next: data &#x3D;&gt; {
+          console.log(&quot;OKKK&quot;)
+          console.log(data)
+          this.showCertifForm &#x3D; false
+        },
+        error: error &#x3D;&gt; {
+          console.log(error.message)
+        }
+      })
+  }
+
+  private resetCheckboxes(currentCheckbox: string) {
+    const checkboxOrder &#x3D; [
+      &#x27;trainerSearch&#x27;,
+      &#x27;trainerValidation&#x27;,
+      &#x27;kickOfMeeting&#x27;,
+      &#x27;trainingSupport&#x27;,
+      &#x27;impression&#x27;,
+      &#x27;completion&#x27;,
+      &#x27;certif&#x27;,
+      &#x27;invoicing&#x27;,
+      &#x27;payment&#x27;
+    ];
+
+    const currentIndex &#x3D; checkboxOrder.indexOf(currentCheckbox);
+    if (currentIndex !&#x3D;&#x3D; -1) {
+      for (let i &#x3D; currentIndex + 1; i &lt; checkboxOrder.length; i++) {
+        this.local_data.lifeCycle[checkboxOrder[i]] &#x3D; false;
+      }
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;h2 class&#x3D;&quot;f-w-500 m-b-24&quot; mat-dialog-title&gt;&lt;strong&gt;{{ action }}&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;!--@if(action !&#x3D;&#x3D; &#x27;Supprimer&#x27;) {--&gt;
+&lt;!--&lt;mat-dialog-content style&#x3D;&quot;max-width: 600px&quot;&gt;--&gt;
+&lt;!--  &lt;form [formGroup]&#x3D;&quot;data.form&quot; (ngSubmit)&#x3D;&quot;submitForm()&quot;&gt;--&gt;
+&lt;!--    &lt;div class&#x3D;&quot;d-flex align-items-center m-b-16&quot;&gt;--&gt;
+&lt;!--      &lt;button mat-flat-button color&#x3D;&quot;primary&quot; class&#x3D;&quot;m-l-16 input-file-button&quot;&gt;--&gt;
+&lt;!--        &lt;input type&#x3D;&quot;file&quot; (change)&#x3D;&quot;selectFile($event)&quot; #fileInput /&gt;--&gt;
+&lt;!--      &lt;/button&gt;--&gt;
+&lt;!--    &lt;/div&gt;--&gt;
+&lt;!--    &lt;div class&#x3D;&quot;row&quot;&gt;--&gt;
+&lt;!--      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;--&gt;
+&lt;!--        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;--&gt;
+&lt;!--          &lt;input--&gt;
+&lt;!--            type&#x3D;&quot;text&quot;--&gt;
+&lt;!--            matInput--&gt;
+&lt;!--            required--&gt;
+&lt;!--            id&#x3D;&quot;corporateName&quot;--&gt;
+&lt;!--            name&#x3D;&quot;corporateName&quot;--&gt;
+&lt;!--            placeholder&#x3D;&quot;Raison Sociale&quot;--&gt;
+&lt;!--            formControlName&#x3D;&quot;corporateName&quot;--&gt;
+&lt;!--          /&gt;--&gt;
+&lt;!--        &lt;/mat-form-field&gt;--&gt;
+&lt;!--      &lt;/div&gt;--&gt;
+&lt;!--      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;--&gt;
+&lt;!--        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;--&gt;
+&lt;!--          &lt;input--&gt;
+&lt;!--            type&#x3D;&quot;text&quot;--&gt;
+&lt;!--            matInput--&gt;
+&lt;!--            required--&gt;
+&lt;!--            id&#x3D;&quot;address&quot;--&gt;
+&lt;!--            name&#x3D;&quot;address&quot;--&gt;
+&lt;!--            placeholder&#x3D;&quot;Adresse&quot;--&gt;
+&lt;!--            formControlName&#x3D;&quot;address&quot;--&gt;
+&lt;!--          /&gt;--&gt;
+&lt;!--        &lt;/mat-form-field&gt;--&gt;
+&lt;!--      &lt;/div&gt;--&gt;
+&lt;!--      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;--&gt;
+&lt;!--        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;--&gt;
+&lt;!--          &lt;input--&gt;
+&lt;!--            type&#x3D;&quot;text&quot;--&gt;
+&lt;!--            matInput--&gt;
+&lt;!--            required--&gt;
+&lt;!--            id&#x3D;&quot;phoneNumber&quot;--&gt;
+&lt;!--            name&#x3D;&quot;phoneNumber&quot;--&gt;
+&lt;!--            placeholder&#x3D;&quot;Téléphone&quot;--&gt;
+&lt;!--            formControlName&#x3D;&quot;phoneNumber&quot;--&gt;
+&lt;!--          /&gt;--&gt;
+&lt;!--        &lt;/mat-form-field&gt;--&gt;
+&lt;!--      &lt;/div&gt;--&gt;
+&lt;!--      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;--&gt;
+&lt;!--        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;--&gt;
+&lt;!--          &lt;input--&gt;
+&lt;!--            type&#x3D;&quot;text&quot;--&gt;
+&lt;!--            matInput--&gt;
+&lt;!--            required--&gt;
+&lt;!--            id&#x3D;&quot;email&quot;--&gt;
+&lt;!--            name&#x3D;&quot;email&quot;--&gt;
+&lt;!--            placeholder&#x3D;&quot;Email&quot;--&gt;
+&lt;!--            formControlName&#x3D;&quot;email&quot;--&gt;
+&lt;!--          /&gt;--&gt;
+&lt;!--        &lt;/mat-form-field&gt;--&gt;
+&lt;!--      &lt;/div&gt;--&gt;
+&lt;!--      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;--&gt;
+&lt;!--        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;--&gt;
+&lt;!--          &lt;input--&gt;
+&lt;!--            type&#x3D;&quot;text&quot;--&gt;
+&lt;!--            matInput--&gt;
+&lt;!--            required--&gt;
+&lt;!--            id&#x3D;&quot;website&quot;--&gt;
+&lt;!--            name&#x3D;&quot;website&quot;--&gt;
+&lt;!--            placeholder&#x3D;&quot;Site Web&quot;--&gt;
+&lt;!--            formControlName&#x3D;&quot;website&quot;--&gt;
+&lt;!--          /&gt;--&gt;
+&lt;!--        &lt;/mat-form-field&gt;--&gt;
+&lt;!--      &lt;/div&gt;--&gt;
+&lt;!--      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;--&gt;
+&lt;!--        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;--&gt;
+&lt;!--          &lt;input--&gt;
+&lt;!--            type&#x3D;&quot;text&quot;--&gt;
+&lt;!--            matInput--&gt;
+&lt;!--            required--&gt;
+&lt;!--            id&#x3D;&quot;nameMainContact&quot;--&gt;
+&lt;!--            name&#x3D;&quot;nameMainContact&quot;--&gt;
+&lt;!--            placeholder&#x3D;&quot;Nom du Contact Principal&quot;--&gt;
+&lt;!--            formControlName&#x3D;&quot;nameMainContact&quot;--&gt;
+&lt;!--          /&gt;--&gt;
+&lt;!--        &lt;/mat-form-field&gt;--&gt;
+&lt;!--      &lt;/div&gt;--&gt;
+&lt;!--      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;--&gt;
+&lt;!--        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;--&gt;
+&lt;!--          &lt;input--&gt;
+&lt;!--            type&#x3D;&quot;text&quot;--&gt;
+&lt;!--            placeholder&#x3D;&quot;Téléphone Contact Principal&quot;--&gt;
+&lt;!--            matInput--&gt;
+&lt;!--            required--&gt;
+&lt;!--            id&#x3D;&quot;phoneNumberMainContact&quot;--&gt;
+&lt;!--            name&#x3D;&quot;phoneNumberMainContact&quot;--&gt;
+&lt;!--            formControlName&#x3D;&quot;phoneNumberMainContact&quot;--&gt;
+&lt;!--          /&gt;--&gt;
+&lt;!--        &lt;/mat-form-field&gt;--&gt;
+&lt;!--      &lt;/div&gt;--&gt;
+&lt;!--      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;--&gt;
+&lt;!--        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;--&gt;
+&lt;!--          &lt;input--&gt;
+&lt;!--            type&#x3D;&quot;text&quot;--&gt;
+&lt;!--            placeholder&#x3D;&quot;Email Contact Principal&quot;--&gt;
+&lt;!--            matInput--&gt;
+&lt;!--            required--&gt;
+&lt;!--            id&#x3D;&quot;emailMainContact&quot;--&gt;
+&lt;!--            name&#x3D;&quot;emailMainContact&quot;--&gt;
+&lt;!--            formControlName&#x3D;&quot;emailMainContact&quot;--&gt;
+&lt;!--          /&gt;--&gt;
+&lt;!--        &lt;/mat-form-field&gt;--&gt;
+&lt;!--      &lt;/div&gt;--&gt;
+&lt;!--      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;--&gt;
+&lt;!--        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;--&gt;
+&lt;!--          &lt;input--&gt;
+&lt;!--            type&#x3D;&quot;text&quot;--&gt;
+&lt;!--            placeholder&#x3D;&quot;Fonction Contact Principal&quot;--&gt;
+&lt;!--            matInput--&gt;
+&lt;!--            required--&gt;
+&lt;!--            id&#x3D;&quot;positionMainContact&quot;--&gt;
+&lt;!--            name&#x3D;&quot;positionMainContact&quot;--&gt;
+&lt;!--            formControlName&#x3D;&quot;positionMainContact&quot;--&gt;
+&lt;!--          /&gt;--&gt;
+&lt;!--        &lt;/mat-form-field&gt;--&gt;
+&lt;!--      &lt;/div&gt;--&gt;
+&lt;!--      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;--&gt;
+&lt;!--        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;--&gt;
+&lt;!--          &lt;input--&gt;
+&lt;!--            type&#x3D;&quot;text&quot;--&gt;
+&lt;!--            placeholder&#x3D;&quot;ICE&quot;--&gt;
+&lt;!--            matInput--&gt;
+&lt;!--            required--&gt;
+&lt;!--            id&#x3D;&quot;commonCompanyIdentifier&quot;--&gt;
+&lt;!--            name&#x3D;&quot;commonCompanyIdentifier&quot;--&gt;
+&lt;!--            formControlName&#x3D;&quot;commonCompanyIdentifier&quot;--&gt;
+&lt;!--          /&gt;--&gt;
+&lt;!--        &lt;/mat-form-field&gt;--&gt;
+&lt;!--      &lt;/div&gt;--&gt;
+&lt;!--      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;--&gt;
+&lt;!--        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;--&gt;
+&lt;!--          &lt;input--&gt;
+&lt;!--            type&#x3D;&quot;text&quot;--&gt;
+&lt;!--            placeholder&#x3D;&quot;Taxe de Registre&quot;--&gt;
+&lt;!--            matInput--&gt;
+&lt;!--            required--&gt;
+&lt;!--            id&#x3D;&quot;taxRegistration&quot;--&gt;
+&lt;!--            name&#x3D;&quot;taxRegistration&quot;--&gt;
+&lt;!--            formControlName&#x3D;&quot;taxRegistration&quot;--&gt;
+&lt;!--          /&gt;--&gt;
+&lt;!--        &lt;/mat-form-field&gt;--&gt;
+&lt;!--      &lt;/div&gt;--&gt;
+&lt;!--      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;--&gt;
+&lt;!--        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;--&gt;
+&lt;!--          &lt;input--&gt;
+&lt;!--            type&#x3D;&quot;text&quot;--&gt;
+&lt;!--            placeholder&#x3D;&quot;Registre du Commerce&quot;--&gt;
+&lt;!--            matInput--&gt;
+&lt;!--            required--&gt;
+&lt;!--            id&#x3D;&quot;commercialRegister&quot;--&gt;
+&lt;!--            name&#x3D;&quot;commercialRegister&quot;--&gt;
+&lt;!--            formControlName&#x3D;&quot;commercialRegister&quot;--&gt;
+&lt;!--          /&gt;--&gt;
+&lt;!--        &lt;/mat-form-field&gt;--&gt;
+&lt;!--      &lt;/div&gt;--&gt;
+&lt;!--      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;--&gt;
+&lt;!--        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;--&gt;
+&lt;!--          &lt;input--&gt;
+&lt;!--            type&#x3D;&quot;text&quot;--&gt;
+&lt;!--            placeholder&#x3D;&quot;Taxe Professionnelle&quot;--&gt;
+&lt;!--            matInput--&gt;
+&lt;!--            required--&gt;
+&lt;!--            id&#x3D;&quot;professionalTax&quot;--&gt;
+&lt;!--            name&#x3D;&quot;professionalTax&quot;--&gt;
+&lt;!--            formControlName&#x3D;&quot;professionalTax&quot;--&gt;
+&lt;!--          /&gt;--&gt;
+&lt;!--        &lt;/mat-form-field&gt;--&gt;
+&lt;!--      &lt;/div&gt;--&gt;
+&lt;!--      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;--&gt;
+&lt;!--        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;--&gt;
+&lt;!--          &lt;input--&gt;
+&lt;!--            type&#x3D;&quot;text&quot;--&gt;
+&lt;!--            placeholder&#x3D;&quot;CNSS&quot;--&gt;
+&lt;!--            matInput--&gt;
+&lt;!--            required--&gt;
+&lt;!--            id&#x3D;&quot;cnss&quot;--&gt;
+&lt;!--            name&#x3D;&quot;cnss&quot;--&gt;
+&lt;!--            formControlName&#x3D;&quot;cnss&quot;--&gt;
+&lt;!--          /&gt;--&gt;
+&lt;!--        &lt;/mat-form-field&gt;--&gt;
+&lt;!--      &lt;/div&gt;--&gt;
+&lt;!--      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;--&gt;
+&lt;!--        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;--&gt;
+&lt;!--          &lt;input--&gt;
+&lt;!--            type&#x3D;&quot;text&quot;--&gt;
+&lt;!--            placeholder&#x3D;&quot;Secteur d&#x27;Activité&quot;--&gt;
+&lt;!--            matInput--&gt;
+&lt;!--            required--&gt;
+&lt;!--            id&#x3D;&quot;field&quot;--&gt;
+&lt;!--            name&#x3D;&quot;field&quot;--&gt;
+&lt;!--            formControlName&#x3D;&quot;field&quot;--&gt;
+&lt;!--          /&gt;--&gt;
+&lt;!--        &lt;/mat-form-field&gt;--&gt;
+&lt;!--      &lt;/div&gt;--&gt;
+&lt;!--      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;--&gt;
+&lt;!--        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;--&gt;
+&lt;!--          &lt;input--&gt;
+&lt;!--            type&#x3D;&quot;text&quot;--&gt;
+&lt;!--            placeholder&#x3D;&quot;Etat&quot;--&gt;
+&lt;!--            matInput--&gt;
+&lt;!--            required--&gt;
+&lt;!--            id&#x3D;&quot;status&quot;--&gt;
+&lt;!--            name&#x3D;&quot;status&quot;--&gt;
+&lt;!--            formControlName&#x3D;&quot;status&quot;--&gt;
+&lt;!--          /&gt;--&gt;
+&lt;!--        &lt;/mat-form-field&gt;--&gt;
+&lt;!--      &lt;/div&gt;--&gt;
+&lt;!--      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;--&gt;
+&lt;!--        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;--&gt;
+&lt;!--          &lt;input--&gt;
+&lt;!--            type&#x3D;&quot;date&quot;--&gt;
+&lt;!--            placeholder&#x3D;&quot;Echéance&quot;--&gt;
+&lt;!--            matInput--&gt;
+&lt;!--            required--&gt;
+&lt;!--            id&#x3D;&quot;deadline&quot;--&gt;
+&lt;!--            name&#x3D;&quot;deadline&quot;--&gt;
+&lt;!--            formControlName&#x3D;&quot;deadline&quot;--&gt;
+&lt;!--            min&#x3D;&quot;{{ getDate() }}&quot;--&gt;
+&lt;!--          /&gt;--&gt;
+&lt;!--        &lt;/mat-form-field&gt;--&gt;
+&lt;!--      &lt;/div&gt;--&gt;
+&lt;!--      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;--&gt;
+&lt;!--        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;--&gt;
+&lt;!--          &lt;input--&gt;
+&lt;!--            type&#x3D;&quot;text&quot;--&gt;
+&lt;!--            placeholder&#x3D;&quot;Plafond&quot;--&gt;
+&lt;!--            matInput--&gt;
+&lt;!--            required--&gt;
+&lt;!--            id&#x3D;&quot;limitAmount&quot;--&gt;
+&lt;!--            name&#x3D;&quot;limitAmount&quot;--&gt;
+&lt;!--            formControlName&#x3D;&quot;limitAmount&quot;--&gt;
+&lt;!--          /&gt;--&gt;
+&lt;!--        &lt;/mat-form-field&gt;--&gt;
+&lt;!--      &lt;/div&gt;--&gt;
+&lt;!--    &lt;/div&gt;--&gt;
+&lt;!--    &lt;button--&gt;
+&lt;!--      mat-flat-button--&gt;
+&lt;!--      (click)&#x3D;&quot;doAction()&quot;--&gt;
+&lt;!--      mat-flat-button--&gt;
+&lt;!--      color&#x3D;&quot;primary&quot;--&gt;
+&lt;!--      [disabled]&#x3D;&quot;!data.form.valid&quot;--&gt;
+&lt;!--    &gt;--&gt;
+&lt;!--      {{action}}--&gt;
+&lt;!--    &lt;/button&gt;--&gt;
+&lt;!--    &lt;button--&gt;
+&lt;!--      mat-stroked-button--&gt;
+&lt;!--      color&#x3D;&quot;warn&quot;--&gt;
+&lt;!--      class&#x3D;&quot;m-l-8&quot;--&gt;
+&lt;!--      (click)&#x3D;&quot;closeDialog()&quot;--&gt;
+&lt;!--    &gt;--&gt;
+&lt;!--      Annuler--&gt;
+&lt;!--    &lt;/button&gt;--&gt;
+&lt;!--  &lt;/form&gt;--&gt;
+&lt;!--&lt;/mat-dialog-content&gt;--&gt;
+&lt;!--} @else {--&gt;
+@if (action &#x3D;&#x3D; &#x27;Supprimer&#x27;) {
+  &lt;div class&#x3D;&quot;p-x-24&quot;&gt;
+    &lt;p&gt;Êtes-vous sûre de Vouloir Supprimer la Formation &lt;span class&#x3D;&quot;f-w-600&quot;&gt;{{ local_data.theme }}&lt;/span&gt; ?&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div mat-dialog-actions class&#x3D;&quot;p-x-24 p-b-24&quot;&gt;
+    &lt;button mat-button (click)&#x3D;&quot;doAction()&quot; mat-flat-button color&#x3D;&quot;warn&quot;&gt;
+      {{ action }}
+    &lt;/button&gt;
+    &lt;button mat-button (click)&#x3D;&quot;closeDialog()&quot; class&#x3D;&quot;m-l-8&quot;&gt;Annuler&lt;/button&gt;
+  &lt;/div&gt;
+}
+
+@if (action &#x3D;&#x3D; &#x27;Confirmer&#x27;) {
+  &lt;div class&#x3D;&quot;p-x-24&quot;&gt;
+    &lt;p&gt;Êtes-vous sûre de Vouloir Changer l&#x27;État de &lt;span class&#x3D;&quot;f-w-600&quot;&gt;{{ local_data.theme }}&lt;/span&gt; ?&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div mat-dialog-actions class&#x3D;&quot;p-x-24 p-b-24&quot;&gt;
+    &lt;button mat-button (click)&#x3D;&quot;doAction()&quot; mat-flat-button color&#x3D;&quot;warn&quot;&gt;
+      {{ action }}
+    &lt;/button&gt;
+    &lt;button mat-button (click)&#x3D;&quot;closeDialog()&quot; class&#x3D;&quot;m-l-8&quot;&gt;Annuler&lt;/button&gt;
+  &lt;/div&gt;
+}
+
+@if (action &#x3D;&#x3D; &#x27;Réaliseé&#x27;) {
+  &lt;div class&#x3D;&quot;p-x-24&quot;&gt;
+    &lt;p&gt;Êtes-vous sûre de Vouloir Changer l&#x27;État de &lt;span class&#x3D;&quot;f-w-600&quot;&gt;{{ local_data.theme }}&lt;/span&gt; ?&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div mat-dialog-actions class&#x3D;&quot;p-x-24 p-b-24&quot;&gt;
+    &lt;button mat-button (click)&#x3D;&quot;doAction()&quot; mat-flat-button color&#x3D;&quot;warn&quot;&gt;
+      {{ action }}
+    &lt;/button&gt;
+    &lt;button mat-button (click)&#x3D;&quot;closeDialog()&quot; class&#x3D;&quot;m-l-8&quot;&gt;Annuler&lt;/button&gt;
+  &lt;/div&gt;
+}
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><h2 class="f-w-500 m-b-24" mat-dialog-title><strong>{{ action }}</strong></h2><!--@if(action !== \'Supprimer\') {--><!--<mat-dialog-content style="max-width: 600px">--><!--  <form [formGroup]="data.form" (ngSubmit)="submitForm()">--><!--    <div class="d-flex align-items-center m-b-16">--><!--      <button mat-flat-button color="primary" class="m-l-16 input-file-button">--><!--        <input type="file" (change)="selectFile($event)" #fileInput />--><!--      </button>--><!--    </div>--><!--    <div class="row">--><!--      <div class="col-lg-6">--><!--        <mat-form-field appearance="outline" class="w-100">--><!--          <input--><!--            type="text"--><!--            matInput--><!--            required--><!--            id="corporateName"--><!--            name="corporateName"--><!--            placeholder="Raison Sociale"--><!--            formControlName="corporateName"--><!--          />--><!--        </mat-form-field>--><!--      </div>--><!--      <div class="col-lg-6">--><!--        <mat-form-field appearance="outline" class="w-100">--><!--          <input--><!--            type="text"--><!--            matInput--><!--            required--><!--            id="address"--><!--            name="address"--><!--            placeholder="Adresse"--><!--            formControlName="address"--><!--          />--><!--        </mat-form-field>--><!--      </div>--><!--      <div class="col-lg-6">--><!--        <mat-form-field appearance="outline" class="w-100">--><!--          <input--><!--            type="text"--><!--            matInput--><!--            required--><!--            id="phoneNumber"--><!--            name="phoneNumber"--><!--            placeholder="Téléphone"--><!--            formControlName="phoneNumber"--><!--          />--><!--        </mat-form-field>--><!--      </div>--><!--      <div class="col-lg-6">--><!--        <mat-form-field appearance="outline" class="w-100">--><!--          <input--><!--            type="text"--><!--            matInput--><!--            required--><!--            id="email"--><!--            name="email"--><!--            placeholder="Email"--><!--            formControlName="email"--><!--          />--><!--        </mat-form-field>--><!--      </div>--><!--      <div class="col-lg-6">--><!--        <mat-form-field appearance="outline" class="w-100">--><!--          <input--><!--            type="text"--><!--            matInput--><!--            required--><!--            id="website"--><!--            name="website"--><!--            placeholder="Site Web"--><!--            formControlName="website"--><!--          />--><!--        </mat-form-field>--><!--      </div>--><!--      <div class="col-lg-6">--><!--        <mat-form-field appearance="outline" class="w-100">--><!--          <input--><!--            type="text"--><!--            matInput--><!--            required--><!--            id="nameMainContact"--><!--            name="nameMainContact"--><!--            placeholder="Nom du Contact Principal"--><!--            formControlName="nameMainContact"--><!--          />--><!--        </mat-form-field>--><!--      </div>--><!--      <div class="col-lg-6">--><!--        <mat-form-field appearance="outline" class="w-100">--><!--          <input--><!--            type="text"--><!--            placeholder="Téléphone Contact Principal"--><!--            matInput--><!--            required--><!--            id="phoneNumberMainContact"--><!--            name="phoneNumberMainContact"--><!--            formControlName="phoneNumberMainContact"--><!--          />--><!--        </mat-form-field>--><!--      </div>--><!--      <div class="col-lg-6">--><!--        <mat-form-field appearance="outline" class="w-100">--><!--          <input--><!--            type="text"--><!--            placeholder="Email Contact Principal"--><!--            matInput--><!--            required--><!--            id="emailMainContact"--><!--            name="emailMainContact"--><!--            formControlName="emailMainContact"--><!--          />--><!--        </mat-form-field>--><!--      </div>--><!--      <div class="col-lg-6">--><!--        <mat-form-field appearance="outline" class="w-100">--><!--          <input--><!--            type="text"--><!--            placeholder="Fonction Contact Principal"--><!--            matInput--><!--            required--><!--            id="positionMainContact"--><!--            name="positionMainContact"--><!--            formControlName="positionMainContact"--><!--          />--><!--        </mat-form-field>--><!--      </div>--><!--      <div class="col-lg-6">--><!--        <mat-form-field appearance="outline" class="w-100">--><!--          <input--><!--            type="text"--><!--            placeholder="ICE"--><!--            matInput--><!--            required--><!--            id="commonCompanyIdentifier"--><!--            name="commonCompanyIdentifier"--><!--            formControlName="commonCompanyIdentifier"--><!--          />--><!--        </mat-form-field>--><!--      </div>--><!--      <div class="col-lg-6">--><!--        <mat-form-field appearance="outline" class="w-100">--><!--          <input--><!--            type="text"--><!--            placeholder="Taxe de Registre"--><!--            matInput--><!--            required--><!--            id="taxRegistration"--><!--            name="taxRegistration"--><!--            formControlName="taxRegistration"--><!--          />--><!--        </mat-form-field>--><!--      </div>--><!--      <div class="col-lg-6">--><!--        <mat-form-field appearance="outline" class="w-100">--><!--          <input--><!--            type="text"--><!--            placeholder="Registre du Commerce"--><!--            matInput--><!--            required--><!--            id="commercialRegister"--><!--            name="commercialRegister"--><!--            formControlName="commercialRegister"--><!--          />--><!--        </mat-form-field>--><!--      </div>--><!--      <div class="col-lg-6">--><!--        <mat-form-field appearance="outline" class="w-100">--><!--          <input--><!--            type="text"--><!--            placeholder="Taxe Professionnelle"--><!--            matInput--><!--            required--><!--            id="professionalTax"--><!--            name="professionalTax"--><!--            formControlName="professionalTax"--><!--          />--><!--        </mat-form-field>--><!--      </div>--><!--      <div class="col-lg-6">--><!--        <mat-form-field appearance="outline" class="w-100">--><!--          <input--><!--            type="text"--><!--            placeholder="CNSS"--><!--            matInput--><!--            required--><!--            id="cnss"--><!--            name="cnss"--><!--            formControlName="cnss"--><!--          />--><!--        </mat-form-field>--><!--      </div>--><!--      <div class="col-lg-6">--><!--        <mat-form-field appearance="outline" class="w-100">--><!--          <input--><!--            type="text"--><!--            placeholder="Secteur d\'Activité"--><!--            matInput--><!--            required--><!--            id="field"--><!--            name="field"--><!--            formControlName="field"--><!--          />--><!--        </mat-form-field>--><!--      </div>--><!--      <div class="col-lg-6">--><!--        <mat-form-field appearance="outline" class="w-100">--><!--          <input--><!--            type="text"--><!--            placeholder="Etat"--><!--            matInput--><!--            required--><!--            id="status"--><!--            name="status"--><!--            formControlName="status"--><!--          />--><!--        </mat-form-field>--><!--      </div>--><!--      <div class="col-lg-6">--><!--        <mat-form-field appearance="outline" class="w-100">--><!--          <input--><!--            type="date"--><!--            placeholder="Echéance"--><!--            matInput--><!--            required--><!--            id="deadline"--><!--            name="deadline"--><!--            formControlName="deadline"--><!--            min="{{ getDate() }}"--><!--          />--><!--        </mat-form-field>--><!--      </div>--><!--      <div class="col-lg-6">--><!--        <mat-form-field appearance="outline" class="w-100">--><!--          <input--><!--            type="text"--><!--            placeholder="Plafond"--><!--            matInput--><!--            required--><!--            id="limitAmount"--><!--            name="limitAmount"--><!--            formControlName="limitAmount"--><!--          />--><!--        </mat-form-field>--><!--      </div>--><!--    </div>--><!--    <button--><!--      mat-flat-button--><!--      (click)="doAction()"--><!--      mat-flat-button--><!--      color="primary"--><!--      [disabled]="!data.form.valid"--><!--    >--><!--      {{action}}--><!--    </button>--><!--    <button--><!--      mat-stroked-button--><!--      color="warn"--><!--      class="m-l-8"--><!--      (click)="closeDialog()"--><!--    >--><!--      Annuler--><!--    </button>--><!--  </form>--><!--</mat-dialog-content>--><!--} @else {-->@if (action == \'Supprimer\') {  <div class="p-x-24">    <p>Êtes-vous sûre de Vouloir Supprimer la Formation <span class="f-w-600">{{ local_data.theme }}</span> ?</p>  </div>  <div mat-dialog-actions class="p-x-24 p-b-24">    <button mat-button (click)="doAction()" mat-flat-button color="warn">      {{ action }}    </button>    <button mat-button (click)="closeDialog()" class="m-l-8">Annuler</button>  </div>}@if (action == \'Confirmer\') {  <div class="p-x-24">    <p>Êtes-vous sûre de Vouloir Changer l\'État de <span class="f-w-600">{{ local_data.theme }}</span> ?</p>  </div>  <div mat-dialog-actions class="p-x-24 p-b-24">    <button mat-button (click)="doAction()" mat-flat-button color="warn">      {{ action }}    </button>    <button mat-button (click)="closeDialog()" class="m-l-8">Annuler</button>  </div>}@if (action == \'Réaliseé\') {  <div class="p-x-24">    <p>Êtes-vous sûre de Vouloir Changer l\'État de <span class="f-w-600">{{ local_data.theme }}</span> ?</p>  </div>  <div mat-dialog-actions class="p-x-24 p-b-24">    <button mat-button (click)="doAction()" mat-flat-button color="warn">      {{ action }}    </button>    <button mat-button (click)="closeDialog()" class="m-l-8">Annuler</button>  </div>}</div>'
+    var COMPONENTS = [{'name': 'AddClientComponent', 'selector': 'app-add-client'},{'name': 'AddComponent', 'selector': 'app-add'},{'name': 'AddInstructorComponent', 'selector': 'app-add-instructor'},{'name': 'AddInvoiceDialogContentComponent', 'selector': 'app-add-invoice-dialog-content'},{'name': 'AddTrainingComponent', 'selector': 'app-add-training'},{'name': 'AddVendorComponent', 'selector': 'app-add-vendor'},{'name': 'AgendaComponent', 'selector': 'app-agenda'},{'name': 'AppClientDialogContentComponent', 'selector': 'app-dialog-content'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppInstructorDialogContentComponent', 'selector': 'app-dialog-content'},{'name': 'AppSearchDialogComponent', 'selector': 'search-dialog'},{'name': 'AppTrainingDialogContentComponent', 'selector': 'app-dialog-content'},{'name': 'AppVendorDialogContentComponent', 'selector': 'app-vendor-dialog-content'},{'name': 'BlankComponent', 'selector': 'app-blank'},{'name': 'BrandingComponent', 'selector': 'app-branding'},{'name': 'BreadcrumbComponent', 'selector': 'app-breadcrumb'},{'name': 'ClientComponent', 'selector': 'app-client'},{'name': 'ClientTrainingComponent', 'selector': 'app-client-training'},{'name': 'CustomizerComponent', 'selector': 'app-customizer'},{'name': 'DetailClientComponent', 'selector': 'app-detail-client'},{'name': 'DetailComponent', 'selector': 'app-detail'},{'name': 'DetailInstructorComponent', 'selector': 'app-detail-instructor'},{'name': 'DetailInvoiceComponent', 'selector': 'app-detail-invoice'},{'name': 'DetailPdfComponent', 'selector': 'app-detail-pdf'},{'name': 'DetailTrainingComponent', 'selector': 'app-detail-training'},{'name': 'DetailTrainingInvoiceComponent', 'selector': 'app-detail-training-invoice'},{'name': 'DetailVendorComponent', 'selector': 'app-detail-vendor'},{'name': 'EditClientComponent', 'selector': 'app-edit-client'},{'name': 'EditComponent', 'selector': 'app-edit'},{'name': 'EditInstructorComponent', 'selector': 'app-edit-instructor'},{'name': 'EditTrainingComponent', 'selector': 'app-edit-training'},{'name': 'EditTrainingInvoiceComponent', 'selector': 'app-edit-training-invoice'},{'name': 'EditVendorComponent', 'selector': 'app-edit-vendor'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'ErrorDialogComponent', 'selector': 'app-ok-dialog'},{'name': 'FullComponent', 'selector': 'app-full'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'InstructorComponent', 'selector': 'app-instructor'},{'name': 'InvoiceComponent', 'selector': 'app-invoice'},{'name': 'InvoiceDialogContentComponent', 'selector': 'app-invoice-dialog-content'},{'name': 'LifeCycleComponent', 'selector': 'app-life-cycle'},{'name': 'NavItemComponent', 'selector': 'app-nav-item'},{'name': 'OkDialogComponent', 'selector': 'app-ok-dialog'},{'name': 'OkDialogComponent', 'selector': 'app-ok-dialog'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'TrainingComponent', 'selector': 'app-training'},{'name': 'TrainingDialog', 'selector': 'app-agenda-dialog'},{'name': 'TrainingLifecycleDialogComponent', 'selector': 'training-life-cycle-dialog'},{'name': 'TrainingLifecycleDialogContentComponent', 'selector': 'training-lifecycle-dialog-content'},{'name': 'VendorComponent', 'selector': 'app-vendor'},{'name': 'WelcomeComponent', 'selector': 'app-welcome'},{'name': 'WelcomeComponent', 'selector': 'app-welcome'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'AppTrainingDialogContentComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AppTrainingDialogContentComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

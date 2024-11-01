@@ -1,0 +1,378 @@
+<!--<h4 class="mat-headline-6 m-y-24">Form with Tabs</h4>-->
+<form (ngSubmit)="onSubmit()" *ngIf="addTrainingForm" [formGroup]="addTrainingForm">
+  <mat-card class="cardWithShadow theme-card">
+    <mat-card-content>
+      <div class="p-16 bg-light-primary rounded">
+        <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+          <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler
+          >
+          Informations Générales
+        </h5>
+      </div>
+      <div class="row m-t-20">
+        <div class="col-lg-6">
+          <div class="row">
+            <div class="col-sm-12 d-flex align-items-center">
+              <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+              >Client
+              </mat-label>
+            </div>
+            <div class="col-sm-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-select formControlName="idClient">
+                  <mat-option disabled value="">Choisir un Client</mat-option>
+                  <mat-option *ngFor="let client of clients" [value]="client.idClient">{{ client.corporateName }}
+                  </mat-option>
+                  <mat-option (click)="handleAdd('client')" class="mat-subtitle-2 f-s-16 f-w-600" value="">Ajouter un
+                    nouveau Client
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="addTrainingForm.get('idClient')?.invalid && addTrainingForm.get('idClient')?.touched">
+                  *Ce champ est obligatoire
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 d-flex align-items-center">
+              <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+              >Thème
+              </mat-label>
+            </div>
+            <div class="col-sm-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <input formControlName="theme" matInput placeholder=""/>
+                <mat-error *ngIf="addTrainingForm.get('theme')?.invalid && addTrainingForm.get('theme')?.touched">
+                  *Ce champ est obligatoire
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 d-flex align-items-center">
+              <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+              >Éffectif Total des Participants
+              </mat-label>
+            </div>
+            <div class="col-sm-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <input formControlName="staff" matInput min="1" placeholder="" type="number"/>
+                <mat-error
+                  *ngIf="addTrainingForm.get('staff')?.hasError('required') && addTrainingForm.get('staff')?.touched">
+                  *Ce champ est obligatoire
+                </mat-error>
+                <mat-error *ngIf="addTrainingForm.get('staff')?.hasError('negativeNumber')">
+                  *Veuillez saisir un nombre positif
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <mat-error *ngIf="addTrainingForm.hasError('staffMismatch')">
+                *L'effectif total doit correspondre à la somme des effectifs des groupes.
+              </mat-error>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+
+          <div class="row">
+            <div class="col-sm-12 d-flex align-items-center">
+              <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+              >Nombre de jours
+              </mat-label>
+            </div>
+            <div class="col-sm-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <input formControlName="days" matInput min="1" placeholder="" type="number"/>
+                <mat-error
+                  *ngIf="addTrainingForm.get('days')?.hasError('required') && addTrainingForm.get('days')?.touched">
+                  *Ce champ est obligatoire
+                </mat-error>
+                <mat-error *ngIf="addTrainingForm.get('days')?.hasError('negativeNumber')">
+                  *Veuillez saisir un nombre positif
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <!--          <div class="row">-->
+          <!--            <div class="col-sm-12 d-flex align-items-center">-->
+          <!--              <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"-->
+          <!--              >Lieu-->
+          <!--              </mat-label>-->
+          <!--            </div>-->
+          <!--            <div class="col-sm-12">-->
+          <!--              <mat-form-field appearance="outline" class="w-100">-->
+          <!--                <input formControlName="location" matInput placeholder=""/>-->
+          <!--                <mat-error *ngIf="addTrainingForm.get('location')?.invalid && addTrainingForm.get('location')?.touched">-->
+          <!--                  *Ce champ est obligatoire-->
+          <!--                </mat-error>-->
+          <!--              </mat-form-field>-->
+          <!--            </div>-->
+          <!--          </div>-->
+          <div class="row">
+            <div class="col-sm-12 d-flex align-items-center">
+              <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+              >Tarif Journalier
+              </mat-label>
+            </div>
+            <div class="col-sm-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <input formControlName="dailyAmount" matInput min="0" placeholder="" type="number"/>
+                <mat-error
+                  *ngIf="addTrainingForm.get('dailyAmount')?.hasError('required') && addTrainingForm.get('dailyAmount')?.touched">
+                  *Ce champ est obligatoire
+                </mat-error>
+                <mat-error *ngIf="addTrainingForm.get('dailyAmount')?.hasError('negativeNumber')">
+                  *Veuillez saisir un nombre positif
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 d-flex align-items-center">
+              <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+              >Montant Total
+              </mat-label>
+            </div>
+            <div class="col-sm-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput
+                       min="0"
+                       placeholder="" readonly type="number" value="{{ addTrainingForm.get('dailyAmount')?.value * addTrainingForm.get('days')?.value }}"/>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+                <div class="col-lg-12">
+                  <div class="p-16 bg-light-primary rounded">
+                    <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+                      <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler
+                      >
+                      Groupes
+                    </h5>
+                  </div>
+                  <!--          <h2>Groupes</h2>-->
+                  <div class="row m-t-20" formArrayName="groups">
+                    <div *ngFor="let group of trainingGroups; let i = index" [formGroupName]="i" class="col-md-4 mb-2">
+                      <span>Groupe {{ i + 1 }}</span>
+                      <div>
+                        <mat-form-field>
+                          <mat-label>Effectif</mat-label>
+                          <input formControlName="groupStaff" matInput type="number">
+                        </mat-form-field>
+                      </div>
+                      <mat-slide-toggle #toggle>{{ toggle.checked ? 'Date' : 'Date Range' }}</mat-slide-toggle>
+                      <div class="col-md-12">
+                        <!--                            Range Dates-->
+                        <div *ngIf="!toggle.checked; else simpleDate">
+                          <!-- Affichez le champ de date range lorsque le slide toggle est activé -->
+                          <mat-form-field>
+                            <input [matDatepicker]="picker0"
+                                   [min]="minStartDate" formControlName="startDate"
+                                   matInput
+                                   placeholder="Date de Début"
+                            >
+                            <mat-datepicker-toggle [for]="picker0" matSuffix></mat-datepicker-toggle>
+                            <mat-datepicker #picker0></mat-datepicker>
+                          </mat-form-field>
+                          <mat-form-field>
+                            <input [matDatepicker]="picker1"
+                                   [min]="minEndDate" formControlName="endDate"
+                                   matInput
+                                   placeholder="Date de Fin"
+                            >
+                            <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div formArrayName="groupDates">
+                        <ng-template #simpleDate>
+                          <div *ngFor="let date of dates(group); let j = index" class="row align-items-center">
+                            <div class="col-md-12">
+                              <!--                            Simple Dates-->
+                              <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block">Date {{ j + 1 }}</mat-label>
+                              <mat-form-field>
+                                <input [formControlName]="j" [matDatepicker]="picker2" matInput placeholder="Choisir une date">
+                                <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                              </mat-form-field>
+                              <button (click)="removeDate(i, j)" color="warn" mat-icon-button matTooltip="Supprimer"
+                                      type="button">
+                                <mat-icon>delete</mat-icon>
+                              </button>
+                            </div>
+
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <button (click)="addDate(i)" color="primary" mat-raised-button type="button">Ajouter Date</button>
+                            </div>
+                          </div>
+                        </ng-template>
+                      </div>
+                      <div>
+                        <mat-form-field>
+                          <mat-label>Formateur</mat-label>
+                          <mat-select formControlName="idVendor">
+                            <mat-option disabled value="">Choisir un Fournisseur</mat-option>
+                            <mat-option *ngFor="let vendor of vendors" [value]="vendor.idVendor">{{ vendor.name }}</mat-option>
+                            <mat-option (click)="handleAdd('vendor')" class="mat-subtitle-2 f-s-16 f-w-600" value="">Ajouter un
+                              nouveau Formateur
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div>
+                        <mat-form-field>
+                          <mat-label>Lieu</mat-label>
+                          <input formControlName="location" matInput>
+                        </mat-form-field>
+                      </div>
+                      <button (click)="removeGroup(i)" color="warn" mat-raised-button type="button">Supprimer Groupe</button>
+                    </div>
+                  </div>
+                  <button (click)="addGroup()" class="m-3" color="primary" mat-raised-button type="button">Ajouter groupe
+                  </button>
+                </div>
+
+<!--        <div class="col-lg-12">-->
+<!--          <div class="p-16 bg-light-primary rounded">-->
+<!--            <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">-->
+<!--              <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler>-->
+<!--              Groupes-->
+<!--            </h5>-->
+<!--          </div>-->
+
+<!--          <table class="table">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--              <th>Groupe</th>-->
+<!--              <th>Formateur</th>-->
+<!--              <th>Lieu</th>-->
+<!--              <th>Effectif</th>-->
+<!--              <th>Dates</th>-->
+<!--              <th></th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody formArrayName="groups">-->
+<!--            <tr *ngFor="let group of trainingGroups; let i = index" [formGroupName]="i">-->
+<!--              <td>{{ i + 1 }}</td>-->
+
+<!--              &lt;!&ndash; Formateur &ndash;&gt;-->
+<!--              <td>-->
+<!--                <div class="row">-->
+<!--                  <div class="col-sm-12 d-flex align-items-center">-->
+<!--                    <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16">Formateur</mat-label>-->
+<!--                  </div>-->
+<!--                  <div class="col-sm-12">-->
+<!--                    <mat-form-field appearance="outline" class="w-100">-->
+<!--                      <mat-select formControlName="idVendor">-->
+<!--                        <mat-option disabled value="">Choisir un Formateur</mat-option>-->
+<!--                        <mat-option *ngFor="let vendor of vendors" [value]="vendor.idVendor">-->
+<!--                          {{ vendor.name }}-->
+<!--                        </mat-option>-->
+<!--                        <mat-option (click)="handleAdd('vendor')" class="mat-subtitle-2 f-s-16 f-w-600" value="">-->
+<!--                          Ajouter un nouveau Formateur-->
+<!--                        </mat-option>-->
+<!--                      </mat-select>-->
+<!--                      <mat-error *ngIf="addTrainingForm.get('idVendor')?.hasError('required') && addTrainingForm.get('idVendor')?.touched">-->
+<!--                        *Ce champ est obligatoire-->
+<!--                      </mat-error>-->
+<!--                    </mat-form-field>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </td>-->
+
+<!--              &lt;!&ndash; Lieu &ndash;&gt;-->
+<!--              <td>-->
+<!--                <div class="row">-->
+<!--                  <div class="col-sm-12 d-flex align-items-center">-->
+<!--                    <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16">Lieu</mat-label>-->
+<!--                  </div>-->
+<!--                  <div class="col-sm-12">-->
+<!--                    <mat-form-field appearance="outline" class="w-100">-->
+<!--                      <input formControlName="location" matInput placeholder="Saisir le lieu" />-->
+<!--                      <mat-error *ngIf="addTrainingForm.get('location')?.hasError('required') && addTrainingForm.get('location')?.touched">-->
+<!--                        *Ce champ est obligatoire-->
+<!--                      </mat-error>-->
+<!--                    </mat-form-field>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </td>-->
+
+<!--              &lt;!&ndash; Effectif &ndash;&gt;-->
+<!--              <td>-->
+<!--                <div class="row">-->
+<!--                  <div class="col-sm-12 d-flex align-items-center">-->
+<!--                    <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16">Effectif</mat-label>-->
+<!--                  </div>-->
+<!--                  <div class="col-sm-12">-->
+<!--                    <mat-form-field appearance="outline" class="w-100">-->
+<!--                      <input formControlName="groupStaff" matInput min="1" type="number" placeholder="Saisir l'effectif" />-->
+<!--                      <mat-error *ngIf="addTrainingForm.get('groupStaff')?.hasError('required') && addTrainingForm.get('groupStaff')?.touched">-->
+<!--                        *Ce champ est obligatoire-->
+<!--                      </mat-error>-->
+<!--                      <mat-error *ngIf="addTrainingForm.get('groupStaff')?.hasError('negativeNumber')">-->
+<!--                        *Veuillez saisir un nombre positif-->
+<!--                      </mat-error>-->
+<!--                    </mat-form-field>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </td>-->
+
+<!--              &lt;!&ndash; Dates &ndash;&gt;-->
+<!--              <td>-->
+<!--                <mat-slide-toggle #toggle>{{ toggle.checked ? 'du' : 'au' }}</mat-slide-toggle>-->
+
+<!--                <ng-container *ngIf="!toggle.checked; else simpleDate">-->
+<!--                  <div class="date-range-container">-->
+<!--                    <mat-form-field class="date-field" appearance="outline">-->
+<!--                      <input [matDatepicker]="startPicker" formControlName="startDate" matInput placeholder="Début">-->
+<!--                      <mat-datepicker-toggle [for]="startPicker" matSuffix></mat-datepicker-toggle>-->
+<!--                      <mat-datepicker #startPicker></mat-datepicker>-->
+<!--                    </mat-form-field>-->
+
+<!--                    <mat-form-field class="date-field" appearance="outline">-->
+<!--                      <input [matDatepicker]="endPicker" formControlName="endDate" matInput placeholder="Fin">-->
+<!--                      <mat-datepicker-toggle [for]="endPicker" matSuffix></mat-datepicker-toggle>-->
+<!--                      <mat-datepicker #endPicker></mat-datepicker>-->
+<!--                    </mat-form-field>-->
+<!--                  </div>-->
+<!--                </ng-container>-->
+
+<!--                <ng-template #simpleDate>-->
+<!--                  <mat-form-field appearance="outline">-->
+<!--                    <input [matDatepicker]="picker" formControlName="simpleDate" matInput placeholder="Date">-->
+<!--                    <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>-->
+<!--                    <mat-datepicker #picker></mat-datepicker>-->
+<!--                  </mat-form-field>-->
+<!--                </ng-template>-->
+
+<!--                <button (click)="addDate(i)" color="primary" mat-raised-button type="button">Ajouter</button>-->
+<!--              </td>-->
+
+<!--              &lt;!&ndash; Supprimer &ndash;&gt;-->
+<!--              <td>-->
+<!--                <button (click)="removeGroup(i)" color="warn" mat-raised-button type="button">Supprimer</button>-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--          </table>-->
+
+<!--          <button (click)="addGroup()" color="primary" mat-raised-button type="button">Ajouter un groupe</button>-->
+<!--        </div>-->
+
+
+
+
+
+      </div>
+      <div class="m-t-12 text-right">
+        <button [disabled]="addTrainingForm.invalid" color="primary" mat-flat-button type="submit">Enregistrer</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</form>

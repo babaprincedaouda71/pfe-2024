@@ -1,0 +1,598 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">frontend documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  quicklinks</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/admin/layout/full/full.component.ts</code>
+        </p>
+
+
+
+
+        <section data-compodoc="block-index">
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#id" 
+>
+                                            id
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#link" 
+>
+                                            link
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#title" 
+>
+                                            title
+                                        </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section data-compodoc="block-properties">
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="id"></a>
+                                        <span class="name "><b>id</b>
+                                            <a href="#id">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>id:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="link"></a>
+                                        <span class="name "><b>link</b>
+                                            <a href="#link">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>link:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="title"></a>
+                                        <span class="name "><b>title</b>
+                                            <a href="#title">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>title:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, OnInit, ViewChild, ViewEncapsulation} from &#x27;@angular/core&#x27;;
+import {navItems} from &quot;../sidebar/sidebar-data&quot;;
+import {MatSidenav, MatSidenavContent} from &quot;@angular/material/sidenav&quot;;
+import {filter, Subscription} from &quot;rxjs&quot;;
+import {CoreService} from &quot;../../../_services/core.service&quot;;
+import {BreakpointObserver} from &quot;@angular/cdk/layout&quot;;
+import {NavigationEnd, Router} from &quot;@angular/router&quot;;
+import {AppSettings} from &quot;../../../app.config&quot;;
+import {KeycloakService} from &quot;keycloak-angular&quot;;
+
+// Définition des tailles d&#x27;écran
+const MOBILE_VIEW &#x3D; &#x27;screen and (max-width: 768px)&#x27;;
+const TABLET_VIEW &#x3D; &#x27;screen and (min-width: 769px) and (max-width: 1024px)&#x27;;
+const MONITOR_VIEW &#x3D; &#x27;screen and (min-width: 1024px)&#x27;;
+const BELOWMONITOR &#x3D; &#x27;screen and (max-width: 1023px)&#x27;;
+
+// for mobile app sidebar
+
+// Interface des apps
+interface apps {
+  id: number;
+  img: string;
+  title: string;
+  subtitle: string;
+  link: string;
+}
+
+// Interface des liens rapides
+interface quicklinks {
+  id: number;
+  title: string;
+  link: string;
+}
+
+@Component({
+  selector: &#x27;app-full&#x27;,
+  templateUrl: &#x27;./full.component.html&#x27;,
+  styleUrls: [],
+  encapsulation: ViewEncapsulation.None,
+})
+export class FullComponent implements OnInit{
+  navItems &#x3D; navItems
+  // Get Options from _services
+  options &#x3D; this.settings.getOptions()
+  private isMobileScreen &#x3D; false;
+  private isCollapsedWidthFixed: boolean &#x3D; false;
+  private isContentWidthFixed &#x3D; true;
+  @ViewChild(&#x27;leftsidenav&#x27;)
+  public sidenav!: MatSidenav;
+  @ViewChild(&#x27;content&#x27;, { static: true }) content!: MatSidenavContent;
+  resView &#x3D; false;
+  private htmlElement!: HTMLHtmlElement;
+  private layoutChangesSubscription: Subscription &#x3D; Subscription.EMPTY;
+
+  get isOver(): boolean {
+    return this.isMobileScreen;
+  }
+
+  constructor(private settings : CoreService,
+              private breakpointObserver : BreakpointObserver,
+              private router: Router,
+              public keycloakService: KeycloakService,) {
+    this.htmlElement &#x3D; document.querySelector(&#x27;html&#x27;)!;
+    this.layoutChangesSubscription &#x3D; this.breakpointObserver
+      .observe([MOBILE_VIEW, TABLET_VIEW, MONITOR_VIEW, BELOWMONITOR])
+      .subscribe((state) &#x3D;&gt; {
+        // SidenavOpened must be reset true when layout changes
+        this.options.sidenavOpened &#x3D; true;
+        this.isMobileScreen &#x3D; state.breakpoints[BELOWMONITOR];
+        if (this.options.sidenavCollapsed &#x3D;&#x3D; false) {
+          this.options.sidenavCollapsed &#x3D; state.breakpoints[TABLET_VIEW];
+        }
+        this.isContentWidthFixed &#x3D; state.breakpoints[MONITOR_VIEW];
+        this.resView &#x3D; state.breakpoints[BELOWMONITOR];
+      });
+
+    // Initialize project theme with options
+    this.receiveOptions(this.options);
+
+    // This is for scroll to top
+    this.router.events
+      .pipe(filter((event) &#x3D;&gt; event instanceof NavigationEnd))
+      .subscribe((e) &#x3D;&gt; {
+        this.content.scrollTo({ top: 0 });
+      });
+  }
+
+  ngOnInit() {}
+
+  // L&#x27;etat de la sidebar : ouverte ou fermée
+  onSidenavOpenedChange(isOpened: boolean) {
+    this.isCollapsedWidthFixed &#x3D; !this.isOver;
+    this.options.sidenavOpened &#x3D; isOpened;
+    this.settings.setOptions(this.options);
+  }
+
+  onSidenavClosedStart() {
+    this.isContentWidthFixed &#x3D; false;
+  }
+
+  // Tablet ?
+  get isTablet(): boolean {
+    return this.resView;
+  }
+
+  toggleCollapsed() {
+    this.isContentWidthFixed &#x3D; false;
+    this.options.sidenavCollapsed &#x3D; !this.options.sidenavCollapsed;
+    this.resetCollapsedState();
+  }
+
+  resetCollapsedState(timer &#x3D; 400) {
+    setTimeout(() &#x3D;&gt; this.settings.setOptions(this.options), timer);
+  }
+
+  receiveOptions(options: AppSettings): void {
+    this.options &#x3D; options;
+    this.toggleDarkTheme(options);
+  }
+
+  toggleDarkTheme(options: AppSettings) {
+    if (options.theme &#x3D;&#x3D;&#x3D; &#x27;dark&#x27;) {
+      this.htmlElement.classList.add(&#x27;dark-theme&#x27;);
+      this.htmlElement.classList.remove(&#x27;light-theme&#x27;);
+    } else {
+      this.htmlElement.classList.remove(&#x27;dark-theme&#x27;);
+      this.htmlElement.classList.add(&#x27;light-theme&#x27;);
+    }
+  }
+
+  // for mobile app sidebar
+  apps: apps[] &#x3D; [
+    {
+      id: 1,
+      img: &#x27;/assets/images/svgs/icon-dd-chat.svg&#x27;,
+      title: &#x27;Chat Application&#x27;,
+      subtitle: &#x27;Messages &amp; Emails&#x27;,
+      link: &#x27;/apps/chat&#x27;,
+    },
+    {
+      id: 2,
+      img: &#x27;/assets/images/svgs/icon-dd-cart.svg&#x27;,
+      title: &#x27;eCommerce App&#x27;,
+      subtitle: &#x27;Buy a Product&#x27;,
+      link: &#x27;/apps/email/inbox&#x27;,
+    },
+    {
+      id: 3,
+      img: &#x27;/assets/images/svgs/icon-dd-invoice.svg&#x27;,
+      title: &#x27;Invoice App&#x27;,
+      subtitle: &#x27;Get latest invoice&#x27;,
+      link: &#x27;/apps/invoice&#x27;,
+    },
+    {
+      id: 4,
+      img: &#x27;/assets/images/svgs/icon-dd-date.svg&#x27;,
+      title: &#x27;Calendar App&#x27;,
+      subtitle: &#x27;Get Dates&#x27;,
+      link: &#x27;/apps/calendar&#x27;,
+    },
+    {
+      id: 5,
+      img: &#x27;/assets/images/svgs/icon-dd-mobile.svg&#x27;,
+      title: &#x27;Contact Application&#x27;,
+      subtitle: &#x27;2 Unsaved Contacts&#x27;,
+      link: &#x27;/apps/contacts&#x27;,
+    },
+    {
+      id: 6,
+      img: &#x27;/assets/images/svgs/icon-dd-lifebuoy.svg&#x27;,
+      title: &#x27;Tickets App&#x27;,
+      subtitle: &#x27;Create new ticket&#x27;,
+      link: &#x27;/apps/tickets&#x27;,
+    },
+    {
+      id: 7,
+      img: &#x27;/assets/images/svgs/icon-dd-message-box.svg&#x27;,
+      title: &#x27;Email App&#x27;,
+      subtitle: &#x27;Get new emails&#x27;,
+      link: &#x27;/apps/email/inbox&#x27;,
+    },
+    {
+      id: 8,
+      img: &#x27;/assets/images/svgs/icon-dd-application.svg&#x27;,
+      title: &#x27;Courses&#x27;,
+      subtitle: &#x27;Create new course&#x27;,
+      link: &#x27;/apps/courses&#x27;,
+    },
+  ];
+
+  // Liens rapides
+  quicklinks: quicklinks[] &#x3D; [
+    {
+      id: 1,
+      title: &#x27;Pricing Page&#x27;,
+      link: &#x27;/theme-pages/pricing&#x27;,
+    },
+    {
+      id: 2,
+      title: &#x27;Authentication Design&#x27;,
+      link: &#x27;/authentication/side-login&#x27;,
+    },
+    {
+      id: 3,
+      title: &#x27;Register Now&#x27;,
+      link: &#x27;/authentication/side-register&#x27;,
+    },
+    {
+      id: 4,
+      title: &#x27;404 Error Page&#x27;,
+      link: &#x27;/authentication/error&#x27;,
+    },
+    {
+      id: 5,
+      title: &#x27;Notes App&#x27;,
+      link: &#x27;/apps/notes&#x27;,
+    },
+    {
+      id: 6,
+      title: &#x27;Employee App&#x27;,
+      link: &#x27;/apps/employee&#x27;,
+    },
+    {
+      id: 7,
+      title: &#x27;Todo Application&#x27;,
+      link: &#x27;/apps/todo&#x27;,
+    },
+    {
+      id: 8,
+      title: &#x27;Treeview&#x27;,
+      link: &#x27;/theme-pages/treeview&#x27;,
+    },
+  ];
+
+  // Logout
+  async handleLogout(){
+    confirm(&quot;Voulez vous vraiment vous déconnectez?&quot;)
+    await this.keycloakService.logout(&#x27;http://localhost:4200&#x27;).then(() &#x3D;&gt; {
+      this.keycloakService.clearToken(); // the problem is with this line!!
+    })
+  }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'quicklinks.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

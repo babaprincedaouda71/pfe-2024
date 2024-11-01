@@ -1,0 +1,313 @@
+<form (ngSubmit)="updateClient()" *ngIf="updateClientForm && client" [formGroup]="updateClientForm">
+  <mat-card class="cardWithShadow theme-card">
+    <!--    <mat-card-header>-->
+    <!--      <mat-card-title class="m-b-0">Basic Header Form</mat-card-title>-->
+    <!--    </mat-card-header>-->
+    <mat-card-content class="b-t-1">
+      <div class="p-16 bg-light-primary rounded">
+        <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+          <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler
+          >
+          Information de l'Entreprise
+        </h5>
+      </div>
+
+      <div class="row m-t-20">
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Raison Sociale
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="corporateName" matInput placeholder=""/>
+            <mat-error
+              *ngIf="updateClientForm.get('corporateName')?.invalid && updateClientForm.get('corporateName')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Adresse
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="address" matInput placeholder=""/>
+            <mat-error *ngIf="updateClientForm.get('address')?.invalid && updateClientForm.get('address')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Téléphone
+          </mat-label
+          >
+          <div class="col-sm-12">
+            <mat-form-field appearance="outline" class="w-100">
+              <input formControlName="phoneNumber" matInput placeholder=""/>
+              <mat-error
+                *ngIf="updateClientForm.get('phoneNumber')?.invalid && updateClientForm.get('phoneNumber')?.touched">
+                *Ce champ est obligatoire
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Email
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="email" matInput placeholder=""/>
+            <mat-error *ngIf="updateClientForm.get('email')?.invalid && updateClientForm.get('email')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Site Web
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="website" matInput placeholder=""/>
+            <mat-error *ngIf="updateClientForm.get('website')?.invalid && updateClientForm.get('website')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <div class="p-16 bg-light-primary rounded">
+        <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+          <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler
+          >
+          Contact Principal
+        </h5>
+      </div>
+      <div class="row m-t-20">
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Nom & Prénom(s)
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="nameMainContact" matInput placeholder=""/>
+            <mat-error
+              *ngIf="updateClientForm.get('nameMainContact')?.invalid && updateClientForm.get('nameMainContact')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block">
+            Téléphone
+          </mat-label>
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="phoneNumberMainContact" matInput placeholder=""/>
+            <mat-error
+              *ngIf="updateClientForm.get('phoneNumberMainContact')?.invalid && updateClientForm.get('phoneNumberMainContact')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Email
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="emailMainContact" matInput placeholder=""/>
+            <mat-error
+              *ngIf="updateClientForm.get('emailMainContact')?.invalid && updateClientForm.get('emailMainContact')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Fonction
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="positionMainContact" matInput placeholder=""/>
+            <mat-error
+              *ngIf="updateClientForm.get('positionMainContact')?.invalid && updateClientForm.get('positionMainContact')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <div class="p-16 bg-light-primary rounded m-y-20">
+        <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+          <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler
+          >
+          Identification de l'Entreprise
+        </h5>
+      </div>
+
+      <div class="row m-t-20">
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >ICE
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="commonCompanyIdentifier" matInput maxlength="20" placeholder=""/>
+            <mat-error
+              *ngIf="updateClientForm.get('commonCompanyIdentifier')?.invalid && updateClientForm.get('commonCompanyIdentifier')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >IF
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="taxRegistration" matInput maxlength="20" placeholder=""/>
+            <mat-error
+              *ngIf="updateClientForm.get('taxRegistration')?.invalid && updateClientForm.get('taxRegistration')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >RC
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="commercialRegister" matInput maxlength="20" placeholder=""/>
+            <mat-error
+              *ngIf="updateClientForm.get('commercialRegister')?.invalid && updateClientForm.get('commercialRegister')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >TP
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="professionalTax" matInput maxlength="20" placeholder=""/>
+            <mat-error
+              *ngIf="updateClientForm.get('professionalTax')?.invalid && updateClientForm.get('professionalTax')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >CNSS
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="cnss" matInput maxlength="20" placeholder=""/>
+            <mat-error *ngIf="updateClientForm.get('cnss')?.invalid && updateClientForm.get('cnss')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="p-16 bg-light-primary rounded m-y-20">
+        <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+          <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler
+          >
+          Informations Générales
+        </h5>
+      </div>
+      <div class="row m-t-20">
+        <!--        <div class="col-lg-12">-->
+        <!--          &lt;!&ndash; input &ndash;&gt;-->
+        <!--          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"-->
+        <!--          >Logo-->
+        <!--          </mat-label-->
+        <!--          >-->
+        <!--          <div appearance="outline" class="w-100">-->
+        <!--            <button type="button" mat-flat-button color="primary" class="m-l-16 input-file-button">-->
+        <!--              <input type="file" accept="image/png, image/svg+xml, image/jpeg" (change)="onFileChange($event)"-->
+        <!--                     #fileInput/>-->
+        <!--            </button>-->
+        <!--          </div>-->
+        <!--          <br>-->
+        <!--          <br>-->
+        <!--        </div>-->
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Secteur d'Activité
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="field" matInput placeholder=""/>
+            <mat-error *ngIf="updateClientForm.get('field')?.invalid && updateClientForm.get('field')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Statut
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select formControlName="status">
+              <mat-option disabled value="">Choisir une option</mat-option>
+              <mat-option value="Actif">Actif</mat-option>
+              <mat-option value="Inactif">Inactif</mat-option>
+            </mat-select>
+            <mat-error *ngIf="updateClientForm.get('status')?.invalid && updateClientForm.get('status')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Échéance
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="deadline" matInput placeholder="" type="number"/>
+            <mat-error *ngIf="updateClientForm.get('deadline')?.invalid && updateClientForm.get('deadline')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Plafond
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input formControlName="limitAmount" matInput placeholder="" type="number"/>
+            <mat-error
+              *ngIf="updateClientForm.get('limitAmount')?.invalid && updateClientForm.get('limitAmount')?.touched">
+              *Ce champ est obligatoire
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="b-t-1">
+      <button [disabled]="updateClientForm.invalid" color="primary" mat-flat-button>Enregistrer</button>
+    </mat-card-actions>
+  </mat-card>
+
+</form>

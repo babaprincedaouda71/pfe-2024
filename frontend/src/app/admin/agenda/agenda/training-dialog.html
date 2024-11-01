@@ -1,0 +1,101 @@
+<h2 class="f-w-500 m-b-24 text-center" mat-dialog-title>{{ training.theme }}</h2>
+<mat-card-content style="max-width: 400px">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="p-x-24">
+        <p> Client : <span class="f-w-600">{{ training.client.corporateName }}</span></p>
+      </div>
+    </div>
+    <div class="col-lg-12">
+      <div class="p-x-24">
+        <p> Formateur : <span class="f-w-600">{{ training.vendor.name }}</span></p>
+      </div>
+    </div>
+    <div class="col-lg-12">
+      <div class="p-x-24">
+        <p>
+          État :
+        @if (training.status == 'Recherche_formateur') {
+          <span class="f-w-600">
+            Recherche Formateur
+          </span>
+        }
+
+        @if (training.status == 'Validation_formateur') {
+          <span class="f-w-600">
+            Validation Formateur
+          </span>
+        }
+
+        @if (training.status == 'Reunion_de_cadrage') {
+          <span class="f-w-600">
+            Reunion de Cadrage
+          </span>
+        }
+
+        @if (training.status == 'Support_de_formation') {
+          <span class="f-w-600">
+            Support de Formation
+          </span>
+        }
+
+        @if (training.status == 'Impression') {
+          <span class="f-w-600">
+            Impression
+          </span>
+        }
+
+        @if (training.status == 'Realisation') {
+          <span class="f-w-600">
+            Réalisation
+          </span>
+        }
+
+        @if (training.status == 'Attestation') {
+          <span class="f-w-600">
+            Attestation
+          </span>
+        }
+
+        @if (training.status == 'Facturation') {
+          <span class="f-w-600">
+            Facturation
+          </span>
+        }
+
+        @if (training.status == 'Reglement') {
+          <span class="f-w-600">
+            Payement
+          </span>
+        }
+
+        @if (training.status == 'Realisée') {
+          <span class="f-w-600">
+            Realisée
+          </span>
+        }
+        </p>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <button
+        mat-flat-button
+        (click)="doAction()"
+        mat-flat-button
+        color="primary"
+      >
+        Voir les détails
+      </button>
+    </div>
+    <div class="col-lg-6">
+      <button
+        mat-stroked-button
+        color="warn"
+        class="m-l-8"
+        (click)="closeDialog()"
+      >
+        Fermer
+      </button>
+    </div>
+  </div>
+</mat-card-content>

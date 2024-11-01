@@ -1,0 +1,141 @@
+<mat-card class="cardWithShadow">
+  <mat-card-header>
+    <mat-card-title>Veuillez Sélectionner les groupes de formation à facturer</mat-card-title>
+    <mat-card-subtitle class="mat-body-1">Un seul ou plusieurs éléments</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="table-responsive m-t-30">
+      <table *ngIf="datasource" [dataSource]="datasource" class="w-100" mat-table>
+        <!-- Position Column -->
+        <ng-container matColumnDef="client">
+          <th *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14" mat-header-cell>
+            Client
+          </th>
+          <td *matCellDef="let element" mat-cell>
+            <div class="d-flex align-items-center">
+              <div class="m-l-16">
+                <h6 class="mat-subtitle-1 f-s-14 f-w-600">
+                  {{ element.client.corporateName }}
+                </h6>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Theme Column -->
+        <ng-container matColumnDef="theme">
+          <th *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14" mat-header-cell>
+            Thème
+          </th>
+          <td *matCellDef="let element" class="mat-body-1" mat-cell>
+            {{ element.theme }}
+          </td>
+        </ng-container>
+
+        <!-- Colonne des groupes -->
+        <ng-container matColumnDef="group">
+          <th *matHeaderCellDef class="p-l-0" mat-header-cell>
+            Groupes
+          </th>
+          <td *matCellDef="let element; let i = index" class="p-l-0" mat-cell>
+            <ul class="group-list">
+              <li *ngFor="let group of element.groups; let i = index" class="group-item">
+                Groupe {{ i + 1 }}
+                <hr *ngIf="!isLastGroup(element.groups, group)"/>
+              </li>
+            </ul>
+          </td>
+        </ng-container>
+
+        <!-- Colonne des bénéficiaires -->
+        <ng-container matColumnDef="staff">
+          <th *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14" mat-header-cell>
+            Bénéficiaires
+          </th>
+          <td *matCellDef="let element" mat-cell>
+            <ul class="group-list">
+              <li *ngFor="let group of element.groups; let i = index" class="group-item">
+                {{ group.groupStaff }}
+              </li>
+            </ul>
+          </td>
+        </ng-container>
+
+
+        <!-- Amount Column -->
+        <ng-container matColumnDef="amount">
+          <th *matHeaderCellDef class="p-l-0" mat-header-cell>
+            Montant HT
+          </th>
+          <td *matCellDef="let element; let i = index" class="p-l-0" mat-cell>
+            <ul class="group-list">
+              <li *ngFor="let group of element.groups; let i = index" class="group-item">
+                {{ group.groupAmount }}
+                <hr *ngIf="!isLastGroup(element.groups, group)"/>
+              </li>
+            </ul>
+          </td>
+        </ng-container>
+
+        <!--        &lt;!&ndash; Amount Column &ndash;&gt;-->
+        <!--        <ng-container matColumnDef="amount">-->
+        <!--          <th *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14" mat-header-cell>-->
+        <!--            Montant-->
+        <!--          </th>-->
+        <!--          <td *matCellDef="let element" class="mat-body-1" mat-cell>-->
+        <!--            &lt;!&ndash;            {{ element.amount }}&ndash;&gt;-->
+        <!--          </td>-->
+        <!--        </ng-container>-->
+
+        <!--        &lt;!&ndash; Checkbox Column &ndash;&gt;-->
+        <!--        <ng-container matColumnDef="select">-->
+        <!--          <th *matHeaderCellDef class="p-l-0" mat-header-cell>-->
+        <!--            &lt;!&ndash;            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"&ndash;&gt;-->
+        <!--            &lt;!&ndash;                          color="primary" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">&ndash;&gt;-->
+        <!--            &lt;!&ndash;            </mat-checkbox>&ndash;&gt;-->
+        <!--          </th>-->
+        <!--          <td *matCellDef="let row" class="p-l-0" mat-cell>-->
+        <!--            <ul>-->
+        <!--              <li *ngFor="let group of row.groups; let i = index">-->
+        <!--                <mat-checkbox (change)="onCheckboxChange($event, row)"-->
+        <!--                              (click)="$event.stopPropagation()"-->
+        <!--                              [aria-label]="checkboxLabel(row)" [checked]="selection.isSelected(row)" color="primary">-->
+        <!--                </mat-checkbox>-->
+        <!--              </li>-->
+        <!--            </ul>-->
+        <!--          </td>-->
+        <!--        </ng-container>-->
+
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef class="p-l-0" mat-header-cell></th>
+          <td *matCellDef="let row" class="p-l-0" mat-cell>
+            <ul class="group-list">
+              <li *ngFor="let group of row.groups; let i = index">
+                <mat-checkbox
+                  (change)="onGroupCheckboxChange($event, group, row)"
+                  (click)="$event.stopPropagation()"
+                  [aria-label]="checkboxLabel(group)"
+                  [checked]="selection.isSelected(group)"
+                  color="primary">
+                </mat-checkbox>
+              </li>
+            </ul>
+          </td>
+        </ng-container>
+
+
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr (click)="selection.toggle(row)" *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+      </table>
+    </div>
+    <div class="m-t-12 text-right">
+      <!--      <button (click)="onGenerateInvoice()" [disabled]="selection.selected.length <= 0" color="primary" mat-flat-button>-->
+      <!--        Suivant-->
+      <!--      </button>-->
+      <button (click)="onGoToValidate()" [disabled]="selection.selected.length <= 0" color="primary" mat-flat-button
+              type="button">
+        Suivant
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,169 @@
+<!--<h4 class="mat-headline-6 m-y-24">Form with Tabs</h4>-->
+<form (ngSubmit)="onSubmit()" *ngIf="editGroupsInvoiceForm" [formGroup]="editGroupsInvoiceForm">
+  <mat-card class="cardWithShadow theme-card">
+    <mat-card-content>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="row">
+            <div class="col-sm-12 d-flex align-items-center">
+              <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+              >Date d'émission
+              </mat-label>
+            </div>
+            <div class="col-sm-12">
+              <mat-form-field>
+                <input [matDatepicker]="createdAtPicker" formControlName="createdAt" matInput
+                       placeholder="Choisir une date" (dateChange)="onDateChange($event)">
+                <mat-datepicker-toggle [for]="createdAtPicker" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #createdAtPicker></mat-datepicker>
+                <mat-error
+                  *ngIf="editGroupsInvoiceForm.get('createdAt')?.invalid && editGroupsInvoiceForm.get('createdAt')?.touched">
+                  *Ce champ est obligatoire
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="row">
+            <div class="col-sm-12 d-flex align-items-center">
+              <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16">
+                Client
+              </mat-label>
+            </div>
+            <div class="col-sm-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <input formControlName="idClient" readonly matInput placeholder=""/>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 d-flex align-items-center">
+              <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+              >Facture N°
+              </mat-label>
+            </div>
+            <div class="col-sm-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <input formControlName="numberInvoice" [value]="invoiceNumber" matInput placeholder=""/>
+                <mat-error
+                  *ngIf="editGroupsInvoiceForm.get('numberInvoice')?.hasError('required') && editGroupsInvoiceForm.get('numberInvoice')?.touched">
+                  *Ce champ est obligatoire
+                </mat-error>
+                <mat-error *ngIf="editGroupsInvoiceForm.get('numberInvoice')?.hasError('invalidMonth')">
+                  *Le mois doit correspondre au mois en cours
+                </mat-error>
+                <mat-error *ngIf="editGroupsInvoiceForm.get('numberInvoice')?.hasError('invalidFormat')">
+                  *Le format doit être AAMM-00X
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <!--        formulaire designation-->
+        <!--        ******************** training ********************-->
+        <div class="col-lg-12">
+          <div class="table-responsive m-t-30">
+            <table *ngIf="datasource" [dataSource]="datasource" class="w-100" mat-table>
+              <!-- Position Column -->
+              <ng-container matColumnDef="client">
+                <th *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14" mat-header-cell>
+                  Client
+                </th>
+                <td *matCellDef="let element" mat-cell>
+                  <div class="d-flex align-items-center">
+                    <div class="m-l-16">
+                      <h6 class="mat-subtitle-1 f-s-14 f-w-600">
+                        {{ element.client.corporateName }}
+                      </h6>
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+
+              <!-- Theme Column -->
+              <ng-container matColumnDef="theme">
+                <th *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14" mat-header-cell>
+                  Thème
+                </th>
+                <td *matCellDef="let element" class="mat-body-1" mat-cell>
+                  {{ element.theme }}
+                </td>
+              </ng-container>
+
+              <!-- Colonne des groupes -->
+              <ng-container matColumnDef="group">
+                <th *matHeaderCellDef class="p-l-0" mat-header-cell>
+                  Groupes
+                </th>
+                <td *matCellDef="let element; let i = index" class="p-l-0" mat-cell>
+                  <ul class="group-list">
+                    <li *ngFor="let group of element.groups; let i = index" class="group-item">
+                      Groupe {{ i + 1 }}
+                    </li>
+                  </ul>
+                </td>
+              </ng-container>
+
+              <!-- Colonne des bénéficiaires -->
+              <ng-container matColumnDef="staff">
+                <th *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14" mat-header-cell>
+                  Bénéficiaires
+                </th>
+                <td *matCellDef="let element" mat-cell>
+                  <ul class="group-list">
+                    <li *ngFor="let group of element.groups; let i = index" class="group-item">
+                      {{ group.groupStaff }}
+                    </li>
+                  </ul>
+                </td>
+              </ng-container>
+
+              <!-- Amount Column -->
+              <ng-container matColumnDef="amount">
+                <th *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14" mat-header-cell>
+                  Montant HT
+                </th>
+                <td *matCellDef="let element" class="mat-body-1" mat-cell>
+                  {{ amount }}
+                </td>
+              </ng-container>
+
+              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+              <tr (click)="selection.toggle(row)" *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+            </table>
+          </div>
+        </div>
+        <!--        ******************** end training ********************-->
+      </div>
+      <div class="row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+          <table>
+            <thead>
+            <tr> <h4>TVA : {{ tva }}</h4> </tr>
+            <tr> <h4>Frais de déplacement : {{ travelFees }}</h4> </tr>
+            <tr> <h4>Montant TTC : {{ ttc }}</h4> </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div *ngIf="deadline" class="col-lg-6">
+          <div class="deadline">
+            <u><b>Échéance</b></u> : Conformément à nos nos accords, le délai de paiement
+            pour cette facture est de <b>{{ deadline }}</b> jours
+            à compter de la date d'émission.
+          </div>
+        </div>
+      </div>
+      <div class="m-t-12 text-right">
+        <button [disabled]="editGroupsInvoiceForm.invalid" color="primary" mat-flat-button type="submit">
+          Enregistrer
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</form>
+

@@ -1,0 +1,117 @@
+<mat-card class="cardWithShadow" *ngIf="datasource">
+  <mat-card-content class="p-24">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <!--        <form class="form-inline my-2 my-lg-0">-->
+        <!--          <input type="search" (ngModelChange) ="search(keyword.value)" #keyword = "ngModel" ngModel name="keyword" id="searchName" class="form-control mr-sm-2" placeholder="Rechercher client..." required>-->
+        <!--        </form>-->
+        <mat-form-field appearance="outline" class="w-100 hide-hint">
+          <input
+            matInput
+            placeholder="Rechercher Formateur"
+            (ngModelChange) ="search(keyword.value)"
+            #keyword = "ngModel"
+            ngModel name="keyword"
+          />
+          <mat-icon matSuffix>
+            <i-tabler name="search" class="icon-20"></i-tabler>
+          </mat-icon>
+        </mat-form-field>
+      </div>
+      <div
+        class="col-lg-4 d-flex align-items-center justify-content-end"
+        *ngIf="keycloakService.getUserRoles().includes('admin')"
+      >
+        <button
+          mat-flat-button
+          color="primary"
+          [routerLink]="['add']"
+        >
+          Nouveau Formateur
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="cardWithShadow">
+  <mat-card-content class="p-24">
+    <div class="table-responsive">
+      <table mat-table [dataSource]="datasource" class="w-100">
+
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Nom</th>
+          <td mat-cell *matCellDef="let element" style="word-wrap: break-word;">
+            <div class="d-flex align-items-center">
+              <div class="m-l-16">
+                <p class="f-w-600 mat-subtitle-1 f-s-16 m-t-0">
+                  <a [routerLink]="['detail', element.idInstructor]">{{ element.lastName }}</a>
+                </p>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Prénom(s)
+          </th>
+          <td mat-cell *matCellDef="let element" class="f-s-14">{{ element.firstName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Téléphone
+          </th>
+          <td mat-cell *matCellDef="let element" class="f-s-14">
+            {{ element.phone }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Email
+          </th>
+          <td mat-cell *matCellDef="let element" class="f-s-14">
+            {{ element.email }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Adresse
+          </th>
+          <td mat-cell *matCellDef="let element" class="f-s-14">
+            {{ element.address }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
+            Action
+          </th>
+          <td mat-cell *matCellDef="let element" class="action-link">
+            <a
+              [routerLink]="['edit', element.idInstructor]"
+              class="m-r-10 cursor-pointer"
+            ><i-tabler name="edit" class="icon-18"></i-tabler
+            ></a>
+            <a
+              (click)="openDialog('Supprimer', element)"
+              class="m-r-10 cursor-pointer"
+            >
+              <i-tabler name="trash" class="icon-18"></i-tabler>
+            </a>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      </table>
+      <mat-paginator [pageSizeOptions]="[3, 5, 10, 20, 50, 100]"
+                     showFirstLastButtons>
+      </mat-paginator>
+    </div>
+  </mat-card-content>
+</mat-card>

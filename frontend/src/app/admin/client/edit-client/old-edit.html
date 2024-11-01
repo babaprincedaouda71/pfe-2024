@@ -1,0 +1,280 @@
+<!--<h4 class="mat-headline-6 m-y-24">{{ client.corporateName }}</h4>-->
+<form [formGroup]="updateClientForm" (ngSubmit)="updateClient()" *ngIf="updateClientForm && client">
+  <mat-card class="cardWithShadow theme-card">
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms" #tabGroup>
+      <mat-tab label="Informations de l'entreprise">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Raison Sociale
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput formControlName="corporateName" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Adresse
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput formControlName="address" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Téléphone
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput formControlName="phoneNumber" />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Email
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput formControlName="email" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Site Web
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput formControlName="website" />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-tab>
+      <mat-tab label="Contact Principal">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Nom & Prénom(s)
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="Nom & Prénom(s)" formControlName="nameMainContact" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Téléphone
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="Téléphone" formControlName="phoneNumberMainContact" />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Email
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="Email" formControlName="emailMainContact" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Position
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="Position" formControlName="positionMainContact" />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-tab>
+      <mat-tab label="Identification de l'Entreprise">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >ICE
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" formControlName="commonCompanyIdentifier" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >IF
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" formControlName="taxRegistration" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >RC
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" formControlName="commercialRegister" />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >TP
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" formControlName="professionalTax" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >CNSS
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" formControlName="cnss" />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-tab>
+
+      <mat-tab label="Informations Générale">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Secteur d'Activité
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" formControlName="field" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Statut
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-select formControlName="status">
+                      <mat-option value="" disabled>Choisir une option</mat-option>
+                      <mat-option value="Actif">Actif</mat-option>
+                      <mat-option value="Inactif">Inactif</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Écheance
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput [matDatepicker]="picker" placeholder="Choisir une date" formControlName="deadline">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 d-flex align-items-center">
+                  <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+                  >Plafond
+                  </mat-label>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input matInput placeholder="" formControlName="limitAmount" />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--          <div class="m-t-12 text-right">-->
+          <!--            <button mat-flat-button color="primary">Enregistrer</button>-->
+          <!--          </div>-->
+        </mat-card-content>
+      </mat-tab>
+    </mat-tab-group>
+    <div class="m-t-12 text-center">
+      <button mat-flat-button color="primary">Enregistrer</button>
+    </div>
+    <div class="m-t-12 text-left">
+      <button type="button" mat-flat-button class="m-2" color="primary" (click)="goToNextTab()">Suivant</button>
+      <button type="button" mat-flat-button class="m-2" color="primary" (click)="goToPreviousTab()">Précédent</button>
+    </div>
+  </mat-card>
+</form>

@@ -1,0 +1,104 @@
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <div class="d-flex align-items-center">
+      <mat-card-title class="m-b-0">Agenda</mat-card-title>
+      <div class="m-l-auto">
+        <button (click)="onAddTraining()" color="primary" mat-flat-button>
+          Ajouter une nouvelle Formation
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+<!--  -->
+
+<!--<mat-card *ngIf="trainings" class="cardWithShadow overflow-hidden">-->
+<mat-card class="cardWithShadow overflow-hidden">
+  <mat-toolbar class="no-shadow" color="primary">
+    <mat-toolbar-row>
+      <div class="d-flex align-items-center w-100">
+        <span>{{ viewDate | calendarDate : view + "ViewTitle" : "fr" }}</span>
+        <div class="m-l-auto d-flex align-items-center">
+          <button
+            (click)="view = 'month'"
+            [class.active]="view === 'month'"
+            mat-button
+          >
+            Mois
+          </button>
+          <button
+            (click)="view = 'month'"
+            [class.active]="view === 'month'"
+            mat-icon-button
+          >
+            <mat-icon>view_module</mat-icon>
+          </button>
+          <button
+            [(viewDate)]="viewDate"
+            [view]="view"
+            mat-icon-button
+            mwlCalendarPreviousView
+          >
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          <button [(viewDate)]="viewDate" mat-icon-button mwlCalendarToday>
+            <mat-icon>today</mat-icon>
+          </button>
+          <button
+            [(viewDate)]="viewDate"
+            [view]="view"
+            mat-icon-button
+            mwlCalendarNextView
+          >
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <mat-card-content>
+    <ng-template #customCellTemplate let-day="day" let-locale="locale">
+      <div class="cal-cell-top">
+        <span *ngIf="day.badgeTotal > 0" class="cal-day-badge">
+          {{ day.badgeTotal }}
+        </span>
+        <span class="cal-day-number">
+          {{ day.date | calendarDate:'monthViewDayNumber':locale }}
+        </span>
+      </div>
+      <!-- ... -->
+      <div (click)="eventClicked(event.id)"
+           *ngFor="let event of day.events"
+           class="event-container"
+      >
+        <!-- ... -->
+        <span [style.background-color]="getColorById(event.id)" class="event-text">
+          {{ event.title }}
+        </span>
+      </div>
+    </ng-template>
+    <!-- ============================================================== -->
+    <!-- Event Calendar -->
+    <!-- ============================================================== -->
+    <div [ngSwitch]="view">
+      <mwl-calendar-month-view
+        *ngSwitchCase="view"
+        [activeDayIsOpen]="activeDayIsOpen"
+        [cellTemplate]="customCellTemplate"
+        [events]="events"
+        [excludeDays]="[0]"
+        [viewDate]="viewDate"
+        locale="fr"
+      >
+      </mwl-calendar-month-view>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<!--&lt;!&ndash; Affichage des détails de l'événement sélectionné &ndash;&gt;-->
+<!--<div *ngIf="selectedEvent" class="event-details">-->
+<!--  <h3>{{ selectedEvent.title }}</h3>-->
+<!--  <p>Début: {{ selectedEvent.start }}</p>-->
+<!--  <p>Fin: {{ selectedEvent.end }}</p>-->
+<!--  &lt;!&ndash; Ajoutez d'autres détails d'événement selon vos besoins &ndash;&gt;-->
+<!--</div>-->

@@ -1,0 +1,158 @@
+<mat-card class="cardWithShadow">
+  <mat-card-content class="p-24">
+    <div class="table-responsive">
+      <table [dataSource]="dataSource" class="w-100" mat-table>
+
+        <ng-container matColumnDef="group">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>Groupe</th>
+          <td *matCellDef="let element" mat-cell style="word-wrap: break-word;">
+            <div class="d-flex align-items-center">
+              <div class="m-l-16">
+                <p class="f-w-600 mat-subtitle-1 f-s-16 m-t-0">
+                  <a [routerLink]="['detail', element.idGroup]">Groupe {{ element.idGroup }}</a>
+                </p>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="supplier">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            Formateur
+          </th>
+          <td *matCellDef="let element" class="f-s-14" mat-cell>
+<!--            {{ element.supplier.name }}-->
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dates">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            Dates
+          </th>
+          <td *matCellDef="let element" [style.white-space]="'pre-line'" class="f-s-14" mat-cell>
+            <!--            start-->
+            <ng-container>
+              @if (element.startDate && element.endDate) {
+                du {{ element.startDate | date : 'd' }} au {{ element.endDate | date : 'shortDate' }}
+                <br>
+              } @else {
+                {{ dateService.formatNonConsecutiveDates(element.groupDates) }}
+                <br>
+              }
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="staff">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            Éffectif
+          </th>
+          <td *matCellDef="let element" class="f-s-14" mat-cell>
+                        {{ element.groupStaff }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            État
+          </th>
+          <td (click)="openLifeCycleDialog('lifeCycle', element)" *matCellDef="let element" class="f-s-14" mat-cell>
+            @if (element.status == 'Recherche_formateur') {
+              <span class="p-x-8 p-y-4 bg-light-primary f-w-600 rounded-pill f-s-12">
+                Recherche Formateur
+              </span>
+            }
+
+            @if (element.status == 'Validation_formateur') {
+              <span class="p-x-8 p-y-4 bg-light-accent f-w-600 rounded-pill f-s-12">
+                Validation Formateur
+              </span>
+            }
+
+            @if (element.status == 'Reunion_de_cadrage') {
+              <span class="p-x-8 p-y-4 bg-light-error f-w-600 rounded-pill f-s-12">
+                Reunion de Cadrage
+              </span>
+            }
+
+            @if (element.status == 'Support_de_formation') {
+              <span class="p-x-8 p-y-4 bg-light-success f-w-600 rounded-pill f-s-12">
+                Support de Formation
+              </span>
+            }
+
+            @if (element.status == 'Impression') {
+              <span class="p-x-8 p-y-4 bg-light-warning f-w-600 rounded-pill f-s-12">
+                Impression
+              </span>
+            }
+
+            @if (element.status == 'Realisation') {
+              <span class="p-x-8 p-y-4 bg-light- f-w-600 rounded-pill f-s-12">
+                Réalisation
+              </span>
+            }
+
+            @if (element.status == 'Attestation') {
+              <span class="p-x-8 p-y-4 bg-light f-w-600 rounded-pill f-s-12">
+                Livrable Formation
+              </span>
+            }
+
+            @if (element.status == 'Facturation') {
+              <span class="p-x-8 p-y-4 bg-light f-w-600 rounded-pill f-s-12">
+                Facturation
+              </span>
+            }
+
+            @if (element.status == 'Reglement') {
+              <span class="p-x-8 p-y-4 bg-light f-w-600 rounded-pill f-s-12">
+                Payement
+              </span>
+            }
+
+            @if (element.status == 'Attestation_de_référence') {
+              <span class="p-x-8 p-y-4 bg-light f-w-600 rounded-pill f-s-12">
+                Attestation de Référence
+              </span>
+            }
+
+            @if (element.status == 'Realisée') {
+              <span class="p-x-8 p-y-4 bg-light f-w-600 rounded-pill f-s-12">
+                Realisée
+              </span>
+            }
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            Action
+          </th>
+          <td *matCellDef="let element" class="action-link" mat-cell>
+            <a
+              [routerLink]="['edit', element.idTraining]"
+              class="m-r-10 cursor-pointer"
+            >
+              <i-tabler class="icon-18" name="edit"></i-tabler
+              >
+            </a>
+<!--            <a-->
+<!--              (click)="openDialog('Supprimer', element)"-->
+<!--              class="m-r-10 cursor-pointer"-->
+<!--            >-->
+<!--              <i-tabler class="icon-18" name="trash"></i-tabler>-->
+<!--            </a>-->
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+
+      </table>
+      <mat-paginator [pageSizeOptions]="[20, 50, 100]"
+                     showFirstLastButtons>
+      </mat-paginator>
+    </div>
+  </mat-card-content>
+</mat-card>

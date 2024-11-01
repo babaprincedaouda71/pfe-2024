@@ -1,0 +1,124 @@
+<mat-card class="cardWithShadow">
+  <mat-card-header>
+    <mat-card-title>Veuillez Sélectionner les Formations à Facturer</mat-card-title>
+    <mat-card-subtitle class="mat-body-1">un seul ou plusieurs éléments</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="table-responsive m-t-30">
+      <table *ngIf="datasource" [dataSource]="datasource" class="w-100" mat-table>
+        <!-- Position Column -->
+        <ng-container matColumnDef="client">
+          <th *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14" mat-header-cell>
+            Client
+          </th>
+          <td *matCellDef="let element" mat-cell>
+            <div class="d-flex align-items-center">
+              <!--              <img [src]="element.imagePath" alt="users" width="40" class="rounded-circle" />-->
+              <div class="m-l-16">
+                <h6 class="mat-subtitle-1 f-s-14 f-w-600">
+                  {{ element.client.corporateName }}
+                </h6>
+                <!--                <span class="mat-body-1 f-s-12">-->
+                <!--                  {{ element.position }}-->
+                <!--                </span>-->
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Theme Column -->
+        <ng-container matColumnDef="theme">
+          <th *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14" mat-header-cell>
+            Thème
+          </th>
+          <td *matCellDef="let element" class="mat-body-1" mat-cell>
+            {{ element.theme }}
+          </td>
+        </ng-container>
+
+        <!-- Date Column -->
+        <ng-container matColumnDef="dates">
+          <th *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14" mat-header-cell>
+            Dates de Réalisation
+          </th>
+          <td *matCellDef="let element" mat-cell>
+            {{ element.completionDate | date : 'shortDate' }}
+            <!--            @if(element.priority == 'low') {-->
+            <!--              <span class="bg-light-accent text-accent rounded f-w-600 p-6 p-y-4 f-s-12">-->
+            <!--              {{ element.priority | titlecase }}-->
+            <!--            </span>-->
+            <!--            }-->
+
+            <!--            @if(element.priority == 'medium') {-->
+            <!--              <span class="bg-light-primary text-primary rounded f-w-600 p-6 p-y-4 f-s-12">-->
+            <!--              {{ element.priority | titlecase }}-->
+            <!--            </span>-->
+            <!--            }-->
+
+            <!--            @if(element.priority == 'high') {-->
+            <!--              <span class="bg-light-warning text-warning rounded f-w-600 p-6 p-y-4 f-s-12">-->
+            <!--              {{ element.priority | titlecase }}-->
+            <!--            </span>-->
+            <!--            }-->
+
+            <!--            @if(element.priority == 'critical') {-->
+            <!--              <span class="bg-light-error text-error rounded f-w-600 p-6 p-y-4 f-s-12">-->
+            <!--              {{ element.priority | titlecase }}-->
+            <!--            </span>-->
+            <!--            }-->
+
+            <!--            @if(element.priority == 'moderate') {-->
+            <!--              <span class="bg-light-success text-success rounded f-w-600 p-6 p-y-4 f-s-12">-->
+            <!--              {{ element.priority | titlecase }}-->
+            <!--            </span>-->
+            <!--            }-->
+          </td>
+        </ng-container>
+
+        <!-- Amount Column -->
+        <ng-container matColumnDef="amount">
+          <th *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14" mat-header-cell>
+            Montant
+          </th>
+          <td *matCellDef="let element" class="mat-body-1" mat-cell>
+            {{ element.amount }}
+          </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th *matHeaderCellDef class="f-w-600 mat-subtitle-1 f-s-14" mat-header-cell>
+            État
+          </th>
+          <td *matCellDef="let element" class="mat-body-1" mat-cell>
+            <!--            ${{ element.amount }}-->
+          </td>
+        </ng-container>
+
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th *matHeaderCellDef class="p-l-0" mat-header-cell>
+            <!--            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"-->
+            <!--                          color="primary" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">-->
+            <!--            </mat-checkbox>-->
+          </th>
+          <td *matCellDef="let row" class="p-l-0" mat-cell>
+            <mat-checkbox (change)="onCheckboxChange($event, row)"
+                          (click)="$event.stopPropagation()"
+                          [aria-label]="checkboxLabel(row)" [checked]="selection.isSelected(row)" color="primary">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr (click)="selection.toggle(row)" *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+      </table>
+    </div>
+    <div class="m-t-12 text-right">
+      <button (click)="onGenerateInvoice()" [disabled]="selection.selected.length <= 0" color="primary" mat-flat-button>
+<!--      <button type="button" (click)="onGoToValidate()" [disabled]="selection.selected.length <= 0" color="primary" mat-flat-button>-->
+        Suivant
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

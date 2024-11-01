@@ -1,0 +1,16 @@
+<h2 class="f-w-500 m-b-24 text-center" mat-dialog-title><strong>Ajouter une Nouvelle Facture</strong></h2>
+<!--@if (action == 'Ajouter'){-->
+<div class="p-x-24">
+  <div class="p-x-24 p-b-24" mat-dialog-actions>
+    <button (click)="onAddStandardInvoice('addStandardInvoice')" color="warn" mat-button mat-flat-button>
+      Facture Standard
+    </button>
+    <button (click)="onAddTrainingInvoice('addTrainingInvoice')" color="primary" mat-button mat-flat-button>
+      Facturation des modules de Formation
+    </button>
+  </div>
+</div>
+<div class="p-x-24 p-b-24" mat-dialog-actions>
+  <button (click)="closeDialog()" class="m-l-8" mat-button>Annuler</button>
+</div>
+<!--}-->

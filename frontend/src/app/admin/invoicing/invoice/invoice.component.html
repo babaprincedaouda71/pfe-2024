@@ -1,0 +1,242 @@
+<mat-card class="cardWithShadow">
+  <mat-card-content class="p-24">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <mat-form-field appearance="outline" class="w-100 hide-hint">
+          <input
+            #keyword="ngModel"
+            (ngModelChange)="search(keyword.value)"
+            matInput
+            name="keyword"
+            ngModel placeholder="Rechercher Facture"
+          />
+          <mat-icon matSuffix>
+            <i-tabler class="icon-20" name="search"></i-tabler>
+          </mat-icon>
+        </mat-form-field>
+      </div>
+      <div
+        *ngIf="keycloakService.getUserRoles().includes('admin')"
+        class="col-lg-4 d-flex align-items-center justify-content-end"
+      >
+        <button
+          (click)="openAddDialog()"
+          color="primary"
+          mat-flat-button
+        >
+          Nouvelle Facture
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="datasource" class="cardWithShadow">
+  <mat-card-content class="p-24">
+    <div class="table-responsive">
+      <table [dataSource]="datasource" class="w-100" mat-table>
+
+        <ng-container matColumnDef="invoiceNumber">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>N°Facture</th>
+          <td *matCellDef="let element" mat-cell style="word-wrap: break-word;">
+            <div class="d-flex align-items-center">
+              <div class="m-l-16">
+                <p class="f-w-500 mat-subtitle-1 f-s-16 m-t-0">
+                  <a
+                    [routerLink]="['detail-invoice', element.idInvoice]"
+                    class="m-r-10 cursor-pointer">
+                    {{ element.numberInvoice }}
+                  </a>
+                </p>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAt">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            Date
+          </th>
+          <td *matCellDef="let element" class="f-s-14" mat-cell>
+            {{ element.createdAt | date : 'shortDate' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="client">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            Client
+          </th>
+          <td *matCellDef="let element" class="f-s-14" mat-cell>
+            {{ element.client.corporateName }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tva">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            TVA
+          </th>
+          <td *matCellDef="let element" class="f-s-14" mat-cell>
+            {{ element.tva }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="travel">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            Frais de déplacement
+          </th>
+          <td *matCellDef="let element" class="f-s-14" mat-cell>
+            {{ element.travelExpenes }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ttc">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            TTC
+          </th>
+          <td *matCellDef="let element" class="f-s-14" mat-cell>
+            @if (element.ttc) {
+              {{ element.ttc.toFixed(2) }}
+            }
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="editor">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            Éditeur
+          </th>
+          <td *matCellDef="let element" class="f-s-14" mat-cell>
+            {{ element.editor }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            État
+          </th>
+          <td *matCellDef="let element" class="f-s-14" mat-cell>
+            <div class="d-flex align-items-center">
+              <div class="m-l-16">
+                <div class="custom-dropdown">
+                  <select (change)="onStatusChange($event, element)" [(ngModel)]="element.status"
+                          [disabled]="element.status == 'Réglée'"
+                          class="custom-dropdown-select">
+                    <option [selected]="element.status == 'Non_Régléé'" value="Non_Réglée">Non Réglée</option>
+                    <option [selected]="element.status == 'Réglée'" value="Réglée">Régléé</option>
+                  </select>
+                  <span class="custom-dropdown-arrow"></span>
+                </div>
+                <small class="mat-body-1 f-s-14">
+                  @if (element.expired) {
+                    Échue
+                  }
+                </small>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="paymentDate">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            Date de Payement
+          </th>
+          <td *matCellDef="let element" class="f-s-14" mat-cell>
+            @if (element.paymentDate != '' || element.paymentDate != null) {
+              {{ element.paymentDate | date : 'shortDate' }}
+            }
+            @if (element.paymentDate == '' || element.paymentDate == null) {
+              <span>En Attente</span>
+            }
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="paymentMethod">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            Mode de Règlement
+          </th>
+          <td *matCellDef="let element" class="f-s-14" mat-cell>
+            @if (element.paymentMethod != '' || element.paymentMethod != null) {
+              {{ element.paymentMethod }}
+            }
+            @if (element.paymentMethod == '' || element.paymentMethod == null) {
+              <span>En Attente</span>
+            }
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            Action
+          </th>
+          <td *matCellDef="let element" class="action-link" mat-cell>
+            <!--            View Invoice-->
+            @if (element.invoiceType == 'standard') {
+              <a
+                (click)="generateInvoice(element)"
+                class="m-r-10 cursor-pointer"
+              >
+                <i-tabler name="eye" class="icon-18"></i-tabler
+                >
+              </a>
+            } @else {
+              <a
+                (click)="generateInvoice(element)"
+                class="m-r-10 cursor-pointer"
+              >
+                <i-tabler name="eye" class="icon-18"></i-tabler
+                >
+              </a>
+            }
+
+            <!--            Print invoice-->
+            <a
+              (click)="openDialog('Supprimer', element)"
+              class="m-r-10 cursor-pointer"
+            >
+              Print
+              <i-tabler class="icon-18" name="IconPrinter"></i-tabler>
+            </a>
+
+            <!--            Edit Invoice-->
+            @if (element.invoiceType == 'standard' && element.status == 'Non_Réglée') {
+              <a
+                [routerLink]="['edit-standard-invoice', element.idInvoice]"
+                class="m-r-10 cursor-pointer">
+                <i-tabler name="edit" class="icon-18"></i-tabler>
+              </a>
+            }
+            @if (element.invoiceType == 'groupInvoice' && element.status == 'Non_Réglée') {
+              <a
+                [routerLink]="['update-groups-invoice', element.idInvoice]"
+                class="m-r-10 cursor-pointer">
+                <i-tabler name="edit" class="icon-18"></i-tabler>
+              </a>
+            }
+            @if (element.invoiceType == 'trainingModule') {
+              <a
+                [routerLink]="['edit-training-invoice', element.idInvoice]"
+                class="m-r-10 cursor-pointer">
+                <i-tabler name="edit" class="icon-18"></i-tabler>
+              </a>
+            }
+
+            <!--            Delete Invoice-->
+            <a
+              (click)="openDialog('Supprimer', element)"
+              class="m-r-10 cursor-pointer"
+            >
+              <i-tabler class="icon-18" name="trash"></i-tabler>
+            </a>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+
+      </table>
+      <!--      <mat-paginator [pageSizeOptions]="[3, 5, 10, 20, 50, 100]"-->
+      <!--                     showFirstLastButtons>-->
+      <!--      </mat-paginator>-->
+    </div>
+  </mat-card-content>
+</mat-card>

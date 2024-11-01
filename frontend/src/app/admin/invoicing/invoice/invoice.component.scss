@@ -1,0 +1,62 @@
+a {
+  text-decoration: none; /* Enlever le soulignement par défaut */
+  color: inherit; /* Utiliser la couleur par défaut du texte */
+  /* Ajoutez d'autres styles si nécessaire */
+}
+
+::ng-deep .green-snackbar {
+  background-color: green !important;
+  color: white !important;
+}
+
+
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+  font-family: Arial, sans-serif;
+}
+
+.custom-dropdown-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  padding: 8px 30px 8px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.custom-dropdown-arrow {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #666;
+}
+
+/* Hover and Focus Styles */
+.custom-dropdown-select:hover,
+.custom-dropdown-select:focus {
+  border-color: #666;
+}
+
+/* Focus Styles */
+.custom-dropdown-select:focus {
+  outline: none;
+}
+
+/* Hover Styles for Arrow */
+.custom-dropdown:hover .custom-dropdown-arrow {
+  border-top-color: #333;
+}
+
+/* Active Styles */
+.custom-dropdown-select:active {
+  background-color: #f0f0f0;
+}

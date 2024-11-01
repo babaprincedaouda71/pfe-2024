@@ -1,0 +1,138 @@
+@if (action == 'pv') {
+  <h2 class="f-w-500 m-b-24" mat-dialog-title><strong>Cycle de Vie de la Formation</strong></h2>
+  <div class="mat-body-1 p-x-24">
+    <div>
+      <div class="col-sm-4 d-flex align-items-center">
+        <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"
+        >PV
+        </mat-label>
+      </div>
+      <div class="col-lg-12">
+        <mat-form-field appearance="outline" class="w-100">
+                <textarea
+                  rows="5"
+                  matInput
+                  placeholder="Rédigez le PV"
+                  [(ngModel)]="pv"
+                ></textarea>
+          <mat-icon matPrefix class="op-5">
+            <i-tabler name="message-2" class="icon-20 d-flex"></i-tabler>
+          </mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div [style.width.px]="600">
+    <div mat-dialog-actions class="p-x-24 p-b-24">
+      <button (click)="onAddPV()" mat-button mat-flat-button color="warn">
+        Ok
+      </button>
+      <button (click)="closeDialog()" mat-button class="m-l-8">Annuler</button>
+    </div>
+  </div>
+}
+
+@if (action == 'trainingSupport') {
+  <h2 class="f-w-500 m-b-24" mat-dialog-title><strong>Téléverser le Support de Formation</strong></h2>
+  <div class="mat-body-1 p-x-24">
+    <form (ngSubmit)="onSubmitTrainingSupport()">
+      <div class="col-lg-12">
+        <div appearance="outline" class="w-100">
+          <button type="button" mat-flat-button color="primary" class="m-l-16 input-file-button">
+            <input type="file" accept="application/pdf"
+                   (change)="onTrainingSupportChange($event)"
+                   #fileInput/>
+          </button>
+          <br>
+          <br>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div [style.width.px]="600">
+    <div mat-dialog-actions class="p-x-24 p-b-24">
+      <button (click)="onSubmitTrainingSupport()" mat-button mat-flat-button color="warn">
+        Ok
+      </button>
+      <button (click)="closeDialog()" mat-button class="m-l-8">Annuler</button>
+    </div>
+  </div>
+}
+
+
+<!--TODO-->
+@if (action == 'referenceCertificate') {
+  <h2 class="f-w-500 m-b-24" mat-dialog-title><strong>Téléverser l'Attestation de Reférence</strong></h2>
+  <div class="mat-body-1 p-x-24">
+    <form (ngSubmit)="onSubmitReferenceCertificate()">
+      <div class="col-lg-12">
+        <div appearance="outline" class="w-100">
+          <button type="button" mat-flat-button color="primary" class="m-l-16 input-file-button">
+            <input type="file" accept="application/pdf"
+                   (change)="onReferenceCertificateChange($event)"
+                   #fileInput/>
+          </button>
+          <br>
+          <br>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div [style.width.px]="600">
+    <div mat-dialog-actions class="p-x-24 p-b-24">
+      <button (click)="onSubmitReferenceCertificate()" mat-button mat-flat-button color="warn">
+        Ok
+      </button>
+      <button (click)="closeDialog()" mat-button class="m-l-8">Annuler</button>
+    </div>
+  </div>
+}
+
+@if (action == 'trainingNotes') {
+  <h2 class="f-w-500 m-b-24 text-center" mat-dialog-title><strong>Les Notes de Formation</strong></h2>
+  <div class="p-x-24">
+    <div class="row">
+      <div class="col-lg-6">
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Téléverser la liste de présence
+        </mat-label
+        >
+        <div appearance="outline" class="w-100">
+          <button type="button" mat-flat-button color="primary" class="m-l-16 input-file-button">
+            <input type="file" accept="application/pdf"
+                   (change)="onPresenceListChange($event)"
+                   #fileInput/>
+          </button>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <!-- input -->
+        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+        >Téléverser l'Évaluation Synthétique
+        </mat-label
+        >
+        <div appearance="outline" class="w-100">
+          <button type="button" mat-flat-button color="primary" class="m-l-16 input-file-button">
+            <input type="file" accept="application/pdf"
+                   (change)="onEvaluationChange($event)"
+                   #fileInput/>
+          </button>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div mat-dialog-actions class="p-x-24 p-b-24">
+          <button (click)="onSubmitTrainingNotes()" mat-button mat-flat-button color="primary">
+            Ok
+          </button>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div mat-dialog-actions class="p-x-24 p-b-24">
+          <button (click)="closeDialog()" mat-button mat-flat-button color="warn">Annuler</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

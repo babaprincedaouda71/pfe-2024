@@ -1,0 +1,215 @@
+<!--@if (action == 'lifeCycle') {-->
+<!--  <div [style.width.px]="600">-->
+<!--    <h2 class="f-w-500 m-b-24" mat-dialog-title><strong>Cycle de Vie de la Formation</strong></h2>-->
+<!--    <div class="mat-body-1 p-x-24">-->
+<!--      <mat-checkbox class="m-b-16 block"-->
+<!--                    [(ngModel)]="local_data.lifeCycle.trainerSearch"-->
+<!--                    (click)="checkVendor($event)">-->
+<!--        <span>Recherche formateur</span>-->
+<!--      </mat-checkbox>-->
+<!--      <br>-->
+<!--      <mat-checkbox class="m-b-16 block"-->
+<!--                    [(ngModel)]="local_data.lifeCycle.trainerValidation"-->
+<!--                    [disabled]="!local_data.lifeCycle.trainerSearch"-->
+<!--                    (ngModelChange)="checkValidation()"-->
+<!--      >-->
+<!--        <span>Validation formateur</span>-->
+<!--      </mat-checkbox>-->
+<!--      <br>-->
+<!--      <mat-checkbox class="m-b-16 block"-->
+<!--                    [(ngModel)]="local_data.lifeCycle.kickOfMeeting"-->
+<!--                    [disabled]="!local_data.lifeCycle.trainerValidation"-->
+<!--                    (click)="checkKickOfMeeting($event)"-->
+<!--      >-->
+<!--        <span>Réunion de cadrage</span>-->
+<!--      </mat-checkbox>-->
+<!--      <br>-->
+<!--      <mat-checkbox class="m-b-16 block"-->
+<!--                    [(ngModel)]="local_data.lifeCycle.trainingSupport"-->
+<!--                    [disabled]="!local_data.lifeCycle.kickOfMeeting"-->
+<!--                    (click)="checkTrainingSupport($event)"-->
+<!--      >-->
+<!--        <span>Support de formation</span>-->
+<!--      </mat-checkbox>-->
+<!--      <br>-->
+<!--      <mat-checkbox class="m-b-16 block"-->
+<!--                    [(ngModel)]="local_data.lifeCycle.impression"-->
+<!--                    [disabled]="!local_data.lifeCycle.trainingSupport"-->
+<!--                    (ngModelChange)="checkImpression()"-->
+<!--      >-->
+<!--        <span>Impression</span>-->
+<!--      </mat-checkbox>-->
+<!--      <br>-->
+<!--      <mat-checkbox class="m-b-16 block"-->
+<!--                    [(ngModel)]="local_data.lifeCycle.completion"-->
+<!--                    [disabled]="!local_data.lifeCycle.impression"-->
+<!--                    (ngModelChange)="checkCompletion()"-->
+<!--      >-->
+<!--        <span>Réalisation</span>-->
+<!--      </mat-checkbox>-->
+<!--      <br>-->
+<!--      <mat-checkbox class="m-b-16 block"-->
+<!--                    [(ngModel)]="local_data.lifeCycle.certif"-->
+<!--                    [disabled]="!local_data.lifeCycle.completion"-->
+<!--                    (click)="checkCertif($event)"-->
+<!--      >-->
+<!--        <span>Attestation</span>-->
+<!--      </mat-checkbox>-->
+<!--      <br>-->
+<!--      <mat-checkbox class="m-b-16 block"-->
+<!--                    [(ngModel)]="local_data.lifeCycle.invoicing"-->
+<!--                    [disabled]="!local_data.lifeCycle.certif"-->
+<!--                    (click)="checkInvoicing($event)"-->
+<!--      >-->
+<!--        <span>Facturation</span>-->
+<!--      </mat-checkbox>-->
+<!--      <br>-->
+<!--      <mat-checkbox class="m-b-16 block"-->
+<!--                    [(ngModel)]="local_data.lifeCycle.payment"-->
+<!--                    [disabled]="!local_data.lifeCycle.invoicing">-->
+<!--        <span>Règlement</span>-->
+<!--      </mat-checkbox>-->
+<!--    </div>-->
+<!--    <div mat-dialog-actions class="p-x-24 p-b-24">-->
+<!--      <button (click)="doAction()" mat-button mat-flat-button color="warn">-->
+<!--        Ok-->
+<!--      </button>-->
+<!--      <button (click)="closeDialog()" mat-button class="m-l-8">Annuler</button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--}-->
+
+
+
+<!--kds,kds,cdskc,dlkc,d,cldskc,dlksc,dsc,sldc,sld,cdslc,dlc,d-->
+@if (action == 'lifeCycle') {
+  <div class="lifecycle-container">
+    <h2 class="f-w-500 m-b-24" mat-dialog-title><strong>Cycle de Vie de la Formation</strong></h2>
+    <div class="mat-body-1 p-x-24 lifecycle-steps">
+      <!-- Step 1 -->
+      <div class="step">
+        <mat-checkbox
+          class="step-checkbox"
+          [(ngModel)]="local_data.lifeCycle.trainerSearch"
+          (click)="checkVendor($event)"
+        >
+          <span>Recherche formateur</span>
+        </mat-checkbox>
+        <mat-icon class="step-icon" matTooltip="Recherche et sélection d'un formateur qualifié">search</mat-icon>
+      </div>
+      <!-- Step 2 -->
+      <div class="step">
+        <mat-checkbox
+          class="step-checkbox"
+          [(ngModel)]="local_data.lifeCycle.trainerValidation"
+          [disabled]="!local_data.lifeCycle.trainerSearch"
+          (ngModelChange)="checkValidation()"
+        >
+          <span>Validation formateur</span>
+        </mat-checkbox>
+        <mat-icon class="step-icon" matTooltip="Validation du formateur sélectionné">check_circle</mat-icon>
+      </div>
+      <!-- Step 3 -->
+      <div class="step">
+        <mat-checkbox
+          class="step-checkbox"
+          [(ngModel)]="local_data.lifeCycle.kickOfMeeting"
+          [disabled]="!local_data.lifeCycle.trainerValidation"
+          (click)="checkKickOfMeeting($event)"
+        >
+          <span>Réunion de cadrage</span>
+        </mat-checkbox>
+        <mat-icon class="step-icon" matTooltip="Organisation d'une réunion de cadrage">event</mat-icon>
+      </div>
+      <!-- Step 4 -->
+      <div class="step">
+        <mat-checkbox
+          class="step-checkbox"
+          [(ngModel)]="local_data.lifeCycle.trainingSupport"
+          [disabled]="!local_data.lifeCycle.kickOfMeeting"
+          (click)="checkTrainingSupport($event)"
+        >
+          <span>Support de formation</span>
+        </mat-checkbox>
+        <mat-icon class="step-icon" matTooltip="Préparation des supports de formation">description</mat-icon>
+      </div>
+      <!-- Step 5 -->
+      <div class="step">
+        <mat-checkbox
+          class="step-checkbox"
+          [(ngModel)]="local_data.lifeCycle.impression"
+          [disabled]="!local_data.lifeCycle.trainingSupport"
+          (ngModelChange)="checkImpression()"
+        >
+          <span>Impression</span>
+        </mat-checkbox>
+        <mat-icon class="step-icon" matTooltip="Impression des supports de formation">print</mat-icon>
+      </div>
+      <!-- Step 6 -->
+      <div class="step">
+        <mat-checkbox
+          class="step-checkbox"
+          [(ngModel)]="local_data.lifeCycle.completion"
+          [disabled]="!local_data.lifeCycle.impression"
+          (ngModelChange)="checkCompletion()"
+        >
+          <span>Réalisation</span>
+        </mat-checkbox>
+        <mat-icon class="step-icon" matTooltip="Réalisation de la formation">done_all</mat-icon>
+      </div>
+      <!-- Step 7 -->
+      <div class="step">
+        <mat-checkbox
+          class="step-checkbox"
+          [(ngModel)]="local_data.lifeCycle.certif"
+          [disabled]="!local_data.lifeCycle.completion"
+          (click)="checkCertif($event)"
+        >
+          <span>Livrable Formation</span>
+        </mat-checkbox>
+        <mat-icon class="step-icon" matTooltip="Émission des attestations de formation">verified_user</mat-icon>
+      </div>
+      <!-- Step 8 -->
+      <div class="step">
+        <mat-checkbox
+          class="step-checkbox"
+          [(ngModel)]="local_data.lifeCycle.invoicing"
+          [disabled]="!local_data.lifeCycle.certif"
+          (click)="checkInvoicing($event)"
+        >
+          <span>Facturation</span>
+        </mat-checkbox>
+        <mat-icon class="step-icon" matTooltip="Facturation des services de formation">receipt</mat-icon>
+      </div>
+      <!-- Step 9 -->
+      <div class="step">
+        <mat-checkbox
+          class="step-checkbox"
+          [(ngModel)]="local_data.lifeCycle.payment"
+          [disabled]="!local_data.lifeCycle.invoicing"
+        >
+          <span>Règlement</span>
+        </mat-checkbox>
+        <mat-icon class="step-icon" matTooltip="Règlement des factures">payment</mat-icon>
+      </div>
+      <!-- Step 10 -->
+      <div class="step">
+        <mat-checkbox
+          class="step-checkbox"
+          [(ngModel)]="local_data.lifeCycle.reference"
+          [disabled]="!local_data.lifeCycle.payment"
+          (click)="checkReference($event)"
+        >
+          <span>Attestation de Référence</span>
+        </mat-checkbox>
+        <mat-icon class="step-icon" matTooltip="Impression des supports de formation">print</mat-icon>
+      </div>
+    </div>
+    <div mat-dialog-actions class="p-x-24 p-b-24 lifecycle-actions">
+      <button (click)="doAction()" mat-button mat-flat-button color="warn">
+        Ok
+      </button>
+      <button (click)="closeDialog()" mat-button>Annuler</button>
+    </div>
+  </div>
+}

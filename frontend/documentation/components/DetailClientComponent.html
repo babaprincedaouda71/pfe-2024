@@ -1,0 +1,1175 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">frontend documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  DetailClientComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/admin/client/detail-client/detail-client.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+                <code>OnDestroy</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-detail-client</code></td>
+            </tr>
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./detail-client.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./detail-client.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#client" >client</a>
+                            </li>
+                            <li>
+                                <a href="#idClient" >idClient</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#subscriptions" >subscriptions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#tabGroup" >tabGroup</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#getClient" >getClient</a>
+                            </li>
+                            <li>
+                                <a href="#goToNextTab" >goToNextTab</a>
+                            </li>
+                            <li>
+                                <a href="#goToPreviousTab" >goToPreviousTab</a>
+                            </li>
+                            <li>
+                                <a href="#handleEdit" >handleEdit</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(route: ActivatedRoute, clientService: <a href="../injectables/ClientService.html" target="_self">ClientService</a>, router: Router)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/admin/client/detail-client/detail-client.component.ts:17</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>route</td>
+                                                  
+                                                        <td>
+                                                                    <code>ActivatedRoute</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>clientService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ClientService.html" target="_self" >ClientService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getClient"></a>
+                    <span class="name">
+                        <span ><b>getClient</b></span>
+                        <a href="#getClient"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getClient(idClient: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="33"
+                                    class="link-to-prism">src/app/admin/client/detail-client/detail-client.component.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>idClient</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goToNextTab"></a>
+                    <span class="name">
+                        <span ><b>goToNextTab</b></span>
+                        <a href="#goToNextTab"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goToNextTab()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="51"
+                                    class="link-to-prism">src/app/admin/client/detail-client/detail-client.component.ts:51</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goToPreviousTab"></a>
+                    <span class="name">
+                        <span ><b>goToPreviousTab</b></span>
+                        <a href="#goToPreviousTab"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goToPreviousTab()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="60"
+                                    class="link-to-prism">src/app/admin/client/detail-client/detail-client.component.ts:60</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleEdit"></a>
+                    <span class="name">
+                        <span ><b>handleEdit</b></span>
+                        <a href="#handleEdit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>handleEdit(idClient: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="47"
+                                    class="link-to-prism">src/app/admin/client/detail-client/detail-client.component.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>idClient</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="29"
+                                    class="link-to-prism">src/app/admin/client/detail-client/detail-client.component.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="25"
+                                    class="link-to-prism">src/app/admin/client/detail-client/detail-client.component.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="client"></a>
+                    <span class="name">
+                        <span ><b>client</b></span>
+                        <a href="#client"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/ClientModel.html" target="_self" >ClientModel</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/admin/client/detail-client/detail-client.component.ts:16</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="idClient"></a>
+                    <span class="name">
+                        <span ><b>idClient</b></span>
+                        <a href="#idClient"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/admin/client/detail-client/detail-client.component.ts:15</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="subscriptions"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>subscriptions</b></span>
+                        <a href="#subscriptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/admin/client/detail-client/detail-client.component.ts:17</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tabGroup"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>tabGroup</b></span>
+                        <a href="#tabGroup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>MatTabGroup</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;tabGroup&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/admin/client/detail-client/detail-client.component.ts:14</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, OnDestroy, OnInit, ViewChild} from &#x27;@angular/core&#x27;;
+import {MatTabGroup} from &quot;@angular/material/tabs&quot;;
+import {ActivatedRoute, Router} from &quot;@angular/router&quot;;
+import {ClientService} from &quot;../../../_services/client.service&quot;;
+import {ClientModel} from &quot;../../../../models/client.model&quot;;
+import {Subscription} from &quot;rxjs&quot;;
+
+@Component({
+  selector: &#x27;app-detail-client&#x27;,
+  templateUrl: &#x27;./detail-client.component.html&#x27;,
+  styleUrl: &#x27;./detail-client.component.scss&#x27;
+})
+export class DetailClientComponent implements OnInit, OnDestroy {
+  @ViewChild(&#x27;tabGroup&#x27;) tabGroup!: MatTabGroup;
+  idClient!: number
+  client!: ClientModel
+  private subscriptions: Subscription[] &#x3D; [];
+
+  constructor(private route: ActivatedRoute,
+              private clientService: ClientService,
+              private router: Router,) {
+    this.idClient &#x3D; this.route.snapshot.params[&#x27;idClient&#x27;];
+  }
+
+  ngOnInit() {
+    this.getClient(this.idClient)
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(s &#x3D;&gt; s.unsubscribe());
+  }
+
+  getClient(idClient: number) {
+    const clientSubscription &#x3D; this.clientService.getClient(idClient)
+      .subscribe({
+        next: value &#x3D;&gt; {
+          this.client &#x3D; value
+        },
+        error: error &#x3D;&gt; {
+          alert(error.error.message)
+          console.log(error)
+        },
+      })
+    this.subscriptions.push(clientSubscription)
+  }
+
+  handleEdit(idClient: number) {
+    this.router.navigate([&#x27;/client/edit/&#x27; + idClient])
+  }
+
+  goToNextTab() {
+    const selectedIndex: number | null &#x3D; this.tabGroup.selectedIndex;
+    // @ts-ignore
+    if (selectedIndex &lt; this.tabGroup._tabs.length - 1) {
+      // @ts-ignore
+      this.tabGroup.selectedIndex &#x3D; selectedIndex + 1;
+    }
+  }
+
+  goToPreviousTab() {
+    const selectedIndex &#x3D; this.tabGroup.selectedIndex;
+    // @ts-ignore
+    if (selectedIndex &gt; 0) {
+      // @ts-ignore
+      this.tabGroup.selectedIndex &#x3D; selectedIndex - 1;
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;m-t-12 text-center&quot;&gt;
+  &lt;button (click)&#x3D;&quot;handleEdit(client.idClient)&quot; color&#x3D;&quot;primary&quot; mat-flat-button type&#x3D;&quot;button&quot;&gt;Modifier&lt;/button&gt;
+&lt;/div&gt;
+&lt;br&gt;
+&lt;form *ngIf&#x3D;&quot;client&quot;&gt;
+  &lt;mat-card class&#x3D;&quot;cardWithShadow theme-card&quot;&gt;
+    &lt;!--    &lt;mat-card-header&gt;--&gt;
+    &lt;!--      &lt;mat-card-title class&#x3D;&quot;m-b-0&quot;&gt;Basic Header Form&lt;/mat-card-title&gt;--&gt;
+    &lt;!--    &lt;/mat-card-header&gt;--&gt;
+    &lt;mat-card-content class&#x3D;&quot;b-t-1&quot;&gt;
+      &lt;div class&#x3D;&quot;p-16 bg-light-primary rounded&quot;&gt;
+        &lt;h5 class&#x3D;&quot;mat-subtitle-2 text-primary d-flex align-items-center f-w-600&quot;&gt;
+          &lt;i-tabler class&#x3D;&quot;icon-20 m-r-8 d-flex&quot; name&#x3D;&quot;info-circle&quot;&gt;&lt;/i-tabler
+          &gt;
+          Information de l&#x27;Entreprise
+        &lt;/h5&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;row m-t-20&quot;&gt;
+        &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;
+          &lt;!-- input --&gt;
+          &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+          &gt;Raison Sociale
+          &lt;/mat-label
+          &gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+            &lt;input matInput placeholder&#x3D;&quot;&quot; readonly value&#x3D;&quot;{{client.corporateName}}&quot;/&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;!-- input --&gt;
+          &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+          &gt;Adresse
+          &lt;/mat-label
+          &gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+            &lt;input matInput placeholder&#x3D;&quot;&quot; readonly value&#x3D;&quot;{{client.address}}&quot;/&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;!-- input --&gt;
+          &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+          &gt;Téléphone
+          &lt;/mat-label
+          &gt;
+          &lt;div class&#x3D;&quot;col-sm-12&quot;&gt;
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+              &lt;input matInput placeholder&#x3D;&quot;&quot; readonly value&#x3D;&quot;{{client.phoneNumber}}&quot;/&gt;
+            &lt;/mat-form-field&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;
+          &lt;!-- input --&gt;
+          &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+          &gt;Email
+          &lt;/mat-label
+          &gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+            &lt;input matInput placeholder&#x3D;&quot;&quot; readonly value&#x3D;&quot;{{client.email}}&quot;/&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;!-- input --&gt;
+          &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+          &gt;Site Web
+          &lt;/mat-label
+          &gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+            &lt;input matInput placeholder&#x3D;&quot;&quot; readonly value&#x3D;&quot;{{client.website}}&quot;/&gt;
+          &lt;/mat-form-field&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+
+      &lt;div class&#x3D;&quot;p-16 bg-light-primary rounded&quot;&gt;
+        &lt;h5 class&#x3D;&quot;mat-subtitle-2 text-primary d-flex align-items-center f-w-600&quot;&gt;
+          &lt;i-tabler class&#x3D;&quot;icon-20 m-r-8 d-flex&quot; name&#x3D;&quot;info-circle&quot;&gt;&lt;/i-tabler
+          &gt;
+          Contact Principal
+        &lt;/h5&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;row m-t-20&quot;&gt;
+        &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;
+          &lt;!-- input --&gt;
+          &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+          &gt;Nom &amp; Prénom(s)
+          &lt;/mat-label
+          &gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+            &lt;input matInput placeholder&#x3D;&quot;&quot;/&gt;
+            &lt;div class&#x3D;&quot;col-sm-12&quot;&gt;
+              &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+                &lt;input matInput placeholder&#x3D;&quot;&quot; readonly value&#x3D;&quot;{{client.nameMainContact}}&quot;/&gt;
+              &lt;/mat-form-field&gt;
+            &lt;/div&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;!-- input --&gt;
+          &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;&gt;
+            Téléphone
+          &lt;/mat-label&gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+            &lt;input matInput placeholder&#x3D;&quot;&quot; readonly value&#x3D;&quot;{{client.phoneNumberMainContact}}&quot;/&gt;
+          &lt;/mat-form-field&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;
+          &lt;!-- input --&gt;
+          &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+          &gt;Email
+          &lt;/mat-label
+          &gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+            &lt;input matInput placeholder&#x3D;&quot;&quot; readonly value&#x3D;&quot;{{client.emailMainContact}}&quot;/&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;!-- input --&gt;
+          &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+          &gt;Fonction
+          &lt;/mat-label
+          &gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+            &lt;input matInput placeholder&#x3D;&quot;&quot; readonly value&#x3D;&quot;{{client.positionMainContact}}&quot;/&gt;
+          &lt;/mat-form-field&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+
+      &lt;div class&#x3D;&quot;p-16 bg-light-primary rounded m-y-20&quot;&gt;
+        &lt;h5 class&#x3D;&quot;mat-subtitle-2 text-primary d-flex align-items-center f-w-600&quot;&gt;
+          &lt;i-tabler class&#x3D;&quot;icon-20 m-r-8 d-flex&quot; name&#x3D;&quot;info-circle&quot;&gt;&lt;/i-tabler
+          &gt;
+          Identification de l&#x27;Entreprise
+        &lt;/h5&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;row m-t-20&quot;&gt;
+        &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;
+          &lt;!-- input --&gt;
+          &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+          &gt;ICE
+          &lt;/mat-label
+          &gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+            &lt;input matInput placeholder&#x3D;&quot;&quot; readonly value&#x3D;&quot;{{client.commonCompanyIdentifier}}&quot;/&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;!-- input --&gt;
+          &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+          &gt;IF
+          &lt;/mat-label
+          &gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+            &lt;input matInput placeholder&#x3D;&quot;&quot; readonly value&#x3D;&quot;{{client.taxRegistration}}&quot;/&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;!-- input --&gt;
+          &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+          &gt;RC
+          &lt;/mat-label
+          &gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+            &lt;input matInput placeholder&#x3D;&quot;&quot; readonly value&#x3D;&quot;{{client.commercialRegister}}&quot;/&gt;
+          &lt;/mat-form-field&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;
+          &lt;!-- input --&gt;
+          &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+          &gt;TP
+          &lt;/mat-label
+          &gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+            &lt;input matInput placeholder&#x3D;&quot;&quot; readonly value&#x3D;&quot;{{client.professionalTax}}&quot;/&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;!-- input --&gt;
+          &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+          &gt;CNSS
+          &lt;/mat-label
+          &gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+            &lt;input matInput placeholder&#x3D;&quot;&quot; readonly value&#x3D;&quot;{{client.cnss}}&quot;/&gt;
+          &lt;/mat-form-field&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;p-16 bg-light-primary rounded m-y-20&quot;&gt;
+        &lt;h5 class&#x3D;&quot;mat-subtitle-2 text-primary d-flex align-items-center f-w-600&quot;&gt;
+          &lt;i-tabler class&#x3D;&quot;icon-20 m-r-8 d-flex&quot; name&#x3D;&quot;info-circle&quot;&gt;&lt;/i-tabler
+          &gt;
+          Informations Générales
+        &lt;/h5&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;row m-t-20&quot;&gt;
+        &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;
+          &lt;!-- input --&gt;
+          &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+          &gt;Secteur d&#x27;Activité
+          &lt;/mat-label
+          &gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+            &lt;input matInput placeholder&#x3D;&quot;&quot; readonly value&#x3D;&quot;{{client.field}}&quot;/&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;!-- input --&gt;
+          &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+          &gt;Statut
+          &lt;/mat-label
+          &gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+            &lt;input matInput placeholder&#x3D;&quot;&quot; readonly value&#x3D;&quot;{{client.status}}&quot;/&gt;
+          &lt;/mat-form-field&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;
+          &lt;!-- input --&gt;
+          &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+          &gt;Échéance
+          &lt;/mat-label
+          &gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+            &lt;input matInput placeholder&#x3D;&quot;&quot; readonly value&#x3D;&quot;{{client.deadline}}&quot;/&gt;
+          &lt;/mat-form-field&gt;
+
+          &lt;!-- input --&gt;
+          &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+          &gt;Plafond
+          &lt;/mat-label
+          &gt;
+          &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+            &lt;input matInput placeholder&#x3D;&quot;&quot; readonly value&#x3D;&quot;{{client.limitAmount}}&quot;/&gt;
+          &lt;/mat-form-field&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/mat-card-content&gt;
+    &lt;mat-card-actions class&#x3D;&quot;b-t-1&quot;&gt;
+      &lt;button (click)&#x3D;&quot;handleEdit(client.idClient)&quot; color&#x3D;&quot;primary&quot; mat-flat-button&gt;Modifier&lt;/button&gt;
+    &lt;/mat-card-actions&gt;
+  &lt;/mat-card&gt;
+
+&lt;/form&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="m-t-12 text-center">  <button (click)="handleEdit(client.idClient)" color="primary" mat-flat-button type="button">Modifier</button></div><br><form *ngIf="client">  <mat-card class="cardWithShadow theme-card">    <!--    <mat-card-header>-->    <!--      <mat-card-title class="m-b-0">Basic Header Form</mat-card-title>-->    <!--    </mat-card-header>-->    <mat-card-content class="b-t-1">      <div class="p-16 bg-light-primary rounded">        <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">          <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler          >          Information de l\'Entreprise        </h5>      </div>      <div class="row m-t-20">        <div class="col-lg-6">          <!-- input -->          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"          >Raison Sociale          </mat-label          >          <mat-form-field appearance="outline" class="w-100">            <input matInput placeholder="" readonly value="{{client.corporateName}}"/>          </mat-form-field>          <!-- input -->          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"          >Adresse          </mat-label          >          <mat-form-field appearance="outline" class="w-100">            <input matInput placeholder="" readonly value="{{client.address}}"/>          </mat-form-field>          <!-- input -->          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"          >Téléphone          </mat-label          >          <div class="col-sm-12">            <mat-form-field appearance="outline" class="w-100">              <input matInput placeholder="" readonly value="{{client.phoneNumber}}"/>            </mat-form-field>          </div>        </div>        <div class="col-lg-6">          <!-- input -->          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"          >Email          </mat-label          >          <mat-form-field appearance="outline" class="w-100">            <input matInput placeholder="" readonly value="{{client.email}}"/>          </mat-form-field>          <!-- input -->          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"          >Site Web          </mat-label          >          <mat-form-field appearance="outline" class="w-100">            <input matInput placeholder="" readonly value="{{client.website}}"/>          </mat-form-field>        </div>      </div>      <div class="p-16 bg-light-primary rounded">        <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">          <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler          >          Contact Principal        </h5>      </div>      <div class="row m-t-20">        <div class="col-lg-6">          <!-- input -->          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"          >Nom & Prénom(s)          </mat-label          >          <mat-form-field appearance="outline" class="w-100">            <input matInput placeholder=""/>            <div class="col-sm-12">              <mat-form-field appearance="outline" class="w-100">                <input matInput placeholder="" readonly value="{{client.nameMainContact}}"/>              </mat-form-field>            </div>          </mat-form-field>          <!-- input -->          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block">            Téléphone          </mat-label>          <mat-form-field appearance="outline" class="w-100">            <input matInput placeholder="" readonly value="{{client.phoneNumberMainContact}}"/>          </mat-form-field>        </div>        <div class="col-lg-6">          <!-- input -->          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"          >Email          </mat-label          >          <mat-form-field appearance="outline" class="w-100">            <input matInput placeholder="" readonly value="{{client.emailMainContact}}"/>          </mat-form-field>          <!-- input -->          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"          >Fonction          </mat-label          >          <mat-form-field appearance="outline" class="w-100">            <input matInput placeholder="" readonly value="{{client.positionMainContact}}"/>          </mat-form-field>        </div>      </div>      <div class="p-16 bg-light-primary rounded m-y-20">        <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">          <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler          >          Identification de l\'Entreprise        </h5>      </div>      <div class="row m-t-20">        <div class="col-lg-6">          <!-- input -->          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"          >ICE          </mat-label          >          <mat-form-field appearance="outline" class="w-100">            <input matInput placeholder="" readonly value="{{client.commonCompanyIdentifier}}"/>          </mat-form-field>          <!-- input -->          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"          >IF          </mat-label          >          <mat-form-field appearance="outline" class="w-100">            <input matInput placeholder="" readonly value="{{client.taxRegistration}}"/>          </mat-form-field>          <!-- input -->          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"          >RC          </mat-label          >          <mat-form-field appearance="outline" class="w-100">            <input matInput placeholder="" readonly value="{{client.commercialRegister}}"/>          </mat-form-field>        </div>        <div class="col-lg-6">          <!-- input -->          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"          >TP          </mat-label          >          <mat-form-field appearance="outline" class="w-100">            <input matInput placeholder="" readonly value="{{client.professionalTax}}"/>          </mat-form-field>          <!-- input -->          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"          >CNSS          </mat-label          >          <mat-form-field appearance="outline" class="w-100">            <input matInput placeholder="" readonly value="{{client.cnss}}"/>          </mat-form-field>        </div>      </div>      <div class="p-16 bg-light-primary rounded m-y-20">        <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">          <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler          >          Informations Générales        </h5>      </div>      <div class="row m-t-20">        <div class="col-lg-6">          <!-- input -->          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"          >Secteur d\'Activité          </mat-label          >          <mat-form-field appearance="outline" class="w-100">            <input matInput placeholder="" readonly value="{{client.field}}"/>          </mat-form-field>          <!-- input -->          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"          >Statut          </mat-label          >          <mat-form-field appearance="outline" class="w-100">            <input matInput placeholder="" readonly value="{{client.status}}"/>          </mat-form-field>        </div>        <div class="col-lg-6">          <!-- input -->          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"          >Échéance          </mat-label          >          <mat-form-field appearance="outline" class="w-100">            <input matInput placeholder="" readonly value="{{client.deadline}}"/>          </mat-form-field>          <!-- input -->          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"          >Plafond          </mat-label          >          <mat-form-field appearance="outline" class="w-100">            <input matInput placeholder="" readonly value="{{client.limitAmount}}"/>          </mat-form-field>        </div>      </div>    </mat-card-content>    <mat-card-actions class="b-t-1">      <button (click)="handleEdit(client.idClient)" color="primary" mat-flat-button>Modifier</button>    </mat-card-actions>  </mat-card></form></div>'
+    var COMPONENTS = [{'name': 'AddClientComponent', 'selector': 'app-add-client'},{'name': 'AddComponent', 'selector': 'app-add'},{'name': 'AddInstructorComponent', 'selector': 'app-add-instructor'},{'name': 'AddInvoiceDialogContentComponent', 'selector': 'app-add-invoice-dialog-content'},{'name': 'AddTrainingComponent', 'selector': 'app-add-training'},{'name': 'AddVendorComponent', 'selector': 'app-add-vendor'},{'name': 'AgendaComponent', 'selector': 'app-agenda'},{'name': 'AppClientDialogContentComponent', 'selector': 'app-dialog-content'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppInstructorDialogContentComponent', 'selector': 'app-dialog-content'},{'name': 'AppSearchDialogComponent', 'selector': 'search-dialog'},{'name': 'AppTrainingDialogContentComponent', 'selector': 'app-dialog-content'},{'name': 'AppVendorDialogContentComponent', 'selector': 'app-vendor-dialog-content'},{'name': 'BlankComponent', 'selector': 'app-blank'},{'name': 'BrandingComponent', 'selector': 'app-branding'},{'name': 'BreadcrumbComponent', 'selector': 'app-breadcrumb'},{'name': 'ClientComponent', 'selector': 'app-client'},{'name': 'ClientTrainingComponent', 'selector': 'app-client-training'},{'name': 'CustomizerComponent', 'selector': 'app-customizer'},{'name': 'DetailClientComponent', 'selector': 'app-detail-client'},{'name': 'DetailComponent', 'selector': 'app-detail'},{'name': 'DetailInstructorComponent', 'selector': 'app-detail-instructor'},{'name': 'DetailInvoiceComponent', 'selector': 'app-detail-invoice'},{'name': 'DetailPdfComponent', 'selector': 'app-detail-pdf'},{'name': 'DetailTrainingComponent', 'selector': 'app-detail-training'},{'name': 'DetailTrainingInvoiceComponent', 'selector': 'app-detail-training-invoice'},{'name': 'DetailVendorComponent', 'selector': 'app-detail-vendor'},{'name': 'EditClientComponent', 'selector': 'app-edit-client'},{'name': 'EditComponent', 'selector': 'app-edit'},{'name': 'EditInstructorComponent', 'selector': 'app-edit-instructor'},{'name': 'EditTrainingComponent', 'selector': 'app-edit-training'},{'name': 'EditTrainingInvoiceComponent', 'selector': 'app-edit-training-invoice'},{'name': 'EditVendorComponent', 'selector': 'app-edit-vendor'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'ErrorDialogComponent', 'selector': 'app-ok-dialog'},{'name': 'FullComponent', 'selector': 'app-full'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'InstructorComponent', 'selector': 'app-instructor'},{'name': 'InvoiceComponent', 'selector': 'app-invoice'},{'name': 'InvoiceDialogContentComponent', 'selector': 'app-invoice-dialog-content'},{'name': 'LifeCycleComponent', 'selector': 'app-life-cycle'},{'name': 'NavItemComponent', 'selector': 'app-nav-item'},{'name': 'OkDialogComponent', 'selector': 'app-ok-dialog'},{'name': 'OkDialogComponent', 'selector': 'app-ok-dialog'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'TrainingComponent', 'selector': 'app-training'},{'name': 'TrainingDialog', 'selector': 'app-agenda-dialog'},{'name': 'TrainingLifecycleDialogComponent', 'selector': 'training-life-cycle-dialog'},{'name': 'TrainingLifecycleDialogContentComponent', 'selector': 'training-lifecycle-dialog-content'},{'name': 'VendorComponent', 'selector': 'app-vendor'},{'name': 'WelcomeComponent', 'selector': 'app-welcome'},{'name': 'WelcomeComponent', 'selector': 'app-welcome'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'DetailClientComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'DetailClientComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

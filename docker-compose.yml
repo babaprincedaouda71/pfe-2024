@@ -1,0 +1,274 @@
+services:
+  databases:
+    image: mysql
+    container_name: databases
+    restart: always
+    environment:
+      MYSQL_DATABASE: databases
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: babaprince
+      # You can use whatever password you like
+      MYSQL_PASSWORD: 'babaprince'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'babaprince'
+    ports:
+      # <Port exposed> : <MySQL Port running inside container>
+      - '3306:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted
+    volumes:
+      - app_data:/var/lib/mysql
+    #      - clients_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      retries: 5
+    networks:
+      - app_network
+
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    depends_on:
+      - databases
+    restart: always
+    ports:
+      - "8090:80"
+    environment:
+      PMA_HOST: databases
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    networks:
+      - app_network
+
+  gs-discovery-service:
+    build: ./discovery-service
+    container_name: gs-discovery-service
+    ports:
+      - '8761:8761'
+    expose:
+      - '8761'
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
+      interval: 10s
+      retries: 4
+    networks:
+      - app_network
+
+  gs-config-service:
+    build: ./config-service
+    container_name: gs-config-service
+    ports:
+      - '9999:9999'
+    expose:
+      - '9999'
+    environment:
+      - DISCOVERY_SERVICE_URL=http://gs-discovery-service:8761/eureka
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9999/actuator/health" ]
+      interval: 10s
+      retries: 4
+    depends_on:
+      gs-discovery-service:
+        condition: service_healthy
+    networks:
+      - app_network
+
+  gs-gateway-service:
+    build: ./gateway-service
+    container_name: gs-gateway-service
+    ports:
+      - '8888:8888'
+    expose:
+      - '8888'
+    environment:
+      DISCOVERY_SERVICE_URL: http://gs-discovery-service:8761/eureka
+      CONFIG_SERVICE_URL: optional:configserver:http://gs-config-service:9999
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8888/actuator/health" ]
+      interval: 10s
+      retries: 4
+    depends_on:
+      gs-config-service:
+        condition: service_healthy
+    networks:
+      - app_network
+
+
+  gs-client-service:
+    build: ./client-service
+    container_name: gs-client-service
+    ports:
+      - '8081:8081'
+    expose:
+      - '8081'
+    environment:
+      DISCOVERY_SERVICE_URL: http://gs-discovery-service:8761/eureka
+      CONFIG_SERVICE_URL: optional:configserver:http://gs-config-service:9999
+      DB_URL: jdbc:mysql://databases:3306/clients_db?createDatabaseIfNotExist=true
+      OAUTH2_ISSUER_URI: http://keycloak:8080/realms/gs-pfe-2024
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8081/actuator/health" ]
+      interval: 10s
+      retries: 4
+    depends_on:
+      gs-gateway-service:
+        condition: service_healthy
+      databases:
+        condition: service_healthy
+    networks:
+      - app_network
+
+
+  gs-supplier-service:
+    build: ./vendor-service
+    container_name: gs-supplier-service
+    ports:
+      - '8083:8083'
+    expose:
+      - '8083'
+    environment:
+      DISCOVERY_SERVICE_URL: http://gs-discovery-service:8761/eureka
+      CONFIG_SERVICE_URL: optional:configserver:http://gs-config-service:9999
+      DB_URL: jdbc:mysql://databases:3306/vendors_db?createDatabaseIfNotExist=true
+      OAUTH2_ISSUER_URI: http://keycloak:8080/realms/gs-pfe-2024
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8083/actuator/health" ]
+      interval: 10s
+      retries: 4
+    depends_on:
+      gs-client-service:
+        condition: service_healthy
+    networks:
+      - app_network
+
+
+  gs-training-service:
+    build: ./training-service
+    container_name: gs-training-service
+    ports:
+      - '8082:8082'
+    expose:
+      - '8082'
+    environment:
+      DISCOVERY_SERVICE_URL: http://gs-discovery-service:8761/eureka
+      CONFIG_SERVICE_URL: optional:configserver:http://gs-config-service:9999
+      DB_URL: jdbc:mysql://databases:3306/trainings_db?createDatabaseIfNotExist=true
+      OAUTH2_ISSUER_URI: http://keycloak:8080/realms/gs-pfe-2024
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8082/actuator/health" ]
+      interval: 10s
+      retries: 4
+    depends_on:
+      gs-supplier-service:
+        condition: service_healthy
+    networks:
+      - app_network
+
+
+  gs-invoicing-service:
+    build: ./invoicing-service
+    container_name: gs-invoicing-service
+    ports:
+      - '8084:8084'
+    expose:
+      - '8084'
+    environment:
+      DISCOVERY_SERVICE_URL: http://gs-discovery-service:8761/eureka
+      CONFIG_SERVICE_URL: optional:configserver:http://gs-config-service:9999
+      DB_URL: jdbc:mysql://databases:3306/invoicings_db?createDatabaseIfNotExist=true
+      OAUTH2_ISSUER_URI: http://keycloak:8080/realms/gs-pfe-2024
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8084/actuator/health" ]
+      interval: 10s
+      retries: 4
+    depends_on:
+      gs-training-service:
+        condition: service_healthy
+    networks:
+      - app_network
+
+
+
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak_db
+      POSTGRES_USER: babaprince
+      POSTGRES_PASSWORD: babaprince
+    networks:
+      - app_network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0.6
+    container_name: keycloak
+    command: start-dev
+    environment:
+      KC_HOSTNAME: localhost
+#      KC_HOSTNAME: keycloak
+      KC_HOSTNAME_PORT: 8080
+      KC_HOSTNAME_STRICT_BACKCHANNEL: false
+      KC_HTTP_ENABLED: true
+      KC_HOSTNAME_STRICT_HTTPS: false
+      KC_HEALTH_ENABLED: true
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak_db
+      KC_DB_USERNAME: babaprince
+      KC_DB_PASSWORD: babaprince
+    ports:
+      - 8080:8080
+    restart: always
+    depends_on:
+      - postgres
+#    healthcheck:
+#      test: [ 'CMD-SHELL', '[ -f /tmp/HealthCheck.java ] || echo "public class HealthCheck { public static void main(String[] args) throws java.lang.Throwable { System.exit(java.net.HttpURLConnection.HTTP_OK == ((java.net.HttpURLConnection)new java.net.URL(args[0]).openConnection()).getResponseCode() ? 0 : 1); } }" > /tmp/HealthCheck.java && java /tmp/HealthCheck.java http://localhost:8080/health/live' ]
+#      interval: 5s
+#      timeout: 5s
+#      retries: 30
+    networks:
+      - app_network
+
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - '80:80'
+    expose:
+      - '80'
+#    environment:
+#      app_conf_generate_base_url: "true"
+#      app_conf_authority: "https://keycloak:8080/auth/realms/gs-pfe-2024"
+#      app_conf_client_id: "frontend"
+      #      app_conf_response_type: "code"
+      #      app_conf_scope: "openid profile email"
+#      app_conf_start_check_session: "true"
+#      app_conf_silent_renew: "true"
+#      app_conf_silent_renew_path: "/silent-renew.html"
+#      app_conf_disable_iat_offset_validation: "false"
+    #      API_URL: http://keycloak:8080
+    restart: always
+    depends_on:
+      gs-client-service:
+        condition: service_healthy
+    networks:
+      - app_network
+
+volumes:
+  postgres_data:
+    driver: local
+  app_data:
+    driver: local
+
+networks:
+  app_network:
+    name: app_network
+    driver: bridge

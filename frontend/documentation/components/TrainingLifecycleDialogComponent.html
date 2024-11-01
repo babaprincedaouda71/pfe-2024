@@ -1,0 +1,1888 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">frontend documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  TrainingLifecycleDialogComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/admin/training/detail-training/detail-training.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>/</p>
+
+    </p>
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>training-life-cycle-dialog</code></td>
+            </tr>
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>training-life-cycle-dialog.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#action" >action</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Public</span>
+                                <a href="#data" >data</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#dialog" >dialog</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#dialogRef" >dialogRef</a>
+                            </li>
+                            <li>
+                                <a href="#local_data" >local_data</a>
+                            </li>
+                            <li>
+                                <a href="#pv" >pv</a>
+                            </li>
+                            <li>
+                                <a href="#selectedEvaluation" >selectedEvaluation</a>
+                            </li>
+                            <li>
+                                <a href="#selectedPresenceList" >selectedPresenceList</a>
+                            </li>
+                            <li>
+                                <a href="#selectedTrainingSupport" >selectedTrainingSupport</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#subscriptions" >subscriptions</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#closeDialog" >closeDialog</a>
+                            </li>
+                            <li>
+                                <a href="#doAction" >doAction</a>
+                            </li>
+                            <li>
+                                <a href="#onAddPV" >onAddPV</a>
+                            </li>
+                            <li>
+                                <a href="#onEvaluationChange" >onEvaluationChange</a>
+                            </li>
+                            <li>
+                                <a href="#onPresenceListChange" >onPresenceListChange</a>
+                            </li>
+                            <li>
+                                <a href="#onSubmitTrainingNotes" >onSubmitTrainingNotes</a>
+                            </li>
+                            <li>
+                                <a href="#onSubmitTrainingSupport" >onSubmitTrainingSupport</a>
+                            </li>
+                            <li>
+                                <a href="#onTrainingSupportChange" >onTrainingSupportChange</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(dialogRef: <a href="../components/TrainingLifecycleDialogComponent.html" target="_self">MatDialogRef&lt;TrainingLifecycleDialogComponent&gt;</a>, data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, dialog: MatDialog, trainingService: <a href="../injectables/TrainingService.html" target="_self">TrainingService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="459" class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:459</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>dialogRef</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../components/TrainingLifecycleDialogComponent.html" target="_self" >MatDialogRef&lt;TrainingLifecycleDialogComponent&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>data</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>trainingService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TrainingService.html" target="_self" >TrainingService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeDialog"></a>
+                    <span class="name">
+                        <span ><b>closeDialog</b></span>
+                        <a href="#closeDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeDialog()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="474"
+                                    class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:474</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="doAction"></a>
+                    <span class="name">
+                        <span ><b>doAction</b></span>
+                        <a href="#doAction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>doAction(local_data: <a href="../interfaces/TrainingModel.html" target="_self">TrainingModel</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="470"
+                                    class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:470</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>local_data</td>
+                                            <td>
+                                                            <code><a href="../interfaces/TrainingModel.html" target="_self" >TrainingModel</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onAddPV"></a>
+                    <span class="name">
+                        <span ><b>onAddPV</b></span>
+                        <a href="#onAddPV"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onAddPV()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="479"
+                                    class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:479</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onEvaluationChange"></a>
+                    <span class="name">
+                        <span ><b>onEvaluationChange</b></span>
+                        <a href="#onEvaluationChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onEvaluationChange(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="523"
+                                    class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:523</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPresenceListChange"></a>
+                    <span class="name">
+                        <span ><b>onPresenceListChange</b></span>
+                        <a href="#onPresenceListChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onPresenceListChange(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="517"
+                                    class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:517</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSubmitTrainingNotes"></a>
+                    <span class="name">
+                        <span ><b>onSubmitTrainingNotes</b></span>
+                        <a href="#onSubmitTrainingNotes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSubmitTrainingNotes()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="530"
+                                    class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:530</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSubmitTrainingSupport"></a>
+                    <span class="name">
+                        <span ><b>onSubmitTrainingSupport</b></span>
+                        <a href="#onSubmitTrainingSupport"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSubmitTrainingSupport()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="498"
+                                    class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:498</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onTrainingSupportChange"></a>
+                    <span class="name">
+                        <span ><b>onTrainingSupportChange</b></span>
+                        <a href="#onTrainingSupportChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onTrainingSupportChange(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="492"
+                                    class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:492</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="action"></a>
+                    <span class="name">
+                        <span ><b>action</b></span>
+                        <a href="#action"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="453" class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:453</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="data"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Public</span>
+                        <span ><b>data</b></span>
+                        <a href="#data"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Optional()<br />@Inject(MAT_DIALOG_DATA)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="462" class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:462</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dialog"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>dialog</b></span>
+                        <a href="#dialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>MatDialog</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="463" class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:463</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dialogRef"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>dialogRef</b></span>
+                        <a href="#dialogRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/TrainingLifecycleDialogComponent.html" target="_self" >MatDialogRef&lt;TrainingLifecycleDialogComponent&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="461" class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:461</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="local_data"></a>
+                    <span class="name">
+                        <span ><b>local_data</b></span>
+                        <a href="#local_data"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="454" class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:454</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pv"></a>
+                    <span class="name">
+                        <span ><b>pv</b></span>
+                        <a href="#pv"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="455" class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:455</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedEvaluation"></a>
+                    <span class="name">
+                        <span ><b>selectedEvaluation</b></span>
+                        <a href="#selectedEvaluation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>File</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="458" class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:458</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedPresenceList"></a>
+                    <span class="name">
+                        <span ><b>selectedPresenceList</b></span>
+                        <a href="#selectedPresenceList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>File</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="457" class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:457</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedTrainingSupport"></a>
+                    <span class="name">
+                        <span ><b>selectedTrainingSupport</b></span>
+                        <a href="#selectedTrainingSupport"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>File</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="456" class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:456</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="subscriptions"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>subscriptions</b></span>
+                        <a href="#subscriptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="459" class="link-to-prism">src/app/admin/training/detail-training/detail-training.component.ts:459</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Inject, OnDestroy, OnInit, Optional} from &#x27;@angular/core&#x27;;
+import {TrainingModel} from &quot;../../../../models/training.model&quot;;
+import {FormBuilder, FormGroup, Validators} from &quot;@angular/forms&quot;;
+import {ActivatedRoute, Params, Router} from &quot;@angular/router&quot;;
+import {TrainingService} from &quot;../../../_services/training.service&quot;;
+import {firstValueFrom, Subscription, switchMap} from &quot;rxjs&quot;;
+import {MatTableDataSource} from &quot;@angular/material/table&quot;;
+import {ErrorDialogComponent} from &quot;../training/error-dialog/error-dialog.component&quot;;
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from &quot;@angular/material/dialog&quot;;
+import {MatSnackBar} from &quot;@angular/material/snack-bar&quot;;
+import {DatesService} from &quot;../../../_services/dates.service&quot;;
+
+@Component({
+  selector: &#x27;app-detail-training&#x27;,
+  templateUrl: &#x27;./detail-training.component.html&#x27;,
+  styleUrl: &#x27;./detail-training.component.scss&#x27;
+})
+export class DetailTrainingComponent implements OnInit, OnDestroy {
+  training!: TrainingModel
+  idTraining!: number
+  confirmFormVendor!: FormGroup;
+  confirmFormClient!: FormGroup;
+  datasource!: MatTableDataSource&lt;any&gt;;
+  displayedColumns: string[] &#x3D; [&#x27;group&#x27;, &#x27;staff&#x27;, &#x27;dates&#x27;, &#x27;location&#x27;];
+  pdfBytes!: Uint8Array | undefined
+  presenceBytes!: Uint8Array | undefined
+  evaluationBytes!: Uint8Array | undefined
+  pdfUrl!: string | null;
+  presenceUrl!: string | null;
+  evaluationUrl!: string | null;
+  private subscriptions : Subscription[] &#x3D; [];
+
+  constructor(private route: ActivatedRoute,
+              private trainingService: TrainingService,
+              private router: Router,
+              private formBuilder: FormBuilder,
+              public dialog: MatDialog,
+              private snackBar: MatSnackBar,
+              public dateService: DatesService) {
+    this.idTraining &#x3D; this.route.snapshot.params[&#x27;idTraining&#x27;]
+    this.confirmFormVendor &#x3D; this.formBuilder.group({
+      receiver: [&#x27;&#x27;], // Valeur par défaut pour receiver
+      subject: [&#x27;&#x27;], // Valeur par défaut pour subject
+      body: [&#x27;&#x27;] // Valeur par défaut pour body
+    });
+    this.confirmFormClient &#x3D; this.formBuilder.group({
+      receiver: [&#x27;&#x27;], // Valeur par défaut pour receiver
+      subject: [&#x27;&#x27;], // Valeur par défaut pour subject
+      body: [&#x27;&#x27;] // Valeur par défaut pour body
+    });
+  }
+
+  ngOnInit() {
+    this.loadTraining();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(s &#x3D;&gt; s.unsubscribe())
+  }
+
+  loadTraining() {
+    const trainingSubscription &#x3D; this.route.params.pipe(
+      switchMap((params: Params) &#x3D;&gt;
+        this.trainingService.getTraining(params[&#x27;idTraining&#x27;])
+      )
+    ).subscribe({
+      next: value &#x3D;&gt; {
+        this.training &#x3D; value
+        this.datasource &#x3D; new MatTableDataSource(this.training.groups)
+        this.buildSendMailFormVendor()
+        this.buildSendMailFormClient()
+        this.convertLogoToBytes()
+      },
+      error: error &#x3D;&gt; {
+      }
+    })
+    this.subscriptions.push(trainingSubscription);
+  }
+
+  buildSendMailFormVendor() {
+    this.confirmFormVendor &#x3D; this.formBuilder.group({
+      receiver: [this.training.vendor.email, [Validators.email]],
+      subject: [&#x27;Confirmation des Détails de la formation&#x27;],
+      body: [&#x60;Bonjour ${this.training.vendor.name} Nous vous écivons pour confirmer la formation prévu pour ${this.training.trainingDates}&#x60;]
+    })
+  }
+
+  buildSendMailFormClient() {
+    this.confirmFormClient &#x3D; this.formBuilder.group({
+      receiver: [this.training.client.email, [Validators.email]],
+      subject: [&#x27;Confirmation des Détails de la formation&#x27;],
+      body: [&#x60;Bonjour Monsieur ${this.training.client.nameMainContact} Nous vous écivons pour confirmer la formation prévu pour ${this.training.trainingDates}&#x60;]
+    })
+  }
+
+  sendMail(receiver: string) {
+    if (receiver &#x3D;&#x3D;&#x3D; &#x27;instructor&#x27;) {
+      document.getElementById(&#x27;btn-closeIns&#x27;)?.click()
+      this.trainingService.sendMail(this.confirmFormVendor.value)
+        .subscribe({
+          next: value &#x3D;&gt; {
+            console.log(value)
+          },
+          error: err &#x3D;&gt; {
+            console.error(err.message)
+          }
+        })
+    } else if (receiver &#x3D;&#x3D;&#x3D; &#x27;client&#x27;) {
+      document.getElementById(&#x27;btn-closeCl&#x27;)?.click()
+      this.trainingService.sendMail(this.confirmFormClient.value)
+        .subscribe({
+          next: value &#x3D;&gt; {
+            console.log(value)
+          },
+          error: err &#x3D;&gt; {
+            console.error(err.message)
+          }
+        })
+    }
+  }
+
+  handleEdit(idTraining: number) {
+    this.router.navigate([&#x60;training/edit/${idTraining}&#x60;])
+  }
+
+  /********** Printing Training Files **********/
+  getTrainingSupportUrl() {
+    return this.pdfUrl
+  }
+
+  getPresenceListUrl() {
+    return this.presenceUrl
+  }
+
+  getEvaluationUrl() {
+    return this.evaluationUrl
+  }
+
+  /*********** Training Life Cycle ***********/
+  openErrorDialog(obj: TrainingModel): void {
+    this.dialog.open(ErrorDialogComponent, {
+      data: {
+        obj: obj,
+      }
+    })
+  }
+
+  removePv(idTraining: number) {
+    const removePvSubscription &#x3D; this.trainingService.removePv(idTraining, this.training).subscribe({
+      next: data &#x3D;&gt; {
+        this.updateLifeCycle(this.training)
+          .then(() &#x3D;&gt; {
+            this.loadTraining();
+          })
+          .catch(err &#x3D;&gt; {
+            console.log(err.message);
+          });
+      },
+      error: error &#x3D;&gt; {
+        console.log(error.message)
+      }
+    })
+    this.subscriptions.push(removePvSubscription)
+  }
+
+  removeTrainingSupport() {
+    const removeTrainingSupportSubscription &#x3D; this.trainingService.removeTrainingSupport(this.training.idTraining, this.training).subscribe({
+      next: data &#x3D;&gt; {
+        this.updateLifeCycle(this.training)
+          .then(() &#x3D;&gt; {
+            this.loadTraining();
+          })
+          .catch(err &#x3D;&gt; {
+            console.log(err.message);
+          });
+      },
+      error: error &#x3D;&gt; {
+        console.log(error.message)
+      }
+    })
+    this.subscriptions.push(removeTrainingSupportSubscription)
+  }
+
+  removeTrainingNotes() {
+    const removeTrainingNotesSubscription &#x3D; this.trainingService.removeTrainingNotes(this.training.idTraining, this.training).subscribe({
+      next: data &#x3D;&gt; {
+        this.updateLifeCycle(this.training)
+          .then(() &#x3D;&gt; {
+            this.loadTraining();
+          })
+          .catch(err &#x3D;&gt; {
+            console.log(err.message);
+          });
+      },
+      error: error &#x3D;&gt; {
+        console.log(error.message)
+      }
+    })
+    this.subscriptions.push(removeTrainingNotesSubscription)
+  }
+
+  /********** End **********/
+
+  // Update training life cycle
+  updateLifeCycle(training: TrainingModel): Promise&lt;TrainingModel&gt; {
+    return firstValueFrom(this.trainingService.updateLifeCycle(training.idTraining, training));
+  }
+
+  checkVendor(event: any) {
+    if (!this.training.vendor || this.training.vendor.idVendor &#x3D;&#x3D; null) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.training.lifeCycle.trainerSearch &#x3D; false;
+      this.openErrorDialog(this.training);
+    } else {
+      this.removeTrainingNotes()
+      this.removePv(this.training.idTraining)
+      this.removeTrainingSupport()
+      this.resetCheckboxes(&#x27;trainerSearch&#x27;);
+      this.updateLifeCycle(this.training)
+        .then(() &#x3D;&gt; {
+          this.loadTraining(); // Recharger les données après la mise à jour
+        })
+        .catch(err &#x3D;&gt; {
+          console.log(err.message);
+        });
+    }
+  }
+
+  checkValidation() {
+    this.resetCheckboxes(&#x27;trainerValidation&#x27;);
+    this.updateLifeCycle(this.training)
+      .then(() &#x3D;&gt; {
+        this.loadTraining()
+      })
+      .catch(err &#x3D;&gt; {
+        console.log(err.message);
+      });
+  }
+
+  checkKickOfMeeting(event: any) {
+    if (this.training.lifeCycle.kickOfMeeting &amp;&amp; !this.training.lifeCycle.trainingSupport) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.training.lifeCycle.kickOfMeeting &#x3D; false;
+      this.openLifeCycleDialog(&#x27;pv&#x27;, this.training)
+    } else {
+      this.resetCheckboxes(&#x27;kickOfMeeting&#x27;);
+      this.training.lifeCycle.kickOfMeeting &#x3D; false;
+      this.removePv(this.training.idTraining)
+      this.removeTrainingSupport()
+      this.removeTrainingNotes()
+    }
+  }
+
+  checkTrainingSupport(event: any) {
+    if (this.training.lifeCycle.trainingSupport &amp;&amp; !this.training.lifeCycle.impression) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.training.lifeCycle.trainingSupport &#x3D; false
+      this.openLifeCycleDialog(&#x27;trainingSupport&#x27;, this.training)
+    } else {
+      this.resetCheckboxes(&#x27;trainingSupport&#x27;);
+      this.training.lifeCycle.trainingSupport &#x3D; false
+      this.removeTrainingSupport()
+      this.removeTrainingNotes()
+    }
+  }
+
+  checkImpression() {
+    this.resetCheckboxes(&#x27;impression&#x27;);
+    this.updateLifeCycle(this.training)
+      .then(() &#x3D;&gt; {
+        this.loadTraining()
+      })
+      .catch(err &#x3D;&gt; {
+        console.log(err.message);
+      });
+  }
+
+  checkCompletion() {
+    this.resetCheckboxes(&#x27;completion&#x27;);
+    this.updateLifeCycle(this.training)
+      .then(() &#x3D;&gt; {
+        this.loadTraining()
+      })
+      .catch(err &#x3D;&gt; {
+        console.log(err.message);
+      });
+  }
+
+  checkCertif(event: any) {
+    if (this.training.lifeCycle.certif &amp;&amp; !this.training.lifeCycle.invoicing) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.training.lifeCycle.certif &#x3D; false
+      this.openLifeCycleDialog(&#x27;trainingNotes&#x27;, this.training)
+    } else {
+      this.training.lifeCycle.certif &#x3D; false
+      this.resetCheckboxes(&#x27;certif&#x27;);
+      this.removeTrainingNotes()
+    }
+  }
+
+  checkInvoicing() {
+    this.resetCheckboxes(&#x27;invoicing&#x27;);
+    this.updateLifeCycle(this.training)
+      .then(() &#x3D;&gt; {
+        this.loadTraining()
+      })
+      .catch(err &#x3D;&gt; {
+        console.log(err.message);
+      });
+  }
+
+  checkPayment() {
+    this.resetCheckboxes(&#x27;payment&#x27;);
+    this.updateLifeCycle(this.training)
+      .then(() &#x3D;&gt; {
+        this.loadTraining()
+      })
+      .catch(err &#x3D;&gt; {
+        console.log(err.message);
+      });
+  }
+
+  openLifeCycleDialog(action: string, obj: TrainingModel) {
+    const dialogRef &#x3D; this.dialog.open(TrainingLifecycleDialogComponent, {
+      data: {
+        obj: obj,
+        action: action
+      }
+    })
+
+    const openLifeCycleDialogSubscription &#x3D; dialogRef.afterClosed().subscribe((result) &#x3D;&gt; {
+      if (result.event &#x3D;&#x3D; &#x27;pv&#x27;) {
+        this.resetCheckboxes(&#x27;kickOfMeeting&#x27;);
+      }
+      if (result.event &#x3D;&#x3D; &#x27;trainingSupport&#x27;) {
+        this.resetCheckboxes(&#x27;trainingSupport&#x27;);
+      }
+      if (result.event &#x3D;&#x3D; &#x27;trainingNotes&#x27;) {
+        this.resetCheckboxes(&#x27;certif&#x27;);
+      }
+      if (result.data !&#x3D; undefined) {
+        this.updateLifeCycle(result.data)
+          .then(() &#x3D;&gt; {
+            this.loadTraining()
+          })
+          .catch(err &#x3D;&gt; {
+            console.log(err.message);
+          });
+      }
+    })
+    this.subscriptions.push(openLifeCycleDialogSubscription);
+  }
+
+  private convertLogoToBytes() {
+    if (this.training &amp;&amp; this.training.trainingSupport) {
+      // @ts-ignore
+      const byteCharacters &#x3D; atob(this.training.trainingSupport);
+      const byteNumbers &#x3D; new Array(byteCharacters.length)
+
+      for (let i &#x3D; 0; i &lt; byteCharacters.length; i++) {
+        byteNumbers[i] &#x3D; byteCharacters.charCodeAt(i);
+      }
+      this.pdfBytes &#x3D; new Uint8Array(byteNumbers);
+      this.createPdfUrl();
+    }
+    if (this.training &amp;&amp; this.training.presenceList) {
+      // @ts-ignore
+      const byteCharacters &#x3D; atob(this.training.presenceList);
+      const byteNumbers &#x3D; new Array(byteCharacters.length)
+
+      for (let i &#x3D; 0; i &lt; byteCharacters.length; i++) {
+        byteNumbers[i] &#x3D; byteCharacters.charCodeAt(i);
+      }
+      this.presenceBytes &#x3D; new Uint8Array(byteNumbers);
+      this.createPresenceUrl();
+    }
+    if (this.training &amp;&amp; this.training.evaluation) {
+      // @ts-ignore
+      const byteCharacters &#x3D; atob(this.training.evaluation);
+      const byteNumbers &#x3D; new Array(byteCharacters.length)
+
+      for (let i &#x3D; 0; i &lt; byteCharacters.length; i++) {
+        byteNumbers[i] &#x3D; byteCharacters.charCodeAt(i);
+      }
+      this.evaluationBytes &#x3D; new Uint8Array(byteNumbers);
+      this.createEvaluationUrl();
+    }
+  }
+
+  private createPdfUrl() {
+    if (this.pdfBytes) {
+      const blob &#x3D; new Blob([this.pdfBytes], {type: &#x27;application/pdf&#x27;});
+      this.pdfUrl &#x3D; URL.createObjectURL(blob);
+    } else {
+      this.pdfUrl &#x3D; null;
+    }
+  }
+
+  private createPresenceUrl() {
+    if (this.presenceBytes) {
+      const blob &#x3D; new Blob([this.presenceBytes], {type: &#x27;application/pdf&#x27;});
+      this.presenceUrl &#x3D; URL.createObjectURL(blob);
+    } else {
+      this.presenceUrl &#x3D; null;
+    }
+  }
+
+  private createEvaluationUrl() {
+    if (this.evaluationBytes) {
+      const blob &#x3D; new Blob([this.evaluationBytes], {type: &#x27;application/pdf&#x27;});
+      this.evaluationUrl &#x3D; URL.createObjectURL(blob);
+    } else {
+      this.evaluationUrl &#x3D; null;
+    }
+  }
+
+  private resetCheckboxes(currentCheckbox: string) {
+    const checkboxOrder &#x3D; [
+      &#x27;trainerSearch&#x27;,
+      &#x27;trainerValidation&#x27;,
+      &#x27;kickOfMeeting&#x27;,
+      &#x27;trainingSupport&#x27;,
+      &#x27;impression&#x27;,
+      &#x27;completion&#x27;,
+      &#x27;certif&#x27;,
+      &#x27;invoicing&#x27;,
+      &#x27;payment&#x27;
+    ];
+
+    const currentIndex: number &#x3D; checkboxOrder.indexOf(currentCheckbox);
+    if (currentIndex !&#x3D;&#x3D; -1) {
+      for (let i: number &#x3D; currentIndex + 1; i &lt; checkboxOrder.length; i++) {
+        // @ts-ignore
+        this.training.lifeCycle[checkboxOrder[i]] &#x3D; false;
+      }
+    }
+  }
+
+  /********** End Life Cycle **********/
+}
+
+
+/*****************************************************************************************/
+@Component({
+  selector: &#x27;training-life-cycle-dialog&#x27;,
+  templateUrl: &#x27;training-life-cycle-dialog.html&#x27;
+})
+export class TrainingLifecycleDialogComponent {
+  action!: string;
+  local_data: any
+  pv!: string
+  selectedTrainingSupport!: File
+  selectedPresenceList!: File
+  selectedEvaluation!: File
+  private subscriptions : Subscription[] &#x3D; []
+
+  constructor(public dialogRef: MatDialogRef&lt;TrainingLifecycleDialogComponent&gt;,
+              @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+              public dialog: MatDialog,
+              private trainingService: TrainingService) {
+    this.local_data &#x3D; {...data.obj}
+    this.action &#x3D; data.action
+    this.selectedTrainingSupport &#x3D; this.local_data.trainingSupport
+  }
+
+  doAction(local_data: TrainingModel) {
+    this.dialogRef.close({event: this.action, data: local_data});
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close({event: &#x27;Cancel&#x27;});
+  }
+
+
+  onAddPV() {
+    this.trainingService.addPv(this.pv, this.local_data.idTraining)
+      .subscribe({
+        next: value &#x3D;&gt; {
+          value.lifeCycle.kickOfMeeting &#x3D; true
+          this.doAction(value)
+        },
+        error: err &#x3D;&gt; {
+          console.log(err.message)
+        }
+      })
+  }
+
+  onTrainingSupportChange(event: any) {
+    if (!event.target.files[0]) return
+    this.selectedTrainingSupport &#x3D; event.target.files[0];
+    console.log(event.target.files[0])
+  }
+
+  onSubmitTrainingSupport() {
+    const formData: FormData &#x3D; new FormData()
+    if (this.selectedTrainingSupport) {
+      formData.append(&#x27;trainingSupport&#x27;, this.selectedTrainingSupport)
+    }
+
+    this.trainingService.addTrainingSupport(formData, this.local_data.idTraining)
+      .subscribe({
+        next: data &#x3D;&gt; {
+          data.lifeCycle.trainingSupport &#x3D; true
+          this.doAction(data)
+        },
+        error: error &#x3D;&gt; {
+          console.log(error.message)
+        }
+      })
+  }
+
+
+  onPresenceListChange(event: any) {
+    if (!event.target.files[0]) return
+    this.selectedPresenceList &#x3D; event.target.files[0];
+    console.log(event.target.files[0])
+  }
+
+  onEvaluationChange(event: any) {
+    if (!event.target.files[0]) return
+    this.selectedEvaluation &#x3D; event.target.files[0];
+    console.log(event.target.files[0])
+  }
+
+
+  onSubmitTrainingNotes() {
+    const formData: FormData &#x3D; new FormData()
+    if (this.selectedPresenceList) {
+      formData.append(&#x27;presenceList&#x27;, this.selectedPresenceList)
+    }
+    if (this.selectedEvaluation) {
+      formData.append(&#x27;evaluation&#x27;, this.selectedEvaluation)
+    }
+
+    this.trainingService.addTrainingNotes(formData, this.local_data.idTraining)
+      .subscribe({
+        next: data &#x3D;&gt; {
+          data.lifeCycle.certif &#x3D; true
+          this.doAction(data)
+        },
+        error: error &#x3D;&gt; {
+          console.log(error.message)
+        }
+      })
+  }
+}
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">@if (action &#x3D;&#x3D; &#x27;pv&#x27;) {
+  &lt;h2 class&#x3D;&quot;f-w-500 m-b-24&quot; mat-dialog-title&gt;&lt;strong&gt;Cycle de Vie de la Formation&lt;/strong&gt;&lt;/h2&gt;
+  &lt;div class&#x3D;&quot;mat-body-1 p-x-24&quot;&gt;
+    &lt;div&gt;
+      &lt;div class&#x3D;&quot;col-sm-4 d-flex align-items-center&quot;&gt;
+        &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 d-block m-b-16&quot;
+        &gt;PV
+        &lt;/mat-label&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;col-lg-12&quot;&gt;
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+                &lt;textarea
+                  rows&#x3D;&quot;5&quot;
+                  matInput
+                  placeholder&#x3D;&quot;Rédigez le PV&quot;
+                  [(ngModel)]&#x3D;&quot;pv&quot;
+                &gt;&lt;/textarea&gt;
+          &lt;mat-icon matPrefix class&#x3D;&quot;op-5&quot;&gt;
+            &lt;i-tabler name&#x3D;&quot;message-2&quot; class&#x3D;&quot;icon-20 d-flex&quot;&gt;&lt;/i-tabler&gt;
+          &lt;/mat-icon&gt;
+        &lt;/mat-form-field&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div [style.width.px]&#x3D;&quot;600&quot;&gt;
+    &lt;div mat-dialog-actions class&#x3D;&quot;p-x-24 p-b-24&quot;&gt;
+      &lt;button (click)&#x3D;&quot;onAddPV()&quot; mat-button mat-flat-button color&#x3D;&quot;warn&quot;&gt;
+        Ok
+      &lt;/button&gt;
+      &lt;button (click)&#x3D;&quot;closeDialog()&quot; mat-button class&#x3D;&quot;m-l-8&quot;&gt;Annuler&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+}
+
+@if (action &#x3D;&#x3D; &#x27;trainingSupport&#x27;) {
+  &lt;h2 class&#x3D;&quot;f-w-500 m-b-24&quot; mat-dialog-title&gt;&lt;strong&gt;Téléverser le Support de Formation&lt;/strong&gt;&lt;/h2&gt;
+  &lt;div class&#x3D;&quot;mat-body-1 p-x-24&quot;&gt;
+    &lt;form (ngSubmit)&#x3D;&quot;onSubmitTrainingSupport()&quot;&gt;
+      &lt;div class&#x3D;&quot;col-lg-12&quot;&gt;
+        &lt;div appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+          &lt;button type&#x3D;&quot;button&quot; mat-flat-button color&#x3D;&quot;primary&quot; class&#x3D;&quot;m-l-16 input-file-button&quot;&gt;
+            &lt;input type&#x3D;&quot;file&quot; accept&#x3D;&quot;application/pdf&quot;
+                   (change)&#x3D;&quot;onTrainingSupportChange($event)&quot;
+                   #fileInput/&gt;
+          &lt;/button&gt;
+          &lt;br&gt;
+          &lt;br&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+  &lt;div [style.width.px]&#x3D;&quot;600&quot;&gt;
+    &lt;div mat-dialog-actions class&#x3D;&quot;p-x-24 p-b-24&quot;&gt;
+      &lt;button (click)&#x3D;&quot;onSubmitTrainingSupport()&quot; mat-button mat-flat-button color&#x3D;&quot;warn&quot;&gt;
+        Ok
+      &lt;/button&gt;
+      &lt;button (click)&#x3D;&quot;closeDialog()&quot; mat-button class&#x3D;&quot;m-l-8&quot;&gt;Annuler&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+}
+
+
+&lt;!--TODO--&gt;
+@if (action &#x3D;&#x3D; &#x27;completion&#x27;) {
+  &lt;h2 class&#x3D;&quot;f-w-500 m-b-24&quot; mat-dialog-title&gt;&lt;strong&gt;Téléverser l&#x27;Attestation de Reférence&lt;/strong&gt;&lt;/h2&gt;
+  &lt;div class&#x3D;&quot;mat-body-1 p-x-24&quot;&gt;
+    &lt;form (ngSubmit)&#x3D;&quot;onSubmitTrainingSupport()&quot;&gt;
+      &lt;div class&#x3D;&quot;col-lg-12&quot;&gt;
+        &lt;div appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+          &lt;button type&#x3D;&quot;button&quot; mat-flat-button color&#x3D;&quot;primary&quot; class&#x3D;&quot;m-l-16 input-file-button&quot;&gt;
+            &lt;input type&#x3D;&quot;file&quot; accept&#x3D;&quot;application/pdf&quot;
+                   (change)&#x3D;&quot;onTrainingSupportChange($event)&quot;
+                   #fileInput/&gt;
+          &lt;/button&gt;
+          &lt;br&gt;
+          &lt;br&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+  &lt;div [style.width.px]&#x3D;&quot;600&quot;&gt;
+    &lt;div mat-dialog-actions class&#x3D;&quot;p-x-24 p-b-24&quot;&gt;
+      &lt;button (click)&#x3D;&quot;onSubmitTrainingSupport()&quot; mat-button mat-flat-button color&#x3D;&quot;warn&quot;&gt;
+        Ok
+      &lt;/button&gt;
+      &lt;button (click)&#x3D;&quot;closeDialog()&quot; mat-button class&#x3D;&quot;m-l-8&quot;&gt;Annuler&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+}
+
+@if (action &#x3D;&#x3D; &#x27;trainingNotes&#x27;) {
+  &lt;h2 class&#x3D;&quot;f-w-500 m-b-24 text-center&quot; mat-dialog-title&gt;&lt;strong&gt;Les Notes de Formation&lt;/strong&gt;&lt;/h2&gt;
+  &lt;div class&#x3D;&quot;p-x-24&quot;&gt;
+    &lt;div class&#x3D;&quot;row&quot;&gt;
+      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;
+        &lt;!-- input --&gt;
+        &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+        &gt;Téléverser la liste de présence
+        &lt;/mat-label
+        &gt;
+        &lt;div appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+          &lt;button type&#x3D;&quot;button&quot; mat-flat-button color&#x3D;&quot;primary&quot; class&#x3D;&quot;m-l-16 input-file-button&quot;&gt;
+            &lt;input type&#x3D;&quot;file&quot; accept&#x3D;&quot;application/pdf&quot;
+                   (change)&#x3D;&quot;onPresenceListChange($event)&quot;
+                   #fileInput/&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;
+        &lt;!-- input --&gt;
+        &lt;mat-label class&#x3D;&quot;mat-subtitle-2 f-w-600 m-b-8 d-block&quot;
+        &gt;Téléverser l&#x27;Évaluation Synthétique
+        &lt;/mat-label
+        &gt;
+        &lt;div appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;w-100&quot;&gt;
+          &lt;button type&#x3D;&quot;button&quot; mat-flat-button color&#x3D;&quot;primary&quot; class&#x3D;&quot;m-l-16 input-file-button&quot;&gt;
+            &lt;input type&#x3D;&quot;file&quot; accept&#x3D;&quot;application/pdf&quot;
+                   (change)&#x3D;&quot;onEvaluationChange($event)&quot;
+                   #fileInput/&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;
+        &lt;div mat-dialog-actions class&#x3D;&quot;p-x-24 p-b-24&quot;&gt;
+          &lt;button (click)&#x3D;&quot;onSubmitTrainingNotes()&quot; mat-button mat-flat-button color&#x3D;&quot;primary&quot;&gt;
+            Ok
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;col-lg-6&quot;&gt;
+        &lt;div mat-dialog-actions class&#x3D;&quot;p-x-24 p-b-24&quot;&gt;
+          &lt;button (click)&#x3D;&quot;closeDialog()&quot; mat-button mat-flat-button color&#x3D;&quot;warn&quot;&gt;Annuler&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+}
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div>@if (action == \'pv\') {  <h2 class="f-w-500 m-b-24" mat-dialog-title><strong>Cycle de Vie de la Formation</strong></h2>  <div class="mat-body-1 p-x-24">    <div>      <div class="col-sm-4 d-flex align-items-center">        <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"        >PV        </mat-label>      </div>      <div class="col-lg-12">        <mat-form-field appearance="outline" class="w-100">                <textarea                  rows="5"                  matInput                  placeholder="Rédigez le PV"                  [(ngModel)]="pv"                ></textarea>          <mat-icon matPrefix class="op-5">            <i-tabler name="message-2" class="icon-20 d-flex"></i-tabler>          </mat-icon>        </mat-form-field>      </div>    </div>  </div>  <div [style.width.px]="600">    <div mat-dialog-actions class="p-x-24 p-b-24">      <button (click)="onAddPV()" mat-button mat-flat-button color="warn">        Ok      </button>      <button (click)="closeDialog()" mat-button class="m-l-8">Annuler</button>    </div>  </div>}@if (action == \'trainingSupport\') {  <h2 class="f-w-500 m-b-24" mat-dialog-title><strong>Téléverser le Support de Formation</strong></h2>  <div class="mat-body-1 p-x-24">    <form (ngSubmit)="onSubmitTrainingSupport()">      <div class="col-lg-12">        <div appearance="outline" class="w-100">          <button type="button" mat-flat-button color="primary" class="m-l-16 input-file-button">            <input type="file" accept="application/pdf"                   (change)="onTrainingSupportChange($event)"                   #fileInput/>          </button>          <br>          <br>        </div>      </div>    </form>  </div>  <div [style.width.px]="600">    <div mat-dialog-actions class="p-x-24 p-b-24">      <button (click)="onSubmitTrainingSupport()" mat-button mat-flat-button color="warn">        Ok      </button>      <button (click)="closeDialog()" mat-button class="m-l-8">Annuler</button>    </div>  </div>}<!--TODO-->@if (action == \'completion\') {  <h2 class="f-w-500 m-b-24" mat-dialog-title><strong>Téléverser l\'Attestation de Reférence</strong></h2>  <div class="mat-body-1 p-x-24">    <form (ngSubmit)="onSubmitTrainingSupport()">      <div class="col-lg-12">        <div appearance="outline" class="w-100">          <button type="button" mat-flat-button color="primary" class="m-l-16 input-file-button">            <input type="file" accept="application/pdf"                   (change)="onTrainingSupportChange($event)"                   #fileInput/>          </button>          <br>          <br>        </div>      </div>    </form>  </div>  <div [style.width.px]="600">    <div mat-dialog-actions class="p-x-24 p-b-24">      <button (click)="onSubmitTrainingSupport()" mat-button mat-flat-button color="warn">        Ok      </button>      <button (click)="closeDialog()" mat-button class="m-l-8">Annuler</button>    </div>  </div>}@if (action == \'trainingNotes\') {  <h2 class="f-w-500 m-b-24 text-center" mat-dialog-title><strong>Les Notes de Formation</strong></h2>  <div class="p-x-24">    <div class="row">      <div class="col-lg-6">        <!-- input -->        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"        >Téléverser la liste de présence        </mat-label        >        <div appearance="outline" class="w-100">          <button type="button" mat-flat-button color="primary" class="m-l-16 input-file-button">            <input type="file" accept="application/pdf"                   (change)="onPresenceListChange($event)"                   #fileInput/>          </button>        </div>      </div>      <div class="col-lg-6">        <!-- input -->        <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"        >Téléverser l\'Évaluation Synthétique        </mat-label        >        <div appearance="outline" class="w-100">          <button type="button" mat-flat-button color="primary" class="m-l-16 input-file-button">            <input type="file" accept="application/pdf"                   (change)="onEvaluationChange($event)"                   #fileInput/>          </button>        </div>      </div>      <div class="col-lg-6">        <div mat-dialog-actions class="p-x-24 p-b-24">          <button (click)="onSubmitTrainingNotes()" mat-button mat-flat-button color="primary">            Ok          </button>        </div>      </div>      <div class="col-lg-6">        <div mat-dialog-actions class="p-x-24 p-b-24">          <button (click)="closeDialog()" mat-button mat-flat-button color="warn">Annuler</button>        </div>      </div>    </div>  </div>}</div>'
+    var COMPONENTS = [{'name': 'AddClientComponent', 'selector': 'app-add-client'},{'name': 'AddComponent', 'selector': 'app-add'},{'name': 'AddInstructorComponent', 'selector': 'app-add-instructor'},{'name': 'AddInvoiceDialogContentComponent', 'selector': 'app-add-invoice-dialog-content'},{'name': 'AddTrainingComponent', 'selector': 'app-add-training'},{'name': 'AddVendorComponent', 'selector': 'app-add-vendor'},{'name': 'AgendaComponent', 'selector': 'app-agenda'},{'name': 'AppClientDialogContentComponent', 'selector': 'app-dialog-content'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AppInstructorDialogContentComponent', 'selector': 'app-dialog-content'},{'name': 'AppSearchDialogComponent', 'selector': 'search-dialog'},{'name': 'AppTrainingDialogContentComponent', 'selector': 'app-dialog-content'},{'name': 'AppVendorDialogContentComponent', 'selector': 'app-vendor-dialog-content'},{'name': 'BlankComponent', 'selector': 'app-blank'},{'name': 'BrandingComponent', 'selector': 'app-branding'},{'name': 'BreadcrumbComponent', 'selector': 'app-breadcrumb'},{'name': 'ClientComponent', 'selector': 'app-client'},{'name': 'ClientTrainingComponent', 'selector': 'app-client-training'},{'name': 'CustomizerComponent', 'selector': 'app-customizer'},{'name': 'DetailClientComponent', 'selector': 'app-detail-client'},{'name': 'DetailComponent', 'selector': 'app-detail'},{'name': 'DetailInstructorComponent', 'selector': 'app-detail-instructor'},{'name': 'DetailInvoiceComponent', 'selector': 'app-detail-invoice'},{'name': 'DetailPdfComponent', 'selector': 'app-detail-pdf'},{'name': 'DetailTrainingComponent', 'selector': 'app-detail-training'},{'name': 'DetailTrainingInvoiceComponent', 'selector': 'app-detail-training-invoice'},{'name': 'DetailVendorComponent', 'selector': 'app-detail-vendor'},{'name': 'EditClientComponent', 'selector': 'app-edit-client'},{'name': 'EditComponent', 'selector': 'app-edit'},{'name': 'EditInstructorComponent', 'selector': 'app-edit-instructor'},{'name': 'EditTrainingComponent', 'selector': 'app-edit-training'},{'name': 'EditTrainingInvoiceComponent', 'selector': 'app-edit-training-invoice'},{'name': 'EditVendorComponent', 'selector': 'app-edit-vendor'},{'name': 'ErrorComponent', 'selector': 'app-error'},{'name': 'ErrorDialogComponent', 'selector': 'app-ok-dialog'},{'name': 'FullComponent', 'selector': 'app-full'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'InstructorComponent', 'selector': 'app-instructor'},{'name': 'InvoiceComponent', 'selector': 'app-invoice'},{'name': 'InvoiceDialogContentComponent', 'selector': 'app-invoice-dialog-content'},{'name': 'LifeCycleComponent', 'selector': 'app-life-cycle'},{'name': 'NavItemComponent', 'selector': 'app-nav-item'},{'name': 'OkDialogComponent', 'selector': 'app-ok-dialog'},{'name': 'OkDialogComponent', 'selector': 'app-ok-dialog'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'TrainingComponent', 'selector': 'app-training'},{'name': 'TrainingDialog', 'selector': 'app-agenda-dialog'},{'name': 'TrainingLifecycleDialogComponent', 'selector': 'training-life-cycle-dialog'},{'name': 'TrainingLifecycleDialogContentComponent', 'selector': 'training-lifecycle-dialog-content'},{'name': 'VendorComponent', 'selector': 'app-vendor'},{'name': 'WelcomeComponent', 'selector': 'app-welcome'},{'name': 'WelcomeComponent', 'selector': 'app-welcome'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'TrainingLifecycleDialogComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'TrainingLifecycleDialogComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

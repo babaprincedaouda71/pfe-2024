@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://51.254.114.223"
+              - "http://51.254.114.223:8888"
+#              - "http://57.128.221.44"
+#              - "http://57.128.221.44:8888"
+#              - "http://**/*"
+              - "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE

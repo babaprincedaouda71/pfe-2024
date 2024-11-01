@@ -1,0 +1,312 @@
+<form *ngIf="vendor">
+  <mat-card class="cardWithShadow theme-card">
+    <!--    <mat-card-header>-->
+    <!--      <mat-card-title class="m-b-0">Basic Header Form</mat-card-title>-->
+    <!--    </mat-card-header>-->
+    <mat-card-content class="b-t-1">
+      <div class="p-16 bg-light-primary rounded">
+        <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+          <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler
+          >
+          Informations Générales
+        </h5>
+      </div>
+
+      <div class="row m-t-20">
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Forme Juridique
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="" readonly value="{{ vendor.status }}"/>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Téléphone
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="" readonly value="{{ vendor.phone }}"/>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Email
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="" readonly value="{{ vendor.email }}"/>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Raison Sociale
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="" readonly value="{{ vendor.name }}"/>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Adresse
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="" readonly value="{{ vendor.address }}"/>
+          </mat-form-field>
+
+          <!-- input -->
+          @if (vendor.status == 'SOLE_PROPRIEOR' || vendor.status == 'INDIVIDUAL') {
+            <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+            >CIN
+            </mat-label
+            >
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput placeholder="" readonly value="{{ vendor.nic }}"/>
+            </mat-form-field>
+          }
+        </div>
+      </div>
+
+      <div class="p-16 bg-light-primary rounded">
+        <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+          <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler
+          >
+          Contact Principal
+        </h5>
+      </div>
+
+      <div class="row m-t-20">
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Nom & Prénoms
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="" readonly value="{{vendor.nameMainContact}}"/>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Téléphone
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="" readonly value="{{vendor.phoneNumberMainContact}}"/>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Email
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="" readonly value="{{vendor.emailMainContact}}"/>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Fonction
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="" readonly value="{{vendor.positionMainContact}}"/>
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <div class="p-16 bg-light-primary rounded">
+        <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+          <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler
+          >
+          Informations Financières et Professionnelles
+        </h5>
+      </div>
+      <div class="row m-t-20">
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >N° Compte Bancaire
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="" readonly value="{{ vendor.bankAccountNumber }}"/>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block">
+            Attestation de RIB
+          </mat-label>
+          <button class="m-r-10 cursor-pointer" color="primary" mat-flat-button>
+            Voir le fichier
+          </button>
+
+        </div>
+
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Prestation
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="" readonly value="{{ vendor.service }}"/>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block">
+            Domaine
+          </mat-label>
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="" readonly value="{{ vendor.subject }}"/>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Écheance
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="" readonly value="{{ vendor.deadline }}"/>
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <div class="p-16 bg-light-primary rounded m-y-20">
+        <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+          <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler
+          >
+          Informations Juridiques
+        </h5>
+      </div>
+
+      <div class="row m-t-20">
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >CNSS
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="" readonly value="{{ vendor.cnss }}"/>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >IF
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="" readonly value="{{ vendor.fi }}"/>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >TP
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="" readonly value="{{ vendor.tp }}"/>
+          </mat-form-field>
+        </div>
+
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >ICE
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="" readonly value="{{ vendor.ice }}"/>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >RC
+          </mat-label
+          >
+          <mat-form-field appearance="outline" class="w-100">
+            <input matInput placeholder="" readonly value="{{ vendor.rc }}"/>
+          </mat-form-field>
+
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Attestation de Régularité fiscale
+          </mat-label
+          >
+          <div appearance="outline" class="w-100">
+            <button class="m-r-10 cursor-pointer" color="primary" mat-flat-button>
+              Voir le fichier
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-16 bg-light-primary rounded m-y-20">
+        <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+          <i-tabler class="icon-20 m-r-8 d-flex" name="info-circle"></i-tabler
+          >
+          Dossiers Contractuels et Professionnels
+        </h5>
+      </div>
+      <div class="row m-t-20">
+        <div class="col-lg-4">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >CV
+          </mat-label
+          >
+          <div appearance="outline" class="w-100">
+            <button class="m-l-16 input-file-button" color="primary" mat-flat-button type="button">
+              <button class="m-r-10 cursor-pointer" color="primary" mat-flat-button>
+                Voir le fichier
+              </button>
+            </button>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Contrat
+          </mat-label
+          >
+          <div appearance="outline" class="w-100">
+            <button class="m-l-16 input-file-button" color="primary" mat-flat-button type="button">
+              <button class="m-r-10 cursor-pointer" color="primary" mat-flat-button>
+                Voir le fichier
+              </button>
+            </button>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <!-- input -->
+          <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
+          >Convention
+          </mat-label
+          >
+          <div appearance="outline" class="w-100">
+            <button class="m-l-16 input-file-button" color="primary" mat-flat-button type="button">
+              <button class="m-r-10 cursor-pointer" color="primary" mat-flat-button>
+                Voir le fichier
+              </button>
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="b-t-1">
+      <button (click)="handleEditVendor(vendor.idVendor)" class="m-l-8" color="primary" mat-flat-button>Modifier
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+</form>

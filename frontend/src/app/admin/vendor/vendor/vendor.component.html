@@ -1,0 +1,109 @@
+<mat-card class="cardWithShadow">
+  <mat-card-content class="p-24">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <mat-form-field appearance="outline" class="w-100 hide-hint">
+          <input
+            #keyword="ngModel"
+            (ngModelChange)="search(keyword.value)"
+            matInput
+            name="keyword"
+            ngModel placeholder="Rechercher Fournisseur"
+          />
+          <mat-icon matSuffix>
+            <i-tabler class="icon-20" name="search"></i-tabler>
+          </mat-icon>
+        </mat-form-field>
+      </div>
+      <div
+        *ngIf="keycloakService.getUserRoles().includes('admin')"
+        class="col-lg-4 d-flex align-items-center justify-content-end"
+      >
+        <button
+          [routerLink]="['add']"
+          color="primary"
+          mat-flat-button
+        >
+          Nouveau Fournisseur
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="datasource" class="cardWithShadow">
+  <mat-card-content class="p-24">
+    <div class="table-responsive">
+      <table [dataSource]="datasource" class="w-100" mat-table>
+
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>Nom | Raison Sociale</th>
+          <td *matCellDef="let element" mat-cell style="word-wrap: break-word;">
+            <div class="d-flex align-items-center">
+              <div class="m-l-16">
+                <p class="f-w-600 mat-subtitle-1 f-s-16 m-t-0">
+                  <a [routerLink]="['detail', element.idVendor]">{{ element.name }}</a>
+                </p>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="phone">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            Téléphone
+          </th>
+          <td *matCellDef="let element" class="f-s-14" mat-cell>
+            {{ element.phone }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            Email
+          </th>
+          <td *matCellDef="let element" class="f-s-14" mat-cell>
+            {{ element.email }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="address">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            Adresse
+          </th>
+          <td *matCellDef="let element" class="f-s-14" mat-cell>
+            {{ element.address }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th *matHeaderCellDef class="f-s-16 f-w-600" mat-header-cell>
+            Action
+          </th>
+          <td *matCellDef="let element" class="action-link" mat-cell>
+            <a
+              [routerLink]="['edit', element.idVendor]"
+              class="m-r-10 cursor-pointer"
+            >
+              <i-tabler class="icon-18" name="edit"></i-tabler
+              >
+            </a>
+            <a
+              (click)="openDialog('Supprimer', element)"
+              class="m-r-10 cursor-pointer"
+            >
+              <i-tabler class="icon-18" name="trash"></i-tabler>
+            </a>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+
+      </table>
+      <mat-paginator [pageSizeOptions]="[20, 50, 100]"
+                     showFirstLastButtons>
+      </mat-paginator>
+    </div>
+  </mat-card-content>
+</mat-card>
