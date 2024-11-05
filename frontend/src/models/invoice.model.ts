@@ -14,7 +14,7 @@ export interface InvoiceModel {
   products : Array<ProductItem>,
   ht : number;
   tva : number;
-  travelExpenses : number;
+  travelFees : number;
   ttc : number;
   editor : string;
   status : string;

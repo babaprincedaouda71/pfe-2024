@@ -85,7 +85,7 @@
             Frais de déplacement
           </th>
           <td *matCellDef="let element" class="f-s-14" mat-cell>
-            {{ element.travelExpenes }}
+            {{ element.travelFees }}
           </td>
         </ng-container>
 
@@ -95,7 +95,8 @@
           </th>
           <td *matCellDef="let element" class="f-s-14" mat-cell>
             @if (element.ttc) {
-              {{ element.ttc.toFixed(2) }}
+<!--              {{ element.ttc.toFixed(2) }}-->
+              {{ element.ttc }}
             }
           </td>
         </ng-container>

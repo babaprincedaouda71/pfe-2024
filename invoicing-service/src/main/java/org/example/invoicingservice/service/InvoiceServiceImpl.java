@@ -102,11 +102,10 @@ public class InvoiceServiceImpl implements InvoiceService {
     double total = 0d;
     LocalDate createdAt = LocalDate.now();
     //    invoice.setNumberInvoice(generateInvoiceNumber("training"));
-    invoice.setCreatedAt(createdAt.toString());
+    invoice.setCreatedAt(invoice.getCreatedAt());
     invoice.setInvoiceType(InvoiceType.groupInvoice);
     Client client = clientRest.findClientById(invoice.getIdClient());
     invoice.setDeadline(client.getDeadline());
-    System.out.println(invoice.getTrainings());
     if (invoice.getTrainings() != null) {
       invoice.setTrainingIds(
           invoice.getTrainings().stream()
@@ -124,9 +123,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 //                  trainingRest.markGroupAsInvoiced(group);
                 });
               });
-      this.tva = (float) (this.total * 0.2);
-      invoice.setTva((float) (this.total * 0.2));
-      invoice.setTtc(this.tva + this.total);
+      invoice.setHt(invoice.getHt() + invoice.getTravelFees());
+      invoice.setTva((invoice.getTva()));
+      invoice.setTravelFees(invoice.getTravelFees());
+      invoice.setTtc(invoice.getTtc());
     }
     invoice.setIdClient(invoice.getIdClient());
     invoice.setStatus(InvoiceStatus.Non_Réglée);

@@ -73,6 +73,28 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     if (invoice.invoiceType === 'trainingModule') {
       this.invoicingService.generateInvoiceWithMultipleTrainings(invoice.trainings, invoice.client)
     }
+    if (invoice.invoiceType === 'groupInvoice') {
+      console.log("****************Start*******************")
+      console.log(invoice)
+      console.log("****************End**********************")
+      this.invoicingService.generateGroupsInvoice(invoice.numberInvoice, invoice, invoice.trainings, invoice.client )
+    }
+    // if (invoice.invoiceType === 'groupInvoice') {
+    //   this.invoicingService.generateGroupsInvoicePDF(invoice.numberInvoice, invoice, invoice.trainings, invoice.client ).then(
+    //     (pdfBlob: any) => {
+    //       const url = window.URL.createObjectURL(pdfBlob)
+    //       const a = document.createElement('a');
+    //       a.href = url;
+    //       a.download = `Facture-${invoice.numberInvoice}.pdf`;
+    //       document.body.appendChild(a);
+    //       a.click();
+    //       document.body.removeChild(a);
+    //       window.URL.revokeObjectURL(url);
+    //     }
+    //   ).catch((error) => {
+    //     console.error('Erreur lors de la génération du PDF :', error);
+    //   })
+    // }
   }
 
   /**************************************************/

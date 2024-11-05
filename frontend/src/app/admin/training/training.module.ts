@@ -43,7 +43,6 @@ import {MatDivider} from "@angular/material/divider";
 import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
 import {MatCheckbox, MatCheckboxModule} from "@angular/material/checkbox";
 import {MatGridList, MatGridListModule, MatGridTile} from "@angular/material/grid-list";
-import {ErrorDialogComponent} from "./training/error-dialog/error-dialog.component";
 import {OkDialogComponent} from "./training/ok-dialog/ok-dialog.component";
 import {LifeCycleComponent} from './life-cycle/life-cycle.component';
 import {MatChipListbox, MatChipOption} from "@angular/material/chips";
@@ -54,6 +53,7 @@ import {
 } from './group/group.component';
 import {DetailGroupComponent} from "./groups/detail-group/detail-group.component";
 import {MatPaginator} from "@angular/material/paginator";
+import {ErrorDialogComponent} from "./group/error-dialog/error-dialog.component";
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -66,12 +66,12 @@ import {MatPaginator} from "@angular/material/paginator";
     TrainingLifecycleDialogContentComponent,
     LifecycleDialogContentComponent,
     LifecycleDocumentsDialogComponent,
-    ErrorDialogComponent,
     OkDialogComponent,
     LifeCycleComponent,
     TrainingLifecycleDialogComponent,
     GroupComponent,
-    DetailGroupComponent
+    DetailGroupComponent,
+    ErrorDialogComponent
   ],
     imports: [
         CommonModule,

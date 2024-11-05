@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 import {GroupService} from "../../../_services/group.service";
 import {TrainingLifecycleDialogComponent} from "../detail-training/detail-training.component";
 import {TrainingService} from "../../../_services/training.service";
+import {ErrorDialogComponent} from "./error-dialog/error-dialog.component";
 
 @Component({
   selector: 'app-group',
@@ -62,8 +63,7 @@ export class GroupComponent implements OnInit, OnDestroy {
     const openLifeCycleSubscription = dialogRef.afterClosed().subscribe((result) => {
       if (result.event == 'lifeCycle') {
         this.updateLifeCycle(result.data)
-      }
-      else {
+      } else {
         this.getGroups()
       }
     })
@@ -94,7 +94,7 @@ export class GroupComponent implements OnInit, OnDestroy {
   styleUrl: './lifecycle-dialog-content.scss'
 })
 
-export class LifecycleDialogContentComponent implements OnDestroy{
+export class LifecycleDialogContentComponent implements OnDestroy {
   action!: string;
   local_data: any
   showTrainingSupportForm: boolean = false;
@@ -105,6 +105,7 @@ export class LifecycleDialogContentComponent implements OnDestroy{
   selectedPresenceList!: File
   selectedEvaluation!: File
   private subscriptions: Subscription[] = [];
+  initialLifeCycleState: any
 
   constructor(public dialogRef: MatDialogRef<LifecycleDialogContentComponent>,
               @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
@@ -115,6 +116,8 @@ export class LifecycleDialogContentComponent implements OnDestroy{
               private trainingService: TrainingService) {
     this.local_data = {...data.obj}
     this.action = data.action
+    // Stockez l'état initial comme une copie profonde immuable
+    this.initialLifeCycleState = JSON.parse(JSON.stringify(this.local_data.groupLifeCycle));
     this.selectedTrainingSupport = this.local_data.trainingSupport
   }
 
@@ -122,21 +125,39 @@ export class LifecycleDialogContentComponent implements OnDestroy{
     this.subscriptions.forEach(s => s.unsubscribe())
   }
 
+  // Méthode de comparaison profonde pour vérifier si l'état a changé
+  hasLifeCycleChanged(): boolean {
+    return JSON.stringify(this.local_data.groupLifeCycle) !== JSON.stringify(this.initialLifeCycleState);
+  }
+
   doAction() {
-    this.dialogRef.close({event: this.action, data: this.local_data});
-    this.snackBar.open('Le Cycle de Vie a été modifié avec Succès', 'Fermer', {
-      duration: 4000,
-      panelClass: ['green-snackbar'],
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
-    })
+    // Comparer l'état actuel avec l'état initial
+    if (!this.hasLifeCycleChanged()){
+      this.dialogRef.close({ event : 'Cancel'})
+    }
+    else {
+      this.dialogRef.close({event: this.action, data: this.local_data});
+      this.snackBar.open('Le Cycle de Vie a été modifié avec Succès', 'Fermer', {
+        duration: 4000,
+        panelClass: ['green-snackbar'],
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      })
+    }
   }
 
   closeDialog(): void {
-    if ({event : 'Cancel'}) {
+    if ({event: 'Cancel'}) {
       this.dialogRef.close({event: 'Cancel'});
-    }
-    else this.dialogRef.close()
+    } else this.dialogRef.close()
+  }
+
+  openErroDialog(obj: GroupModel) {
+    this.dialog.open(ErrorDialogComponent, {
+      data: {
+        obj: obj
+      }
+    })
   }
 
   // Update training life cycle
@@ -151,6 +172,7 @@ export class LifecycleDialogContentComponent implements OnDestroy{
       this.local_data.groupLifeCycle.trainerSearch = false
       this.closeDialog()
       // appeler le dialog qui demande d'attribuer un formateur au groupe
+      this.openErroDialog(this.local_data);
     }
     this.removeTrainingNotes()
     this.removePv(this.local_data.idTraining)
@@ -512,7 +534,6 @@ export class LifecycleDocumentsDialogComponent {
     this.groupService.addPv(this.pv, this.local_data.idGroup)
       .subscribe({
         next: (value: GroupModel) => {
-          console.log(value)
           value.groupLifeCycle.kickOfMeeting = true
           this.doAction(value)
         },
@@ -525,7 +546,6 @@ export class LifecycleDocumentsDialogComponent {
   onTrainingSupportChange(event: any) {
     if (!event.target.files[0]) return
     this.selectedTrainingSupport = event.target.files[0];
-    console.log(event.target.files[0])
   }
 
   onSubmitTrainingSupport() {
@@ -549,7 +569,6 @@ export class LifecycleDocumentsDialogComponent {
   onReferenceCertificateChange(event: any) {
     if (!event.target.files[0]) return
     this.selectedReferenceCertificate = event.target.files[0];
-    console.log(event.target.files[0])
   }
 
   onSubmitReferenceCertificate() {
@@ -574,13 +593,11 @@ export class LifecycleDocumentsDialogComponent {
   onPresenceListChange(event: any) {
     if (!event.target.files[0]) return
     this.selectedPresenceList = event.target.files[0];
-    console.log(event.target.files[0])
   }
 
   onEvaluationChange(event: any) {
     if (!event.target.files[0]) return
     this.selectedEvaluation = event.target.files[0];
-    console.log(event.target.files[0])
   }
 
 

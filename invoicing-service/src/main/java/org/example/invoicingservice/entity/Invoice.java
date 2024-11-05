@@ -50,8 +50,6 @@ public class Invoice {
 
   private float tva;
 
-  private float travelExpenses;
-
   private Double ttc;
 
   @ElementCollection List<Long> trainingIds;
@@ -66,6 +64,8 @@ public class Invoice {
   @Lob
   @Column(columnDefinition = "LONGBLOB")
   private byte[] cheque;
+
+  private double travelFees;
 
   @Lob
   @Column(columnDefinition = "LONGBLOB")

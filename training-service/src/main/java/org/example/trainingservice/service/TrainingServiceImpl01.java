@@ -32,6 +32,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -122,6 +123,9 @@ public class TrainingServiceImpl01 implements TrainingService {
               //              trainingGroup.setInvoiced(false);
               // ******** NEW CODE: Calculate numDays based on group dates ********
               int numDays = calculateNumDays(trainingGroup, formatter, isoFormatter);
+              for (int i = 0; i < 25; i++) {
+                System.out.println("Nombre de jours : " + numDays);
+              }
               trainingGroup.setNumDays(numDays);
               double amount = numDays * addTrainingDTO.getDailyAmount();
               trainingGroup.setGroupAmount(amount);
@@ -146,16 +150,6 @@ public class TrainingServiceImpl01 implements TrainingService {
     trainingGroupRepo.saveAll(savedGroups);
 
     return trainingMapper.fromTrainingToAddTrainingDTO(savedTraining);
-  }
-
-  // Méthode pour vérifier si le Set contient au moins une date non vide
-  private static boolean containsNonEmptyDate(List<String> dates) {
-    for (String date : dates) {
-      if (!date.isEmpty()) {
-        return true;
-      }
-    }
-    return false;
   }
 
   @Override
@@ -201,6 +195,100 @@ public class TrainingServiceImpl01 implements TrainingService {
     return trainingMapper.fromTraining(training);
   }
 
+  /************ Nouvelle méthode de mise à jour ***********/
+  /*******************************************************/
+
+  //   Méthode pour vérifier si le Set contient au moins une date non vide
+  private static boolean containsNonEmptyDate(List<String> dates) {
+    for (String date : dates) {
+      if (!date.isEmpty()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // Méthode calculateNumDays mise à jour pour exclure les samedis et dimanches
+  private int calculateNumDays(
+      TrainingGroup group, DateTimeFormatter formatter, DateTimeFormatter isoFormatter) {
+    int numDays = 0;
+
+    // Calcul des jours consécutifs si startDate et endDate sont fournis
+    if (group.getStartDate() != null
+        && group.getEndDate() != null
+        && !group.getStartDate().isEmpty()
+        && !group.getEndDate().isEmpty()) {
+      try {
+        OffsetDateTime startDateTime = OffsetDateTime.parse(group.getStartDate(), isoFormatter);
+        OffsetDateTime endDateTime = OffsetDateTime.parse(group.getEndDate(), isoFormatter);
+
+        LocalDate startDate =
+            startDateTime.toLocalDate().plusDays(1); // Commencer à la date suivante
+        LocalDate endDate = endDateTime.toLocalDate().plusDays(1); // Aller jusqu'à la date suivante
+
+        LocalDate currentDate = startDate;
+        while (!currentDate.isAfter(endDate)) {
+          // Exclure les samedis et dimanches
+          if (currentDate.getDayOfWeek() != DayOfWeek.SATURDAY
+              && currentDate.getDayOfWeek() != DayOfWeek.SUNDAY) {
+            numDays++;
+          }
+          currentDate = currentDate.plusDays(1); // Passer au jour suivant
+        }
+      } catch (DateTimeParseException e) {
+        // Gestion d'une erreur de parsing, log et retour d'une valeur par défaut
+        System.out.println("Erreur de parsing de la date de début ou de fin : " + e.getMessage());
+        return 0; // ou une autre valeur par défaut
+      }
+    }
+
+    // Calcul des jours non consécutifs à partir de groupDates
+    if (containsNonEmptyDate(group.getGroupDates())) {
+      Set<String> uniqueDates = new TreeSet<>(group.getGroupDates());
+      uniqueDates.removeIf(
+          dateStr -> {
+            try {
+              OffsetDateTime dateTime = OffsetDateTime.parse(dateStr, isoFormatter);
+              LocalDate date = dateTime.toLocalDate().plusDays(1); // Ajustement similaire
+              return date.getDayOfWeek() == DayOfWeek.SATURDAY
+                  || date.getDayOfWeek() == DayOfWeek.SUNDAY;
+            } catch (DateTimeParseException e) {
+              System.out.println(
+                  "Erreur de parsing pour une date non consécutive : " + e.getMessage());
+              return true; // Si erreur, on exclut la date
+            }
+          });
+      numDays += uniqueDates.size();
+    }
+
+    return numDays;
+  }
+
+  private void manageDate(
+      Set<String> datesSet,
+      DateTimeFormatter formatter,
+      DateTimeFormatter isoFormatter,
+      TrainingGroup trainingGroup) {
+    if (!trainingGroup.getStartDate().isEmpty() && !trainingGroup.getEndDate().isEmpty()) {
+      OffsetDateTime startDateTime =
+          OffsetDateTime.parse(trainingGroup.getStartDate(), isoFormatter);
+      OffsetDateTime endDateTime = OffsetDateTime.parse(trainingGroup.getEndDate(), isoFormatter);
+
+      LocalDate startDate =
+          startDateTime.toLocalDate().plusDays(1); // commencer à la date suivante de startDate
+      LocalDate endDate =
+          endDateTime.toLocalDate().plusDays(1); // aller jusqu'à la date suivante de endDate
+
+      LocalDate currentDate = startDate;
+      while (!currentDate.isAfter(endDate)) {
+        if (currentDate.getDayOfWeek() != DayOfWeek.SUNDAY) { // exclure les dimanches
+          datesSet.add(currentDate.format(formatter));
+        }
+        currentDate = currentDate.plusDays(1);
+      }
+    }
+  }
+
   @Override
   public AddTrainingDTO updateTraining(AddTrainingDTO addTrainingDTO, Long idTraining) {
     // Handle dates for training
@@ -226,6 +314,23 @@ public class TrainingServiceImpl01 implements TrainingService {
 
     // Clear existing training dates
     training.getTrainingDates().clear();
+
+    // ***** Partie modifiée : Identification des groupes supprimés *****
+    // 1. Créer un ensemble des IDs de groupes dans addTrainingDTO
+    Set<Long> updatedGroupIds = addTrainingDTO.getGroups().stream()
+            .map(TrainingGroup::getIdGroup)
+            .filter(Objects::nonNull) // Ignorer les nouveaux groupes sans IDs
+            .collect(Collectors.toSet());
+
+    // 2. Identifier les groupes dans training qui ne sont pas dans addTrainingDTO
+    List<TrainingGroup> groupsToRemove = training.getGroups().stream()
+            .filter(group -> group.getIdGroup() != null && !updatedGroupIds.contains(group.getIdGroup()))
+            .collect(Collectors.toList());
+
+    // Supprimer ces groupes de la formation et de la base de données
+    training.getGroups().removeAll(groupsToRemove);
+    trainingGroupRepo.deleteAll(groupsToRemove);
+    // ***** Fin de la partie modifiée pour les groupes supprimés *****
 
     // Process groups from DTO
     addTrainingDTO
@@ -264,7 +369,7 @@ public class TrainingServiceImpl01 implements TrainingService {
                 newTrainingGroup.setGroupLifeCycle(newGroup.getGroupLifeCycle());
                 newTrainingGroup.setStatus(TrainingGroupStatus.Recherche_formateur);
                 // Set the start and end date
-                if (!newGroup.getStartDate().isEmpty()){
+                if (!newGroup.getStartDate().isEmpty()) {
                   newTrainingGroup.setStartDate(newGroup.getStartDate());
                   newTrainingGroup.setEndDate(newGroup.getEndDate());
                 }
@@ -276,7 +381,6 @@ public class TrainingServiceImpl01 implements TrainingService {
                 double amount = numDays * addTrainingDTO.getDailyAmount();
                 newTrainingGroup.setGroupAmount(amount);
                 // ***************************************************************
-
 
                 // Save new group and handle trainer search status
                 TrainingGroup savedGroup = trainingGroupRepo.save(newTrainingGroup);
@@ -327,55 +431,6 @@ public class TrainingServiceImpl01 implements TrainingService {
 
     // Save the training entity with updated groups and dates
     return trainingMapper.fromTrainingToAddTrainingDTO(trainingRepository.save(training));
-  }
-
-  // Méthode calculateNumDays mise à jour pour exclure les samedis et dimanches
-  private int calculateNumDays(TrainingGroup group, DateTimeFormatter formatter, DateTimeFormatter isoFormatter) {
-    int numDays = 0;
-
-    // Calcul des jours consécutifs si startDate et endDate sont fournis
-    if (group.getStartDate() != null && group.getEndDate() != null &&
-            !group.getStartDate().isEmpty() && !group.getEndDate().isEmpty()) {
-      try {
-        OffsetDateTime startDateTime = OffsetDateTime.parse(group.getStartDate(), isoFormatter);
-        OffsetDateTime endDateTime = OffsetDateTime.parse(group.getEndDate(), isoFormatter);
-
-        LocalDate startDate = startDateTime.toLocalDate().plusDays(1); // Commencer à la date suivante
-        LocalDate endDate = endDateTime.toLocalDate().plusDays(1); // Aller jusqu'à la date suivante
-
-        LocalDate currentDate = startDate;
-        while (!currentDate.isAfter(endDate)) {
-          // Exclure les samedis et dimanches
-          if (currentDate.getDayOfWeek() != DayOfWeek.SATURDAY &&
-                  currentDate.getDayOfWeek() != DayOfWeek.SUNDAY) {
-            numDays++;
-          }
-          currentDate = currentDate.plusDays(1); // Passer au jour suivant
-        }
-      } catch (DateTimeParseException e) {
-        // Gestion d'une erreur de parsing, log et retour d'une valeur par défaut
-        System.out.println("Erreur de parsing de la date de début ou de fin : " + e.getMessage());
-        return 0; // ou une autre valeur par défaut
-      }
-    }
-
-    // Calcul des jours non consécutifs à partir de groupDates
-    if (containsNonEmptyDate(group.getGroupDates())) {
-      Set<String> uniqueDates = new TreeSet<>(group.getGroupDates());
-      uniqueDates.removeIf(dateStr -> {
-        try {
-          OffsetDateTime dateTime = OffsetDateTime.parse(dateStr, isoFormatter);
-          LocalDate date = dateTime.toLocalDate().plusDays(1); // Ajustement similaire
-          return date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY;
-        } catch (DateTimeParseException e) {
-          System.out.println("Erreur de parsing pour une date non consécutive : " + e.getMessage());
-          return true; // Si erreur, on exclut la date
-        }
-      });
-      numDays += uniqueDates.size();
-    }
-
-    return numDays;
   }
 
   //  @Override
@@ -839,31 +894,6 @@ public class TrainingServiceImpl01 implements TrainingService {
       trainingInvoiceDTOS.add(trainingMapper.toTrainingInvoiceDTO(training));
     }
     return trainingInvoiceDTOS;
-  }
-
-  private void manageDate(
-      Set<String> datesSet,
-      DateTimeFormatter formatter,
-      DateTimeFormatter isoFormatter,
-      TrainingGroup trainingGroup) {
-    if (!trainingGroup.getStartDate().isEmpty() && !trainingGroup.getEndDate().isEmpty()) {
-      OffsetDateTime startDateTime =
-          OffsetDateTime.parse(trainingGroup.getStartDate(), isoFormatter);
-      OffsetDateTime endDateTime = OffsetDateTime.parse(trainingGroup.getEndDate(), isoFormatter);
-
-      LocalDate startDate =
-          startDateTime.toLocalDate().plusDays(1); // commencer à la date suivante de startDate
-      LocalDate endDate =
-          endDateTime.toLocalDate().plusDays(1); // aller jusqu'à la date suivante de endDate
-
-      LocalDate currentDate = startDate;
-      while (!currentDate.isAfter(endDate)) {
-        if (currentDate.getDayOfWeek() != DayOfWeek.SUNDAY) { // exclure les dimanches
-          datesSet.add(currentDate.format(formatter));
-        }
-        currentDate = currentDate.plusDays(1);
-      }
-    }
   }
 
   /*********************** Gestion des groupes *****************/

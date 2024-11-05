@@ -73,15 +73,4 @@ public class Training {
     private byte[] evaluation;
 
     private String completionDate;
-
-
-    public void addGroup(TrainingGroup trainingGroup) {
-        groups.add(trainingGroup);
-        trainingGroup.setTraining(this); // Lier le groupe à cette formation
-    }
-
-    public void removeGroup(TrainingGroup trainingGroup) {
-        groups.remove(trainingGroup);
-        trainingGroup.setTraining(null); // Détacher le groupe de cette formation
-    }
 }

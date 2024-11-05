@@ -18,5 +18,7 @@ public class Group {
     private GroupStatus status;
     private int staff;
     private int days;
+    private String startDate;
+    private String endDate;
 //    private boolean invoiced;
 }

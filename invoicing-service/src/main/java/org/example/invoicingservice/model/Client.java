@@ -17,6 +17,7 @@ public class Client {
     private String emailMainContact;
     private String phoneNumberMainContact;
     private String positionMainContact;
+    private String commonCompanyIdentifier;
     private String color;
     private int deadline;
 }

@@ -10,7 +10,6 @@ import {ClientService} from "../../../_services/client.service";
 import {ClientModel} from "../../../../models/client.model";
 import {Vendor} from "../../../../models/vendor.model";
 import {VendorService} from "../../../_services/vendor.service";
-import {ErrorDialogComponent} from "./error-dialog/error-dialog.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {TrainingLifecycleDialogComponent} from "../detail-training/detail-training.component";
 import {DatesService} from "../../../_services/dates.service";
@@ -425,14 +424,6 @@ export class TrainingLifecycleDialogContentComponent {
     this.dialogRef.close({event: 'Cancel'});
   }
 
-  openErrorDialog(obj: TrainingModel): void {
-    this.dialog.open(ErrorDialogComponent, {
-      data: {
-        obj: obj,
-      }
-    })
-  }
-
   /*
   * BLACK BOX AI CODE
   * */
@@ -503,7 +494,7 @@ export class TrainingLifecycleDialogContentComponent {
         event.stopPropagation();
         this.local_data.lifeCycle.trainerSearch = false;
         this.closeDialog();
-        this.openErrorDialog(this.local_data);
+        // this.openErrorDialog(this.local_data);
       }
       this.resetCheckboxes('trainerSearch');
       this.updateLifeCycle(this.local_data)

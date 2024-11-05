@@ -5,7 +5,6 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 import {TrainingService} from "../../../_services/training.service";
 import {Subscription, switchMap} from "rxjs";
 import {MatTableDataSource} from "@angular/material/table";
-import {ErrorDialogComponent} from "../training/error-dialog/error-dialog.component";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {DatesService} from "../../../_services/dates.service";
@@ -143,13 +142,13 @@ export class DetailTrainingComponent implements OnInit, OnDestroy {
   }
 
   /*********** Training Life Cycle ***********/
-  openErrorDialog(obj: TrainingModel): void {
-    this.dialog.open(ErrorDialogComponent, {
-      data: {
-        obj: obj,
-      }
-    })
-  }
+  // openErrorDialog(obj: TrainingModel): void {
+  //   this.dialog.open(ErrorDialogComponent, {
+  //     data: {
+  //       obj: obj,
+  //     }
+  //   })
+  // }
 
   /********** End **********/
 

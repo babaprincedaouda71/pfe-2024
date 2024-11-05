@@ -2,12 +2,13 @@ import {TrainingModel} from "./training.model";
 
 export interface TrainingInvoice {
   idInvoice? : number;
-  editor : string;
-  idClient : number | null;
   numberInvoice? : string
+  idClient : number | null;
+  editor : string;
   createdAt? : string,
-  amount? : number,
+  ht? : number,
   tva? : number | null;
+  ttc? : number | null;
   travelFees? : number | null;
   trainings : Array<TrainingModel>;
 }

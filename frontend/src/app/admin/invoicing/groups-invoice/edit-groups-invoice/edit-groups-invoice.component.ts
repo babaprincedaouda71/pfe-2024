@@ -42,7 +42,7 @@ export class EditGroupsInvoiceComponent implements OnInit, OnDestroy {
 
   tva! : number
   ttc! : number
-  travelFees!: number
+  travelF!: number
 
   amount : number = 0
 
@@ -85,20 +85,20 @@ export class EditGroupsInvoiceComponent implements OnInit, OnDestroy {
       idClient: [this.selectedTrainings[0].client.corporateName, [Validators.required, Validators.minLength(6)]],
       numberInvoice: [this.invoiceNumber, [referenceValidator(this.selectedDate)]],
       createdAt: [new Date(), [Validators.required, Validators.minLength(6)]],
+      travelFees: ['', [Validators.required]],
     })
 
     this.tva = this.amount * 0.2
-    this.travelFees = 4500
-    this.ttc = this.tva + this.travelFees + this.amount
+    // this.ttc = this.tva + this.travelFees + this.amount
 
-    // const deadlineSubscription = this.editGroupsInvoiceForm.get('idClient')?.valueChanges.subscribe((idClient) => {
-    //   // Mettre en place la logique pour récupérer l'échéance en fonction du client sélectionné
-    //   this.getDeadlineForClient(idClient);
-    // });
-    //
-    // if (deadlineSubscription) {
-    //   this.subscriptions.push(deadlineSubscription)
-    // }
+    const travelExpensesSubscription = this.editGroupsInvoiceForm.get('travelFees')?.valueChanges.subscribe((travelFees) => {
+      this.travelF = this.editGroupsInvoiceForm.get('travelFees')?.value
+      this.ttc = this.tva + this.travelF + this.amount
+    });
+
+    if (travelExpensesSubscription) {
+      this.subscriptions.push(travelExpensesSubscription)
+    }
   }
 
   // Fonction pour obtenir l'échéance en fonction du client sélectionné
@@ -144,8 +144,11 @@ export class EditGroupsInvoiceComponent implements OnInit, OnDestroy {
       idClient: this.selectedTrainings[0].idClient,
       trainings: this.selectedTrainings,
       editor: this.userProfile.firstName + ' ' + this.userProfile.lastName,
-      amount : this.amount,
-      tva : this.tva
+      ht : this.amount,
+      tva : this.tva,
+      travelFees: this.travelF,
+      ttc: this.ttc,
+      createdAt : this.editGroupsInvoiceForm.get('createdAt')?.value,
     }
     const saveInvoiceSubscription = this.invoicingService.saveGroupsInvoice(trainingInvoice).subscribe({
       next: data => {
