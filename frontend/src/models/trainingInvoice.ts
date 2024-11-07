@@ -11,4 +11,5 @@ export interface TrainingInvoice {
   ttc? : number | null;
   travelFees? : number | null;
   trainings : Array<TrainingModel>;
+  groupsIds? : Array<number>
 }

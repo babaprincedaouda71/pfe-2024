@@ -30,6 +30,7 @@ export class AddComponent implements OnInit, OnDestroy {
   invoiceNumber: string = '';
   private userProfile!: KeycloakProfile;
   private subscriptions: Subscription[] = []
+  tva : number = 0
 
   constructor(private formBuilder: FormBuilder,
               private clientService: ClientService,
@@ -49,19 +50,10 @@ export class AddComponent implements OnInit, OnDestroy {
     this.addProductItem()
     this.getClients()
     this.updateInvoiceNumber()
-    // this.buildPattern()
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe())
-  }
-
-  buildPattern() {
-    const year = new Date().getFullYear().toString().slice(-2); // les deux derniers chiffres de l'année
-    const month = ('0' + (new Date().getMonth() + 1)).slice(-2); // le mois actuel avec deux chiffres
-
-    const pattern = `FS-${year}${month}-\\d{3}`; // FS-AAMM-00X
-    return pattern
   }
 
   getClients(): void {
@@ -79,13 +71,13 @@ export class AddComponent implements OnInit, OnDestroy {
 
   buildForm() {
     this.addStandardInvoiceForm = this.formBuilder.group({
+      createdAt: [new Date(), [Validators.required, Validators.minLength(6)]],
       idClient: [null, [Validators.required, Validators.minLength(6)]],
       numberInvoice: [this.invoiceNumber, [referenceValidator(this.selectedDate)]],
-      createdAt: [new Date(), [Validators.required, Validators.minLength(6)]],
       addDeadline: [],
       products: this.formBuilder.array([]),
       totalHT: [{value: '', disabled: true}],
-      tva: [0.2, Validators.required],
+      // tva: [0.2, Validators.required],
       totalTravelExpenses: [{value: '', disabled: true}],
       totalTTC: [{value: '', disabled: true}],
     })
@@ -141,6 +133,10 @@ export class AddComponent implements OnInit, OnDestroy {
     const standardInvoice: StandardInvoice = this.addStandardInvoiceForm.value;
     standardInvoice.editor = this.userProfile.firstName + ' ' + this.userProfile.lastName;
     standardInvoice.numberInvoice = this.invoiceNumber
+    standardInvoice.ht = this.addStandardInvoiceForm.get('totalHT')?.value;
+    standardInvoice.tva = this.tva
+    standardInvoice.travelFees = this.addStandardInvoiceForm.get('totalTravelExpenses')?.value
+    standardInvoice.ttc = this.addStandardInvoiceForm.get('totalTTC')?.value
     console.log("Numéro : " + standardInvoice.numberInvoice)
     const findInvoiceNumberSubscription = this.invoicingService.findInvoiceNumber(standardInvoice.numberInvoice)
       .subscribe({
@@ -196,54 +192,6 @@ export class AddComponent implements OnInit, OnDestroy {
     }
   }
 
-  // private addValueChangeSubscriptions(group: FormGroup) {
-  //   const quantitySubscription = group.get('quantity')?.valueChanges.subscribe(quantity => {
-  //     const unitPrice = group.get('unitPrice')?.value || 0;
-  //     group.get('total')?.setValue(quantity * unitPrice, {emitEvent: false});
-  //   });
-  //
-  //   const unitPriceSubscription = group.get('unitPrice')?.valueChanges.subscribe(unitPrice => {
-  //     const quantity = group.get('quantity')?.value || 0;
-  //     group.get('total')?.setValue(quantity * unitPrice, {emitEvent: false});
-  //   });
-  //
-  //   if (quantitySubscription) {
-  //     this.subscriptions.push(quantitySubscription)
-  //   }
-  //
-  //   if (unitPriceSubscription) {
-  //     this.subscriptions.push(unitPriceSubscription)
-  //   }
-  //
-  //   this.addStandardInvoiceForm.get('tva')?.valueChanges.subscribe(() => {
-  //     this.calculateTotals();
-  //   });
-  // }
-  //
-  // private calculateTotals() {
-  //   let totalHT = 0
-  //   let totalTravelExpenses = 0
-  //
-  //   this.productItem.controls.forEach(value => {
-  //     const total = value.get('total')?.value || 0
-  //     const travelExpenses = value.get('travelExpenses')?.value || 0
-  //
-  //     totalHT += total
-  //     totalTravelExpenses += travelExpenses
-  //   })
-  //
-  //   const totalTTC = (totalHT * 0.2).toFixed(2) + totalTravelExpenses
-  //
-  //   this.addStandardInvoiceForm.get('totalHT')?.setValue(totalHT, { emitEvent: false });
-  //   this.addStandardInvoiceForm.get('totalTravelExpenses')?.setValue(totalTravelExpenses, { emitEvent: false });
-  //   this.addStandardInvoiceForm.get('totalTTC')?.setValue(totalTTC, { emitEvent: false });
-  // }
-
-  addFormValueChangeSubscriptions() {
-    this.addStandardInvoiceForm.get('tva')?.valueChanges.subscribe(() => {
-      this.calculateTotals();
-    });
-  }
 
   updateInvoiceNumber() {
     const year = this.selectedDate.getFullYear() % 100; // Récupérer les deux derniers chiffres de l'année
@@ -293,6 +241,7 @@ export class AddComponent implements OnInit, OnDestroy {
       const travelExpenses = control.get('travelExpenses')?.value || 0;
 
       totalHT += total;
+      this.tva = totalHT * 0.2;
       totalTravelExpenses += travelExpenses;
     });
 

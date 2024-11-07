@@ -5,6 +5,10 @@ export interface StandardInvoice {
   createdAt? : number;
   editor : string;
   products : Array<ProductItem>;
+  ht? : number,
+  tva? : number | null;
+  ttc? : number | null;
+  travelFees? : number | null;
 }
 
 export interface ProductItem {

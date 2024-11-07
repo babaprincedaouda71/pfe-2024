@@ -8,6 +8,7 @@ import org.example.invoicingservice.entity.Invoice;
 import org.example.invoicingservice.enums.InvoiceStatus;
 import org.example.invoicingservice.enums.InvoiceType;
 import org.example.invoicingservice.model.Client;
+import org.example.invoicingservice.model.Group;
 import org.example.invoicingservice.model.Product;
 import org.example.invoicingservice.model.Training;
 import org.example.invoicingservice.repo.InvoiceRepo;
@@ -57,9 +58,9 @@ public class InvoiceServiceImpl implements InvoiceService {
             product -> {
               product.setInvoice(invoice);
               productList.add(product);
-              invoice.setTtc(
-                  product.getUnitPrice() * product.getQuantity()
-                      + ((product.getQuantity() * product.getUnitPrice()) * 0.2));
+              //              invoice.setTtc(
+              //                  product.getUnitPrice() * product.getQuantity()
+              //                      + ((product.getQuantity() * product.getUnitPrice()) * 0.2));
             });
     invoice.setClient(client);
     invoice.setProducts(productList);
@@ -101,7 +102,6 @@ public class InvoiceServiceImpl implements InvoiceService {
   public Invoice saveGroupsInvoice(Invoice invoice) {
     double total = 0d;
     LocalDate createdAt = LocalDate.now();
-    //    invoice.setNumberInvoice(generateInvoiceNumber("training"));
     invoice.setCreatedAt(invoice.getCreatedAt());
     invoice.setInvoiceType(InvoiceType.groupInvoice);
     Client client = clientRest.findClientById(invoice.getIdClient());
@@ -118,65 +118,167 @@ public class InvoiceServiceImpl implements InvoiceService {
                 this.total += training.getAmount();
 
                 // Marquer le groupe comme facturé
-                training.getGroups().forEach(group -> {
-//                  group.setInvoiced(true);
-//                  trainingRest.markGroupAsInvoiced(group);
-                });
+                training
+                    .getGroups()
+                    .forEach(
+                        group -> {
+                          //                  group.setInvoiced(true);
+                          //                  trainingRest.markGroupAsInvoiced(group);
+                        });
               });
       invoice.setHt(invoice.getHt() + invoice.getTravelFees());
       invoice.setTva((invoice.getTva()));
       invoice.setTravelFees(invoice.getTravelFees());
       invoice.setTtc(invoice.getTtc());
     }
+
+    if (invoice.getGroupsIds() != null) {
+      System.out.println("*********Start*******");
+      System.out.println("Group ids : " + invoice.getGroupsIds());
+      System.out.println("*********End**********");
+      invoice.setGroupsIds(invoice.getGroupsIds());
+    }
     invoice.setIdClient(invoice.getIdClient());
     invoice.setStatus(InvoiceStatus.Non_Réglée);
     return invoiceRepo.save(invoice);
   }
 
-
   @Override
   public Invoice updateGroupsInvoice(Invoice invoice, Long idInvoice) {
-    Invoice byId = invoiceRepo.findById(idInvoice).orElseThrow(() -> new RuntimeException("Invoice not found"));
+    Invoice byId =
+        invoiceRepo
+            .findById(idInvoice)
+            .orElseThrow(() -> new RuntimeException("Invoice not found"));
 
     return invoiceRepo.save(invoice);
   }
 
+  //  @Override
+  //  public List<Invoice> findAllInvoices() {
+  //    List<Training> trainingList = new ArrayList<>();
+  //    List<Invoice> all = invoiceRepo.findAll();
+  //    if (all.isEmpty()) {
+  //      System.out.println("No invoices found");
+  //    }
+  //    all.forEach(
+  //        invoice -> {
+  //          Client client = clientRest.findClientById(invoice.getIdClient());
+  //          if (invoice.getTrainings() == null) {
+  //            invoice
+  //                .getTrainingIds()
+  //                .forEach(
+  //                    trainingId -> {
+  //                      if (trainingId != null) {
+  //                        Training training = trainingRest.findTrainingById(trainingId);
+  //
+  //                        boolean hasValidGroup =
+  //                            training.getGroups().stream()
+  //                                .anyMatch(
+  //                                    group ->
+  // invoice.getGroupsIds().contains(group.getIdGroup()));
+  //
+  //                        if (hasValidGroup) {
+  //                          trainingList.add(training);
+  //                        }
+  //                      }
+  //                    });
+  //          }
+  //          invoice.setClient(client);
+  //          invoice.setTrainings(trainingList);
+  //        });
+  //    return all;
+  //  }
+
   @Override
   public List<Invoice> findAllInvoices() {
-    List<Training> trainingList = new ArrayList<>();
     List<Invoice> all = invoiceRepo.findAll();
     if (all.isEmpty()) {
       System.out.println("No invoices found");
+      return all;
     }
+
     all.forEach(
         invoice -> {
           Client client = clientRest.findClientById(invoice.getIdClient());
-          if (invoice.getTrainings() == null) {
+
+          // Initialiser la liste des trainings pour chaque facture
+          List<Training> filteredTrainings = new ArrayList<>();
+
+          // Vérifier si la facture a des IDs de formation
+          if (invoice.getTrainingIds() != null) {
             invoice
                 .getTrainingIds()
                 .forEach(
                     trainingId -> {
                       if (trainingId != null) {
                         Training training = trainingRest.findTrainingById(trainingId);
-                        System.out.println(training);
-                        trainingList.add(training);
+                        if (training != null) {
+
+                          // Filtrer les groupes associés au training pour inclure uniquement ceux
+                          // qui sont dans les IDs de groupe de la facture
+                          List<Group> filteredGroups =
+                              training.getGroups().stream()
+                                  .filter(
+                                      group -> invoice.getGroupsIds().contains(group.getIdGroup()))
+                                  .collect(Collectors.toList());
+
+                          // Mettre à jour les groupes du training avec ceux filtrés
+                          training.setGroups(filteredGroups);
+                          filteredTrainings.add(training);
+                        }
                       }
                     });
           }
+
+          // Associer le client et les trainings filtrés à la facture
           invoice.setClient(client);
-          invoice.setTrainings(trainingList);
+          invoice.setTrainings(filteredTrainings);
         });
+
     return all;
   }
 
+  //  @Override
+  //  public Invoice findInvoiceById(Long idInvoice) {
+  //    Invoice invoice =
+  //        invoiceRepo
+  //            .findById(idInvoice)
+  //            .orElseThrow(() -> new EntityNotFoundException("Invoice not found"));
+  //    feignClients(invoice);
+  //    feignTrainings(invoice);
+  //    return invoice;
+  //  }
+
   @Override
   public Invoice findInvoiceById(Long idInvoice) {
+    // Récupérer l'invoice ou lever une exception si non trouvée
     Invoice invoice =
         invoiceRepo
             .findById(idInvoice)
             .orElseThrow(() -> new EntityNotFoundException("Invoice not found"));
+
+    // Charger les clients et trainings associés
     feignClients(invoice);
     feignTrainings(invoice);
+
+    // Filtrer les groupes dans chaque training de l'invoice
+    if (invoice.getTrainings() != null) {
+      invoice
+          .getTrainings()
+          .forEach(
+              training -> {
+                // Filtrer les groupes associés au training en fonction des IDs de groupe de la
+                // facture
+                List<Group> filteredGroups =
+                    training.getGroups().stream()
+                        .filter(group -> invoice.getGroupsIds().contains(group.getIdGroup()))
+                        .collect(Collectors.toList());
+
+                // Mettre à jour les groupes du training avec ceux filtrés
+                training.setGroups(filteredGroups);
+              });
+    }
+
     return invoice;
   }
 
@@ -264,11 +366,15 @@ public class InvoiceServiceImpl implements InvoiceService {
     ObjectMapper objectMapper = new ObjectMapper();
     try {
       Invoice invoice = objectMapper.readValue(invoiceData, Invoice.class);
+      //      Invoice byNumberInvoice = invoiceRepo.findByNumberInvoice(invoice.getNumberInvoice());
       if (cheque != null) {
+        //        byNumberInvoice.setCheque(cheque.getBytes());
         invoice.setCheque(cheque.getBytes());
       }
       if (copyRemise != null) {
         invoice.setCopyRemise(copyRemise.getBytes());
+        //        byNumberInvoice.setCopyRemise(copyRemise.getBytes());
+        //        byNumberInvoice.setStatus(invoice.getStatus());
       }
       if (!invoice.getProducts().isEmpty()) {
         List<Product> productList = new ArrayList<>();
@@ -282,9 +388,10 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoice.setProducts(productList);
         invoice.setInvoiceType(InvoiceType.standard);
       } else {
-        invoice.setInvoiceType(InvoiceType.trainingModule);
+        invoice.setInvoiceType(InvoiceType.groupInvoice);
       }
       Invoice saved = invoiceRepo.save(invoice);
+      //      Invoice saved = invoiceRepo.save(byNumberInvoice);
 
       if (saved.getTrainings() == null) {
         List<Training> trainingList = new ArrayList<>();

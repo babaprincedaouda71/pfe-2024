@@ -11,6 +11,7 @@ export interface InvoiceModel {
   idTraining: number;
   trainings : Array<TrainingModel>,
   groups : Array<GroupModel>,
+  groupsIds? : Array<number>
   products : Array<ProductItem>,
   ht : number;
   tva : number;

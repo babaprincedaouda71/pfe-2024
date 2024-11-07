@@ -96,7 +96,7 @@
           <td *matCellDef="let element" class="f-s-14" mat-cell>
             @if (element.ttc) {
 <!--              {{ element.ttc.toFixed(2) }}-->
-              {{ element.ttc }}
+              {{ element.ttc.toFixed(2).replace('.', ',') }}
             }
           </td>
         </ng-container>
@@ -122,7 +122,7 @@
                           [disabled]="element.status == 'Réglée'"
                           class="custom-dropdown-select">
                     <option [selected]="element.status == 'Non_Régléé'" value="Non_Réglée">Non Réglée</option>
-                    <option [selected]="element.status == 'Réglée'" value="Réglée">Régléé</option>
+                    <option [selected]="element.status == 'Réglée'" value="Réglée">Réglée</option>
                   </select>
                   <span class="custom-dropdown-arrow"></span>
                 </div>
@@ -173,7 +173,7 @@
             <!--            View Invoice-->
             @if (element.invoiceType == 'standard') {
               <a
-                (click)="generateInvoice(element)"
+                (click)="printBill(element.idInvoice)"
                 class="m-r-10 cursor-pointer"
               >
                 <i-tabler name="eye" class="icon-18"></i-tabler
@@ -181,7 +181,7 @@
               </a>
             } @else {
               <a
-                (click)="generateInvoice(element)"
+                (click)="printBill(element.idInvoice)"
                 class="m-r-10 cursor-pointer"
               >
                 <i-tabler name="eye" class="icon-18"></i-tabler

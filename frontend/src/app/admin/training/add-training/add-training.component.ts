@@ -177,7 +177,6 @@ export class AddTrainingComponent implements OnInit, OnDestroy {
     // console.log(this.addTrainingForm.value)
     const training: TrainingModel = this.addTrainingForm.value
     training.amount = this.addTrainingForm.get('dailyAmount')?.value * this.addTrainingForm.get('days')?.value
-    console.log(training)
     const addTrainingSubscription = this.trainingService.addTraining(training)
       .subscribe({
         next: data => {

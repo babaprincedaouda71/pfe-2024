@@ -13,6 +13,8 @@ import {KeycloakProfile} from "keycloak-js";
 import {referenceValidator} from "../../../../_validators/invoice-format.validator";
 import {TrainingInvoice} from "../../../../../models/trainingInvoice";
 import {GroupService} from "../../../../_services/group.service";
+import { group } from '@angular/animations';
+import { set } from 'date-fns';
 
 @Component({
   selector: 'app-edit-groups-invoice',
@@ -37,15 +39,13 @@ export class EditGroupsInvoiceComponent implements OnInit, OnDestroy {
   datasource!: MatTableDataSource<TrainingModel>
   selection = new SelectionModel<GroupModel>(true, []);
   groups!: Array<GroupModel>
+  tva!: number
+  ttc!: number
+  travelF!: number
+  amount: number = 0
+  groupsIds! : Array<number>
   private subscriptions: Subscription[] = []
   private userProfile!: KeycloakProfile;
-
-  tva! : number
-  ttc! : number
-  travelF!: number
-
-  amount : number = 0
-
 
   constructor(private invoicingService: InvoicingService,
               private router: Router,
@@ -62,6 +62,7 @@ export class EditGroupsInvoiceComponent implements OnInit, OnDestroy {
       this.calculateAmountHT(this.selectedTrainings)
       this.datasource = new MatTableDataSource(this.selectedTrainings)
       this.buildForm()
+      //this.getGroupsIds(this.selectedTrainings)
       this.getDeadlineForClient(this.selectedTrainings[0].idClient)
       this.updateInvoiceNumber()
     }
@@ -72,17 +73,33 @@ export class EditGroupsInvoiceComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe())
   }
 
-  calculateAmountHT(trainings : TrainingModel[]) {
+  calculateAmountHT(trainings: TrainingModel[]) {
     trainings.forEach(training => {
       training.groups.forEach(group => {
         this.amount += group.groupAmount
       })
     })
+    this.getGroupsIds(trainings)
   }
+
+  getGroupsIds(trainings: TrainingModel[]) {
+    const uniqueGroupIds = new Set<number>();  // Utilisation d'un Set pour l'unicité
+    
+    trainings.forEach(training => {
+      training.groups.forEach(group => {
+        uniqueGroupIds.add(group.idGroup);  // Ajoute l'idGroup au Set (pas de doublons)
+      });
+    });
+  
+    // Convertir le Set en tableau et assigner à groupsIds
+    this.groupsIds = Array.from(uniqueGroupIds);  
+  }
+  
+  
 
   buildForm() {
     this.editGroupsInvoiceForm = this.formBuilder.group({
-      idClient: [this.selectedTrainings[0].client.corporateName, [Validators.required, Validators.minLength(6)]],
+      idClient: [this.selectedTrainings[0].client.corporateName],
       numberInvoice: [this.invoiceNumber, [referenceValidator(this.selectedDate)]],
       createdAt: [new Date(), [Validators.required, Validators.minLength(6)]],
       travelFees: ['', [Validators.required]],
@@ -93,7 +110,11 @@ export class EditGroupsInvoiceComponent implements OnInit, OnDestroy {
 
     const travelExpensesSubscription = this.editGroupsInvoiceForm.get('travelFees')?.valueChanges.subscribe((travelFees) => {
       this.travelF = this.editGroupsInvoiceForm.get('travelFees')?.value
-      this.ttc = this.tva + this.travelF + this.amount
+      if (this.travelF != null || this.travelF > 0) {
+        this.ttc = this.tva + this.travelF + this.amount
+      } else {
+        this.ttc = this.tva + this.amount
+      }
     });
 
     if (travelExpensesSubscription) {
@@ -143,13 +164,16 @@ export class EditGroupsInvoiceComponent implements OnInit, OnDestroy {
       numberInvoice: this.invoiceNumber,
       idClient: this.selectedTrainings[0].idClient,
       trainings: this.selectedTrainings,
+      groupsIds: this.groupsIds,
       editor: this.userProfile.firstName + ' ' + this.userProfile.lastName,
-      ht : this.amount,
-      tva : this.tva,
+      ht: this.amount,
+      tva: this.tva,
       travelFees: this.travelF,
       ttc: this.ttc,
-      createdAt : this.editGroupsInvoiceForm.get('createdAt')?.value,
+      createdAt: this.editGroupsInvoiceForm.get('createdAt')?.value,
     }
+    console.log("Lite de id de groupe")
+    console.log(trainingInvoice.groupsIds)
     const saveInvoiceSubscription = this.invoicingService.saveGroupsInvoice(trainingInvoice).subscribe({
       next: data => {
         data.trainings.forEach(training => {

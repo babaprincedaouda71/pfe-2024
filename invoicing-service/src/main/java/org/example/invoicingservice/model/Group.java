@@ -20,5 +20,5 @@ public class Group {
     private int days;
     private String startDate;
     private String endDate;
-//    private boolean invoiced;
+    private Long idTraining;
 }

@@ -9,6 +9,7 @@ import org.example.invoicingservice.model.Group;
 import org.example.invoicingservice.model.Product;
 import org.example.invoicingservice.model.Training;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -56,7 +57,8 @@ public class Invoice {
 
   @Transient private List<Training> trainings;
 
-  @Transient List<Group> trainingGroups;
+  @ElementCollection
+  List<Long> groupsIds = new ArrayList<>();
 
   @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
   private List<Product> products;

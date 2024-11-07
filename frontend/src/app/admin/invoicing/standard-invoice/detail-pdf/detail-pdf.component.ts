@@ -49,7 +49,7 @@ export class DetailPdfComponent implements OnInit, OnDestroy{
   /**************************************************/
   generateInvoice(invoice : InvoiceModel) {
     if (invoice.invoiceType == 'standard') {
-      this.invoicingService.generateStandardInvoicePDF(invoice.products, invoice.client, invoice.numberInvoice)
+      this.invoicingService.generateStandardInvoicePDF(invoice, invoice.products, invoice.client, invoice.numberInvoice)
         .then((blob : any) => {
           const url = URL.createObjectURL(blob);
           this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);

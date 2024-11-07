@@ -141,7 +141,11 @@
                   Montant HT
                 </th>
                 <td *matCellDef="let element" class="mat-body-1" mat-cell>
-                  {{ amount }}
+                  <ul class="group-list">
+                    <li *ngFor="let group of element.groups; let i = index" class="group-item">
+                      {{ group.groupAmount }}
+                    </li>
+                  </ul>
                 </td>
               </ng-container>
 
@@ -174,13 +178,8 @@
           </div>
         </div>
       </div>
-<!--      <div class="m-t-12 text-right">-->
-<!--        <button [disabled]="editGroupsInvoiceForm.invalid" color="primary" mat-flat-button type="submit">-->
-<!--          Enregistrer-->
-<!--        </button>-->
-<!--      </div>-->
       <div class="m-t-12 text-right">
-        <button color="primary" mat-flat-button type="submit">
+        <button [disabled]="editGroupsInvoiceForm.invalid" color="primary" mat-flat-button type="submit">
           Enregistrer
         </button>
       </div>
