@@ -20,6 +20,8 @@ public class TrainingGroup {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long idGroup;
 
+  private String label;
+
   private String startDate;
   private String endDate;
 

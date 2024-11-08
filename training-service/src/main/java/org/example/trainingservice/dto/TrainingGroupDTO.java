@@ -16,6 +16,8 @@ import java.util.List;
 public class TrainingGroupDTO {
     private Long idGroup;
 
+    private String label;
+
     private String startDate;
 
     private String endDate;

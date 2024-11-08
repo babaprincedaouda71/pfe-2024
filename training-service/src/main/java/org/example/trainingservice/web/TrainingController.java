@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import org.example.trainingservice.dto.AddTrainingDTO;
 import org.example.trainingservice.dto.TrainingDTO;
 import org.example.trainingservice.dto.TrainingInvoiceDTO;
+import org.example.trainingservice.entity.Training;
 import org.example.trainingservice.service.TrainingService;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -157,5 +159,11 @@ public class TrainingController {
   @PreAuthorize("hasAnyAuthority('admin','user')")
   public boolean checkIfTrainingSupportExists(@PathVariable Long idTraining) {
     return trainingService.checkIfTrainingSupportExists(idTraining);
+  }
+
+  @PostMapping("/filteredByGroup")
+  public ResponseEntity<List<TrainingDTO>> getFilteredTrainings(@RequestBody List<Long> groupIds) {
+    List<TrainingDTO> filteredTrainings = trainingService.getTrainingsByGroupIds(groupIds);
+    return ResponseEntity.ok(filteredTrainings);
   }
 }

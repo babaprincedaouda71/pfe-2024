@@ -23,4 +23,7 @@ public interface TrainingRepository extends JpaRepository<Training, Long> {
 
     @Query("SELECT t FROM Training t WHERE t.idClient = :idClient")
     List<Training> findByIdClient(Long idClient);
+
+    @Query("SELECT DISTINCT t FROM Training t JOIN FETCH t.groups g WHERE g.idGroup IN :groupIds")
+    List<Training> findTrainingsByGroupIds(@Param("groupIds") List<Long> groupIds);
 }

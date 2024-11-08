@@ -12,6 +12,7 @@ import java.util.List;
 @ToString
 public class Group {
     private Long idGroup;
+    private String label;
     private Long idVendor;
     private List<String> groupDates;
     private String location;

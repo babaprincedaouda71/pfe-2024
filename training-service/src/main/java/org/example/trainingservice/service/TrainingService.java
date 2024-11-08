@@ -3,6 +3,7 @@ package org.example.trainingservice.service;
 import org.example.trainingservice.dto.AddTrainingDTO;
 import org.example.trainingservice.dto.TrainingDTO;
 import org.example.trainingservice.dto.TrainingInvoiceDTO;
+import org.example.trainingservice.entity.Training;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -47,4 +48,6 @@ public interface TrainingService {
     boolean checkIfPvExists(Long idTraining);
 
     boolean checkIfTrainingSupportExists(Long idTraining);
+
+    List<TrainingDTO> getTrainingsByGroupIds(List<Long> groupIds);
 }

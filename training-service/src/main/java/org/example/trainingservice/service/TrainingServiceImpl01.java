@@ -317,14 +317,18 @@ public class TrainingServiceImpl01 implements TrainingService {
 
     // ***** Partie modifiée : Identification des groupes supprimés *****
     // 1. Créer un ensemble des IDs de groupes dans addTrainingDTO
-    Set<Long> updatedGroupIds = addTrainingDTO.getGroups().stream()
+    Set<Long> updatedGroupIds =
+        addTrainingDTO.getGroups().stream()
             .map(TrainingGroup::getIdGroup)
             .filter(Objects::nonNull) // Ignorer les nouveaux groupes sans IDs
             .collect(Collectors.toSet());
 
     // 2. Identifier les groupes dans training qui ne sont pas dans addTrainingDTO
-    List<TrainingGroup> groupsToRemove = training.getGroups().stream()
-            .filter(group -> group.getIdGroup() != null && !updatedGroupIds.contains(group.getIdGroup()))
+    List<TrainingGroup> groupsToRemove =
+        training.getGroups().stream()
+            .filter(
+                group ->
+                    group.getIdGroup() != null && !updatedGroupIds.contains(group.getIdGroup()))
             .collect(Collectors.toList());
 
     // Supprimer ces groupes de la formation et de la base de données
@@ -924,5 +928,37 @@ public class TrainingServiceImpl01 implements TrainingService {
             training ->
                 training.getTrainingSupport() != null && training.getTrainingSupport().length > 0)
         .orElse(false);
+  }
+
+  @Override
+  public List<TrainingDTO> getTrainingsByGroupIds(List<Long> groupIds) {
+    // Récupérer les formations contenant les groupes spécifiques
+    List<Training> trainings = trainingRepository.findTrainingsByGroupIds(groupIds);
+
+    List<TrainingDTO> trainingDTOS = new ArrayList<>();
+
+    trainings.forEach(training -> {
+      trainingDTOS.add(trainingMapper.fromTraining(training));
+    });
+
+    System.out.println("*******Size*******");
+    System.out.println("Trainings found: " + trainings.size());
+    System.out.println("*******End Size*******");
+
+    // Filtrer les groupes dans chaque formation pour ne conserver que ceux dont l'id est dans
+    // groupIds
+    for (TrainingDTO trainingDTO : trainingDTOS) {
+      // Filtrer les groupes uniquement en mémoire (aucune modification de la base de données)
+      List<TrainingGroup> filteredGroups =
+          trainingDTO.getGroups().stream()
+              .filter(group -> groupIds.contains(group.getIdGroup()))
+              .collect(Collectors.toList());
+
+      // Mettre à jour la liste des groupes pour chaque formation sans modifier la base de données
+      // Cette modification est seulement en mémoire
+      trainingDTO.setGroups(filteredGroups);
+    }
+
+    return trainingDTOS;
   }
 }

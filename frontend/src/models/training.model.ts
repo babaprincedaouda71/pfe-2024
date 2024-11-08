@@ -28,6 +28,7 @@ export interface TrainingModel {
 
 export interface GroupModel {
   idGroup: number;
+  label: string;
   groupStaff: number;
   location: string;
   startDate : string;

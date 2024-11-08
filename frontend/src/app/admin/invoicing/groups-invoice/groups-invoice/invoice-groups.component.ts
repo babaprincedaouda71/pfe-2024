@@ -199,8 +199,16 @@ export class InvoiceGroupsComponent implements OnInit, OnDestroy {
   onGoToValidate() {
     const selectedTrainings = this.getSelectedTrainings();
 
+    // Extraire uniquement les identifiants des groupes sélectionnés
+    const selectedGroupIds = selectedTrainings.flatMap(training => {
+      return training.groups.map(group => group.idGroup)
+    });
+
+    // Stocker uniquement les identifiants des groupes sélectionnés
+    localStorage.setItem('selectedGroupIds', JSON.stringify(selectedGroupIds));
+
     // Stocker les données dans localStorage
-    localStorage.setItem('selectedTrainings', JSON.stringify(selectedTrainings));
+    // localStorage.setItem('selectedTrainings', JSON.stringify(selectedTrainings));
 
     // Naviguer vers la page cible
     this.router.navigate(['/invoicing/edit-groups-invoice'])

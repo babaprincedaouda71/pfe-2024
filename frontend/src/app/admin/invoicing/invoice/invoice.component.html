@@ -31,6 +31,103 @@
   </mat-card-content>
 </mat-card>
 
+<!--Filtre-->
+<!--<mat-card *ngIf="datasource" class="cardWithShadow">-->
+<!--  <mat-card-content class="p-24">-->
+<!--    <div class="row">-->
+<!--      &lt;!&ndash;      Control Selection To Filter By Vendor&ndash;&gt;-->
+<!--      <div class="col-lg-3">-->
+<!--        <div class="row">-->
+<!--          <div class="col-sm-12">-->
+<!--            <mat-form-field appearance="outline" class="w-100">-->
+<!--              <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"-->
+<!--              >Filtrer par Éditeur:-->
+<!--              </mat-label>-->
+<!--              <mat-select (selectionChange)="applyFilter($event, 'vendor')" [(value)]="selectedVendor">-->
+<!--                <mat-option value="">Tous</mat-option>-->
+<!--                <mat-option *ngFor="let vendor of uniqueVendors" [value]="vendor">{{ vendor }}</mat-option>-->
+<!--              </mat-select>-->
+<!--            </mat-form-field>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash;      Control Selection To Filter By Date&ndash;&gt;-->
+<!--      <div class="col-lg-3">-->
+<!--        <div class="row">-->
+<!--          <div class="col-sm-12">-->
+<!--            <mat-form-field appearance="outline" class="w-100">-->
+<!--              <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"-->
+<!--              >Filtrer par Année:-->
+<!--              </mat-label>-->
+<!--              <mat-select (selectionChange)="applyFilter($event, 'date')" [(value)]="selectedDate">-->
+<!--                <mat-option value="">Tous</mat-option>-->
+<!--                <mat-option value="0">Janvier</mat-option>-->
+<!--                <mat-option value="1">Février</mat-option>-->
+<!--                <mat-option value="2">Mars</mat-option>-->
+<!--                <mat-option value="3">Avril</mat-option>-->
+<!--                <mat-option value="4">Mai</mat-option>-->
+<!--                <mat-option value="5">Juin</mat-option>-->
+<!--                <mat-option value="6">Juillet</mat-option>-->
+<!--                <mat-option value="7">Août</mat-option>-->
+<!--                <mat-option value="8">Septembre</mat-option>-->
+<!--                <mat-option value="9">Octobre</mat-option>-->
+<!--                <mat-option value="10">Novembre</mat-option>-->
+<!--                <mat-option value="11">Décembre</mat-option>-->
+<!--              </mat-select>-->
+<!--            </mat-form-field>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash;      Control Selection To Filter By Date&ndash;&gt;-->
+<!--      <div class="col-lg-3">-->
+<!--        <div class="row">-->
+<!--          <div class="col-sm-12">-->
+<!--            <mat-form-field appearance="outline" class="w-100">-->
+<!--              <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"-->
+<!--              >Filtrer par État:-->
+<!--              </mat-label>-->
+<!--              <mat-select (selectionChange)="applyFilter($event, 'date')" [(value)]="selectedDate">-->
+<!--                <mat-option value="">Tous</mat-option>-->
+<!--                <mat-option value="0">Janvier</mat-option>-->
+<!--                <mat-option value="1">Février</mat-option>-->
+<!--                <mat-option value="2">Mars</mat-option>-->
+<!--                <mat-option value="3">Avril</mat-option>-->
+<!--                <mat-option value="4">Mai</mat-option>-->
+<!--                <mat-option value="5">Juin</mat-option>-->
+<!--                <mat-option value="6">Juillet</mat-option>-->
+<!--                <mat-option value="7">Août</mat-option>-->
+<!--                <mat-option value="8">Septembre</mat-option>-->
+<!--                <mat-option value="9">Octobre</mat-option>-->
+<!--                <mat-option value="10">Novembre</mat-option>-->
+<!--                <mat-option value="11">Décembre</mat-option>-->
+<!--              </mat-select>-->
+<!--            </mat-form-field>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      &lt;!&ndash;      Control Selection To Filter By Client&ndash;&gt;-->
+<!--      <div class="col-lg-3">-->
+<!--        <div class="row">-->
+<!--          <div class="col-sm-12">-->
+<!--            <mat-form-field appearance="outline" class="w-100">-->
+<!--              <mat-label class="mat-subtitle-2 f-w-600 d-block m-b-16"-->
+<!--              >Filtrer par Client:-->
+<!--              </mat-label>-->
+<!--              <mat-select (selectionChange)="applyFilter($event, 'client')" [(value)]="selectedClient">-->
+<!--                <mat-option value="">Tous</mat-option>-->
+<!--                <mat-option *ngFor="let client of uniqueClients" [value]="client">{{ client }}</mat-option>-->
+<!--              </mat-select>-->
+<!--            </mat-form-field>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </mat-card-content>-->
+<!--</mat-card>-->
+<!--Fin Filte-->
+
 <mat-card *ngIf="datasource" class="cardWithShadow">
   <mat-card-content class="p-24">
     <div class="table-responsive">
@@ -95,7 +192,7 @@
           </th>
           <td *matCellDef="let element" class="f-s-14" mat-cell>
             @if (element.ttc) {
-<!--              {{ element.ttc.toFixed(2) }}-->
+              <!--              {{ element.ttc.toFixed(2) }}-->
               {{ element.ttc.toFixed(2).replace('.', ',') }}
             }
           </td>

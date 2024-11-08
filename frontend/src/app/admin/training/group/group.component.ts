@@ -101,11 +101,10 @@ export class LifecycleDialogContentComponent implements OnDestroy {
   showPV: boolean = false;
   pv!: string
   showCertifForm: boolean = false;
-  selectedTrainingSupport!: File
   selectedPresenceList!: File
   selectedEvaluation!: File
-  private subscriptions: Subscription[] = [];
   initialLifeCycleState: any
+  private subscriptions: Subscription[] = [];
 
   constructor(public dialogRef: MatDialogRef<LifecycleDialogContentComponent>,
               @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
@@ -118,7 +117,6 @@ export class LifecycleDialogContentComponent implements OnDestroy {
     this.action = data.action
     // Stockez l'état initial comme une copie profonde immuable
     this.initialLifeCycleState = JSON.parse(JSON.stringify(this.local_data.groupLifeCycle));
-    this.selectedTrainingSupport = this.local_data.trainingSupport
   }
 
   ngOnDestroy() {
@@ -132,10 +130,9 @@ export class LifecycleDialogContentComponent implements OnDestroy {
 
   doAction() {
     // Comparer l'état actuel avec l'état initial
-    if (!this.hasLifeCycleChanged()){
-      this.dialogRef.close({ event : 'Cancel'})
-    }
-    else {
+    if (!this.hasLifeCycleChanged()) {
+      this.dialogRef.close({event: 'Cancel'})
+    } else {
       this.dialogRef.close({event: this.action, data: this.local_data});
       this.snackBar.open('Le Cycle de Vie a été modifié avec Succès', 'Fermer', {
         duration: 4000,
@@ -325,12 +322,23 @@ export class LifecycleDialogContentComponent implements OnDestroy {
     }
   }
 
+  // Stocker le id du group
+  storeGroupId() {
+    // Si groupId est un nombre, le mettre dans un tableau
+    const groupIdArray = Array.isArray(this.local_data.idGroup) ?
+      this.local_data.idGroup :
+      [this.local_data.idGroup];
+    console.log(groupIdArray)
+    localStorage.setItem('selectedGroupIds', JSON.stringify(groupIdArray));
+    this.router.navigate([`invoicing/edit-groups-invoice`])
+  }
+
   checkInvoicing(event: any) {
     if (this.local_data.groupLifeCycle.invoicing && !this.local_data.groupLifeCycle.payment) {
       event.preventDefault();
       event.stopPropagation();
       this.closeDialog()
-      this.router.navigate([`invoicing/invoice-groups`])
+      this.storeGroupId()
     } else {
       this.resetCheckboxes('invoicing');
       this.updateLifeCycle(this.local_data)

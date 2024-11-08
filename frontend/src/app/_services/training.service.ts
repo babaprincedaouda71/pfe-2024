@@ -93,4 +93,8 @@ export class TrainingService {
   public checkIfTrainingSupportExists(idTraining: number) : Observable<boolean> {
     return this.http.get<boolean>(`${this.host}/training/checkTrainingSupport/${idTraining}`)
   }
+
+  public getFilteredTrainings(groupIds : Array<number>) {
+    return this.http.post<Array<TrainingModel>>(`${this.host}/training/filteredByGroup`, groupIds )
+  }
 }
