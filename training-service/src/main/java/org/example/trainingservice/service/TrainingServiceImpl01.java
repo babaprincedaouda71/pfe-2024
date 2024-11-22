@@ -32,6 +32,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Transactional
@@ -152,29 +153,87 @@ public class TrainingServiceImpl01 implements TrainingService {
     return trainingMapper.fromTrainingToAddTrainingDTO(savedTraining);
   }
 
+  //  @Override
+  //  public List<TrainingDTO> getTrainings() {
+  //    List<Training> all = trainingRepository.findAll();
+  //    List<TrainingDTO> trainingDTOS = new ArrayList<>();
+  //    if (all.isEmpty()) {
+  //      throw new TrainingsNotFoundException("Not Training Found In The DataBase");
+  //    }
+  //    all.forEach(
+  //        training -> {
+  //          Client client = clientRest.findClientById(training.getIdClient());
+  //          training.setClient(client);
+  //          Vendor vendor = vendorRest.findVendorById(training.getIdVendor());
+  //          training.setVendor(vendor);
+  //          training
+  //              .getGroups()
+  //              .forEach(
+  //                  trainingGroup -> {
+  //                    Vendor vendor1 = vendorRest.findVendorById(trainingGroup.getIdVendor());
+  //                    trainingGroup.setSupplier(vendor1);
+  //                  });
+  //          trainingDTOS.add(trainingMapper.fromTraining(training));
+  //        });
+  //    return trainingDTOS;
+  //  }
+
   @Override
   public List<TrainingDTO> getTrainings() {
-    List<Training> all = trainingRepository.findAll();
-    List<TrainingDTO> trainingDTOS = new ArrayList<>();
-    if (all.isEmpty()) {
-      throw new TrainingsNotFoundException("Not Training Found In The DataBase");
+    // Charger toutes les formations depuis la base de données
+    List<Training> trainings = trainingRepository.findAll();
+
+    if (trainings.isEmpty()) {
+      throw new TrainingsNotFoundException("No Training Found In The Database");
     }
-    all.forEach(
-        training -> {
-          Client client = clientRest.findClientById(training.getIdClient());
-          training.setClient(client);
-          Vendor vendor = vendorRest.findVendorById(training.getIdVendor());
-          training.setVendor(vendor);
-          training
-              .getGroups()
-              .forEach(
-                  trainingGroup -> {
-                    Vendor vendor1 = vendorRest.findVendorById(trainingGroup.getIdVendor());
-                    trainingGroup.setSupplier(vendor1);
-                  });
-          trainingDTOS.add(trainingMapper.fromTraining(training));
-        });
-    return trainingDTOS;
+
+    // Préparer les IDs nécessaires pour regrouper les appels REST
+    Set<Long> clientIds = trainings.stream().map(Training::getIdClient).collect(Collectors.toSet());
+
+    Set<Long> groupVendorIds =
+        trainings.stream()
+            .flatMap(training -> training.getGroups().stream())
+            .map(TrainingGroup::getIdVendor)
+            .collect(Collectors.toSet());
+
+    // Appels REST groupés
+    List<Client> clientList = clientRest.findClientsByIds(clientIds);
+    Map<Long, Client> clientMap =
+        clientList.stream().collect(Collectors.toMap(Client::getIdClient, Function.identity()));
+
+    List<Vendor> vendorList = vendorRest.findVendorsByIds(groupVendorIds);
+    Map<Long, Vendor> vendorMap =
+        vendorList.stream().collect(Collectors.toMap(Vendor::getIdVendor, Function.identity()));
+
+    // Transformation des formations en DTOs
+    return trainings.stream()
+        .map(
+            training -> {
+              // Associer Client aux trainings
+              Client client = clientMap.get(training.getIdClient());
+//              if (client == null) {
+//                throw new ClientNotFoundException(
+//                    "Client not found for ID: " + training.getIdClient());
+//              }
+              training.setClient(client);
+
+              // Associer les Vendors aux groupes
+              training
+                  .getGroups()
+                  .forEach(
+                      group -> {
+                        Vendor vendor = vendorMap.get(group.getIdVendor());
+//                        if (vendor == null) {
+//                          throw new VendorNotFoundException(
+//                              "Vendor not found for ID: " + group.getIdVendor());
+//                        }
+                        group.setSupplier(vendor);
+                      });
+
+              // Mapper Training en TrainingDTO
+              return trainingMapper.fromTraining(training);
+            })
+        .collect(Collectors.toList());
   }
 
   @Override
@@ -937,9 +996,10 @@ public class TrainingServiceImpl01 implements TrainingService {
 
     List<TrainingDTO> trainingDTOS = new ArrayList<>();
 
-    trainings.forEach(training -> {
-      trainingDTOS.add(trainingMapper.fromTraining(training));
-    });
+    trainings.forEach(
+        training -> {
+          trainingDTOS.add(trainingMapper.fromTraining(training));
+        });
 
     System.out.println("*******Size*******");
     System.out.println("Trainings found: " + trainings.size());

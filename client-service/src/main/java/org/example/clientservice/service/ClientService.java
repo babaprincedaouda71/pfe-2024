@@ -6,6 +6,7 @@ import org.example.clientservice.entity.Client;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public interface ClientService {
@@ -20,4 +21,6 @@ public interface ClientService {
   ClientDTO deleteClient(Long idClient);
 
     int getDeadline(Long idClient);
+
+    List<Client> findAllById(Set<Long> ids);
 }

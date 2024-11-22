@@ -7,25 +7,41 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @FeignClient(name = "CLIENT-SERVICE")
 public interface ClientRest {
-    Logger logger = LoggerFactory.getLogger(ClientRest.class);
+  Logger logger = LoggerFactory.getLogger(ClientRest.class);
 
-    @GetMapping("/client/find/{idClient}")
-    @CircuitBreaker(name = "clientService", fallbackMethod = "getDefaultClient")
-    Client findClientById(@PathVariable Long idClient);
+  @GetMapping("/client/find/{idClient}")
+  @CircuitBreaker(name = "clientService", fallbackMethod = "getDefaultClient")
+  Client findClientById(@PathVariable Long idClient);
 
-    @GetMapping("/client/all")
-    @CircuitBreaker(name = "clientService", fallbackMethod = "getAllDefaultClients")
-    List<Client> allClients();
+  @GetMapping("/client/all")
+  @CircuitBreaker(name = "clientService", fallbackMethod = "getAllDefaultClients")
+  List<Client> allClients();
 
-    default Client getDefaultClient(Long idClient, Throwable exception) {
-        logger.error("Fallback method for findClientById triggered", exception);
+  @GetMapping("/client/some")
+  @CircuitBreaker(name = "clientService", fallbackMethod = "getDefaultClientsByIds")
+  List<Client> findClientsByIds(@RequestParam Set<Long> ids);
+
+  default List<Client> getDefaultClientsByIds(Set<Long> ids, Throwable exception) {
+    logger.error("Fallback method for findClientsByIds triggered", exception);
+    return ids.stream()
+        .map(
+            id -> {
+                return getClient(id);
+            })
+        .toList();
+  }
+
+    private Client getClient(Long id) {
         Client client = new Client();
-        client.setIdClient(idClient);
+        client.setIdClient(id);
         client.setCorporateName("Not Available");
         client.setAddress("Not Available");
         client.setEmail("Not Available");
@@ -37,8 +53,13 @@ public interface ClientRest {
         return client;
     }
 
-    default List<Client> getAllDefaultClients(Throwable exception) {
-        logger.error("Fallback method for allClients triggered", exception);
-        return List.of();
+    default Client getDefaultClient(Long idClient, Throwable exception) {
+    logger.error("Fallback method for findClientById triggered", exception);
+        return getClient(idClient);
     }
+
+  default List<Client> getAllDefaultClients(Throwable exception) {
+    logger.error("Fallback method for allClients triggered", exception);
+    return List.of();
+  }
 }

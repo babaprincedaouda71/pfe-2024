@@ -84,8 +84,6 @@ export class TrainingComponent implements OnInit, OnDestroy {
         // Setup table data and pagination
         this.datasource = new MatTableDataSource(this.trainings);
         this.datasource.paginator = this.paginator;
-        console.log(this.datasource)
-
 
         // Filter operations
         this.filteredTrainings = [...this.trainings];
@@ -165,7 +163,9 @@ export class TrainingComponent implements OnInit, OnDestroy {
   getAllUniqueVendors() {
     const vendors = new Set<string>()
     this.trainings.forEach(training => {
-      vendors.add(training.vendor.name)
+      training.groups.forEach(group => {
+        vendors.add(group.supplier.name)
+      })
     })
     return Array.from(vendors)
   }

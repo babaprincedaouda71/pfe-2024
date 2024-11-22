@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -79,6 +80,11 @@ public class VendorServiceImplv1 implements VendorService {
   public Vendor updateVendor(Vendor vendor) {
     getVendor(vendor.getIdVendor());
     return vendorRepo.save(vendor);
+  }
+
+  @Override
+  public List<Vendor> findAllById(Set<Long> ids) {
+    return vendorRepo.findAllById(ids);
   }
 
   @Override

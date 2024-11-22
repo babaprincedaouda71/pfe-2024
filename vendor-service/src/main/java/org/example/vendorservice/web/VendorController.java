@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/vendor")
@@ -49,5 +50,11 @@ public class VendorController {
     @DeleteMapping("/delete/{idVendor}")
     public Vendor deleteVendor(@PathVariable long idVendor) {
         return vendorService.deleteVendor(idVendor);
+    }
+
+    @GetMapping("/some")
+    @PreAuthorize("hasAnyAuthority('admin','user')")
+    public List<Vendor> findVendorsByIds(@RequestParam Set<Long> ids) {
+        return vendorService.findAllById(ids);
     }
 }

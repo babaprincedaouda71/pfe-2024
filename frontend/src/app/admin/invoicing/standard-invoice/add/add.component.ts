@@ -28,9 +28,9 @@ export class AddComponent implements OnInit, OnDestroy {
   deadline!: number;
   selectedDate: Date = new Date(); // Date sélectionnée dans le calendrier
   invoiceNumber: string = '';
+  tva: number = 0
   private userProfile!: KeycloakProfile;
   private subscriptions: Subscription[] = []
-  tva : number = 0
 
   constructor(private formBuilder: FormBuilder,
               private clientService: ClientService,
@@ -132,7 +132,7 @@ export class AddComponent implements OnInit, OnDestroy {
   onSubmit() {
     const standardInvoice: StandardInvoice = this.addStandardInvoiceForm.value;
     standardInvoice.editor = this.userProfile.firstName + ' ' + this.userProfile.lastName;
-    standardInvoice.numberInvoice = this.invoiceNumber
+    standardInvoice.numberInvoice = this.addStandardInvoiceForm.get('numberInvoice')?.value;
     standardInvoice.ht = this.addStandardInvoiceForm.get('totalHT')?.value;
     standardInvoice.tva = this.tva
     standardInvoice.travelFees = this.addStandardInvoiceForm.get('totalTravelExpenses')?.value
@@ -193,14 +193,32 @@ export class AddComponent implements OnInit, OnDestroy {
   }
 
 
-  updateInvoiceNumber() {
-    const year = this.selectedDate.getFullYear() % 100; // Récupérer les deux derniers chiffres de l'année
-    const month = this.selectedDate.getMonth() + 1; // Les mois commencent à 0 en JS
+  // updateInvoiceNumber() {
+  //   const year = this.selectedDate.getFullYear() % 100; // Récupérer les deux derniers chiffres de l'année
+  //   const month = this.selectedDate.getMonth() + 1; // Les mois commencent à 0 en JS
+  //
+  //   this.invoicingService.getNextInvoiceNumber(year, month).subscribe((nextNum: string) => {
+  //     this.invoiceNumber = nextNum;
+  //   });
+  // }
+
+  updateInvoiceNumber(): void {
+    const year = this.selectedDate.getFullYear() % 100; // Deux derniers chiffres de l'année
+    const month = this.selectedDate.getMonth() + 1; // Mois, en commençant par 1
 
     this.invoicingService.getNextInvoiceNumber(year, month).subscribe((nextNum: string) => {
       this.invoiceNumber = nextNum;
+
+      // Mettez à jour le champ du formulaire et la validation
+      const control = this.addStandardInvoiceForm.get('numberInvoice');
+      if (control) {
+        control.setValue(this.invoiceNumber); // Synchronisez la valeur dans le formulaire
+        control.setValidators(referenceValidator(this.selectedDate)); // Réappliquez le validateur
+        control.updateValueAndValidity(); // Recalculez la validation
+      }
     });
   }
+
 
   onDateChange(event: any) {
     this.selectedDate = event.value; // Mettre à jour la date sélectionnée

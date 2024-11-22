@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @AllArgsConstructor
@@ -57,4 +58,11 @@ public class ClientController {
   public ClientDTO deleteClient(@PathVariable Long idClient) {
     return clientService.deleteClient(idClient);
   }
+
+  @GetMapping("/some")
+  @PreAuthorize("hasAnyAuthority('admin','user')")
+  public List<Client> findClientsByIds(@RequestParam Set<Long> ids) {
+    return clientService.findAllById(ids);
+  }
+
 }

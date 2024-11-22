@@ -20,7 +20,21 @@
           </mat-label
           >
           <mat-form-field appearance="outline" class="w-100">
-            <input matInput placeholder="" readonly value="{{ vendor.status }}"/>
+            @if (vendor.status == "INDIVIDUAL") {
+              <input matInput placeholder="" readonly value="Personne Physique"/>
+            }
+            @if (vendor.status == "SOLE_PROPRIETOR") {
+              <input matInput placeholder="" readonly value="Auto Entrepreneur"/>
+            }
+            @if (vendor.status == "LLC") {
+              <input matInput placeholder="" readonly value="SARL"/>
+            }
+            @if (vendor.status == "SMLLC") {
+              <input matInput placeholder="" readonly value="SARL AU"/>
+            }
+            @if (vendor.status == "SA") {
+              <input matInput placeholder="" readonly value="SA"/>
+            }
           </mat-form-field>
 
           <!-- input -->
@@ -61,7 +75,7 @@
           </mat-form-field>
 
           <!-- input -->
-          @if (vendor.status == 'SOLE_PROPRIEOR' || vendor.status == 'INDIVIDUAL') {
+          @if (vendor.status == 'SOLE_PROPRIETOR' || vendor.status == 'INDIVIDUAL') {
             <mat-label class="mat-subtitle-2 f-w-600 m-b-8 d-block"
             >CIN
             </mat-label

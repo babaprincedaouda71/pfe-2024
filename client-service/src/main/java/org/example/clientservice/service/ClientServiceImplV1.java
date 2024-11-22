@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -93,5 +94,10 @@ public class ClientServiceImplV1 implements ClientService {
   public int getDeadline(Long idClient) {
     Client client = clientRepository.findById(idClient).orElseThrow(() -> new ClientNotFoundException("Le Client n'existe pas"));
     return client.getDeadline();
+  }
+
+  @Override
+  public List<Client> findAllById(Set<Long> ids) {
+      return clientRepository.findAllById(ids);
   }
 }
