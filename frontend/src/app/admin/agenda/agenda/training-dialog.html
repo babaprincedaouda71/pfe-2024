@@ -8,7 +8,9 @@
     </div>
     <div class="col-lg-12">
       <div class="p-x-24">
-        <p> Formateur : <span class="f-w-600">{{ training.vendor.name }}</span></p>
+       <ng-container *ngFor="let group of training.groups">
+         <p> Formateur : <span class="f-w-600">{{ group.supplier.name }}</span></p>
+       </ng-container>
       </div>
     </div>
     <div class="col-lg-12">
